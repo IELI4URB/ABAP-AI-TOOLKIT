@@ -1,4 +1,20 @@
-# How to Install These Skills & Agents in VS Code
+# SAP DEV AI Toolkit
+
+Skills and specialist agents for SAP ABAP Cloud, ECC/on-premise, and functional
+modules (PP/MM/SD/Finance/TM) development — for use with **GitHub Copilot** in
+VS Code and **Claude Code**.
+
+Repo: https://github.tools.sap/I756261/SAP-DEV-AI-TOOLKIT
+
+## Get it
+
+```bash
+git clone https://github.tools.sap/I756261/SAP-DEV-AI-TOOLKIT.git
+cd SAP-DEV-AI-TOOLKIT
+```
+
+Or download the repo as a ZIP from the GitHub Enterprise page (Code → Download ZIP)
+if you don't have git.
 
 ## Install (do this — it's the only step)
 
