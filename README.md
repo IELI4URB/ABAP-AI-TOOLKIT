@@ -2,7 +2,13 @@
 
 Skills and specialist agents for SAP ABAP Cloud, ECC/on-premise, and functional
 modules (PP/MM/SD/Finance/TM) development — for use with **GitHub Copilot** in
-VS Code and **Claude Code**.
+VS Code.
+
+> **Copilot-only install.** The installer sets things up for GitHub Copilot only.
+> Claude Code agents are intentionally **not** installed: VS Code surfaces
+> `~/.claude/agents` in the Copilot agent picker too, so installing them produced
+> **duplicate agents** in Copilot chat. The `claude-agents/` folder is kept in the
+> repo for reference/manual use only.
 
 Repo: https://github.tools.sap/I756261/SAP-DEV-AI-TOOLKIT
 
@@ -33,34 +39,28 @@ if you don't have git.
 Done. Open Copilot Chat and check the agent picker — you should see the `abap-cloud-*`
 agents and `abap-ecc-to-s4hana-migration`.
 
-If **Claude Code** is also installed (the `claude` CLI is on PATH), the installer
-automatically also copies skills to `~/.claude/skills` and agents to `~/.claude/agents`
-— no extra steps needed.
-
 ## What the installer does
 
-It copies folders from here into the locations each tool actually reads from:
+It copies folders from here into the locations GitHub Copilot in VS Code reads from:
 
 | From (this folder) | To (live location) | What it is |
 |---|---|---|
-| `skills\` | `~/.agents/skills/` (Copilot) and `~/.claude/skills/` (Claude Code) | Skill knowledge files (`SKILL.md`) — same format works for both |
+| `skills\` | `~/.agents/skills/` (Copilot) | Skill knowledge files (`SKILL.md`) |
 | `agents\` | `~/.copilot/agents/` | Custom agents (`*.agent.md`) — shown in the Copilot agent picker |
-| `claude-agents\` | `~/.claude/agents/` (only if Claude Code is detected) | Same 11 agents, pre-converted to Claude Code's `.md` + tool-name format |
 
 `~` means your user home folder (`C:\Users\<you>` on Windows, `/Users/<you>` on Mac).
 
-> **Note on `claude-agents\`:** Claude Code uses a different frontmatter dialect
-> (`tools:` as a comma string with its own tool names, e.g. `Read, Edit, Bash`,
-> instead of Copilot's `tools: [read, edit, execute]`). The files in `claude-agents\`
-> are manually translated equivalents of `agents\*.agent.md` — if you edit one side,
-> update the other to keep them in sync.
+> **`claude-agents\` is not installed.** It holds the same agents pre-converted to
+> Claude Code's format, kept only for reference. Installing them into `~/.claude/agents`
+> caused duplicate entries in the Copilot picker, so the installer skips it. If you
+> genuinely use Claude Code, copy `claude-agents\*.md` to `~/.claude/agents` manually.
 
 ## Sharing this with your team
 
-Zip this whole `Skills` folder (it must keep `skills\`, `agents\`, `claude-agents\`,
+Zip this whole `Skills` folder (it must keep `skills\`, `agents\`,
 `install.ps1`, and `install.sh` together) and send it, or put it on a shared drive /
 internal Git repo. Each teammate just runs the installer for their OS — no manual
-file copying, and it auto-detects whether they also have Claude Code installed.
+file copying.
 
 ## If something looks duplicated
 
@@ -89,15 +89,17 @@ cp "$HOME/.copilot/agents/"*.agent.md "./agents/"
 ## Contents
 
 - **37 skills** in `skills\` — ABAP/RAP/CDS/Clean Core topics plus a couple of
-  general-purpose ones (`find-skills`, `cavecrew`). Portable as-is to both
-  `~/.agents/skills` (Copilot) and `~/.claude/skills` (Claude Code).
+  general-purpose ones (`find-skills`, `cavecrew`). Installed to `~/.agents/skills`
+  (Copilot). The same `SKILL.md` format also works for Claude Code if copied manually.
 - **11 agents** in `agents\` — the `abap-cloud-*` specialist agents (analyzer,
   designer, developer, reviewer, enterprise-architect, delivery-gates,
   routing/handoff, shared guardrails, syntax policy, VS Code ADT object workflow)
-  plus `abap-ecc-to-s4hana-migration`. VS Code/Copilot format.
+  plus `abap-ecc-to-s4hana-migration`. VS Code/Copilot format. **These are the only
+  agents the installer installs.**
 - `agents\references\` — supporting docs (`rap-overview.md`, `rap-extensibility.md`).
-- **11 agents** in `claude-agents\` — the same agents, converted to Claude Code's
-  plain `.md` + comma-separated `tools:` format.
+- **11 agents** in `claude-agents\` — the same agents converted to Claude Code's
+  plain `.md` + comma-separated `tools:` format. **Not installed** (see the note at
+  the top) — kept for reference / manual Claude Code use only.
 
 ## Notes
 
