@@ -88,7 +88,7 @@ cp "$HOME/.copilot/agents/"*.agent.md "./agents/"
 
 ## Contents
 
-- **37 skills** in `skills\` — ABAP/RAP/CDS/Clean Core topics plus a couple of
+- **40 skills** in `skills\` — ABAP/RAP/CDS/Clean Core topics plus a couple of
   general-purpose ones (`find-skills`, `cavecrew`). Installed to `~/.agents/skills`
   (Copilot). The same `SKILL.md` format also works for Claude Code if copied manually.
 - **11 agents** in `agents\` — the `abap-cloud-*` specialist agents (analyzer,
@@ -103,9 +103,8 @@ cp "$HOME/.copilot/agents/"*.agent.md "./agents/"
 
 ## Notes
 
-- `C:\Users\I756261\.agents` on this machine also contains a `skill-packs\` subfolder
-  and helper scripts (`build_v3.py`, `gen_v3.py`, `.skill-lock.json`) used to manage
-  skill installations — packaging tooling, not skill/agent content, intentionally not
-  included here.
+- Connected-system development loads the `adt-mcp-object-workflow` skill first to
+  create, populate, activate, and test ABAP repository objects through the configured
+  ADT MCP server. The VS Code ABAP remote-fs workflow remains available as fallback.
 - This is a plain file copy, not a symlink — edits here don't auto-apply until you
   re-run the installer (or manually copy them over).

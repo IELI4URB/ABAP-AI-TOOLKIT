@@ -19,7 +19,10 @@ Use the shared companion docs in this folder:
 - [abap-cloud-routing-and-handoff.md](abap-cloud-routing-and-handoff.md)
 - [abap-cloud-syntax-policy.md](abap-cloud-syntax-policy.md)
 - [abap-cloud-delivery-gates.md](abap-cloud-delivery-gates.md)
-- [abap-cloud-vscode-adt-object-workflow.md](abap-cloud-vscode-adt-object-workflow.md) — mandatory when creating/populating ABAP objects in a VS Code ABAP remote-fs (`abap:` URI) session
+- [abap-cloud-vscode-adt-object-workflow.md](abap-cloud-vscode-adt-object-workflow.md) — fallback guidance for VS Code ABAP remote-fs (`abap:` URI) sessions when native ADT MCP tools are unavailable
+
+Mandatory development workflow skill:
+- Load `adt-mcp-object-workflow` before starting development that creates, populates, activates, or tests ABAP repository objects directly in a connected system. Its ADT MCP workflow is authoritative for this path.
 
 Use the specialist agents as the default execution path:
 - `abap-cloud-analyzer` for feasibility, constraints, risks, and option evaluation.
@@ -57,7 +60,7 @@ Routing rule:
 
 ## Development Target Selection (Mandatory Before Coding)
 Once the TSD is confirmed, ask the user to choose how development should happen, before generating any object or code:
-- Option A — Create objects directly in the connected system: before proposing any object names, ask the user for the project's naming guidelines/conventions (package, prefix, namespace, suffix rules) if not already known. Then propose the name and description for each object (table, CDS view, behavior definition, class, service definition/binding, DCL, etc.) following those guidelines, get user confirmation, create the object shells via the ADT object-creation workflow, and populate them with the designed values/code. Follow [abap-cloud-vscode-adt-object-workflow.md](abap-cloud-vscode-adt-object-workflow.md) for this path.
+- Option A — Create objects directly in the connected system: load `adt-mcp-object-workflow` before development starts. Before proposing any object names, ask the user for the project's naming guidelines/conventions (package, prefix, namespace, suffix rules) if not already known. Then propose the name and description for each object (table, CDS view, behavior definition, class, service definition/binding, DCL, etc.) following those guidelines, get user confirmation, and follow the skill's ADT MCP sequence to create, populate, activate, and test the objects. Use [abap-cloud-vscode-adt-object-workflow.md](abap-cloud-vscode-adt-object-workflow.md) only as fallback guidance when native ADT MCP tools are unavailable.
 - Option B — Generate as local files in the workspace folder (no system object creation): still ask for naming guidelines first, propose names/descriptions accordingly, then generate the files following the project's folder conventions, for later review or import.
 - Do not assume which option applies; ask if it is not already stated. Re-confirm if the user's answer is ambiguous.
 

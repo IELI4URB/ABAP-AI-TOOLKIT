@@ -37,7 +37,7 @@ from the agents above, keeping shared rules in one place instead of duplicated:
 | `abap-cloud-syntax-policy.agent.md` | "SAP Help is truth" rule for ABAP/CDS/BDL/EML syntax, syntax-confidence output contract. |
 | `abap-cloud-delivery-gates.agent.md` | The P0-P8 delivery gate flow, definition of done, evidence-first and object-contract verification gates. |
 | `abap-cloud-routing-and-handoff.agent.md` | The analyzer → designer → developer → reviewer escalation rule and handoff/domain-routing tables. |
-| `abap-cloud-vscode-adt-object-workflow.agent.md` | Mandatory protocol for creating ABAP repository objects via VS Code ABAP remote-fs (`abap:` URIs) — linked by developer/enterprise-architect. |
+| `abap-cloud-vscode-adt-object-workflow.agent.md` | Fallback protocol for VS Code ABAP remote-fs (`abap:` URIs) when native ADT MCP tools are unavailable. Developer and enterprise-architect load the `adt-mcp-object-workflow` skill first for connected-system development. |
 
 ## Behavior rules common to every agent
 

@@ -97,6 +97,7 @@ Recurring migration issue catalog (must proactively check):
 - Simplification item conflicts and removed/changed transactions.
 - CDS or DB semantic differences after HANA migration.
 - Performance regressions from ECC-era SQL patterns.
+- Direct `TVARVC` table access: prefer `CL_SVAR_TVARVC_ACCESS` after applying SAP Note [3768420](https://me.sap.com/notes/3768420/E); verify note applicability, implementation status, API release state, and the class contract in the target system before remediation.
 - Authorization breaks after role/model changes.
 - Interface contract breaks (RFC/IDoc/OData payload or behavior changes).
 - Long-running job regressions and lock/contention issues.
