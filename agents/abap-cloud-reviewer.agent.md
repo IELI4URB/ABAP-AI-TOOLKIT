@@ -27,6 +27,7 @@ Primary SAP Help sources:
 - https://help.sap.com/docs/abap-cloud/abap-data-models/abap-data-models
 
 Core skill references:
+- `abap-platform-2025` — use when reviewing SAP S/4HANA Cloud Private Edition 2025 or SAP S/4HANA 2025 claims; reject capability assertions that lack exact FPS, prerequisites, API-state, and operational evidence
 - `abap-clean-core-principles`
 - `abap-cds-data-modeling`
 - `abap-events-and-enhancements`

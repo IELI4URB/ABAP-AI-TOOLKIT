@@ -20,6 +20,7 @@ Use the shared docs in this folder:
 - [abap-cloud-shared-guardrails.agent.md](abap-cloud-shared-guardrails.agent.md)
 
 Core skill references:
+- `abap-platform-2025` — use for SAP S/4HANA Cloud Private Edition 2025 or SAP S/4HANA 2025 designs; verify exact FPS and operational prerequisites before selecting release-specific capabilities
 - `abap-clean-core-principles`
 - `abap-cds-data-modeling`
 - `abap-oops-design-patterns`

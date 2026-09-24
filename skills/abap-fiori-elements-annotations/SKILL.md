@@ -1,20 +1,21 @@
 ---
 name: abap-fiori-elements-annotations
 description: >-
-  Complete Fiori Elements UI annotation guide for ABAP Cloud. Covers all @UI annotations (lineItem, fieldGroup, identification, selectionField, facet, headerInfo, chart), @Consumption.valueHelpDefinition, @Search annotations, List Report, Object Page, Analytical List Page, Overview Page, side effects, draft indicators, and metadata extension patterns. Triggers: @UI, annotation, Fiori Elements, list report, object page, lineItem, facet, headerInfo, value help, search, metadata extension, side effect, draft, analytical, chart, column, field group, selection field.
+  Fiori Elements and ABAP CDS annotation guidance organized by CDS artifact type: interface/basic views, composite views, transactional projections, value-help providers, text providers, and metadata extensions. Covers value helps, dependent additional bindings, text associations/elements, ID-text display, @UI.textArrangement, list reports, object pages, and UI annotations. Use for value help, F4 help, dropdown, text display, show ID and description, interface versus projection annotation placement, metadata extension, @Consumption.valueHelpDefinition, @ObjectModel.text.*, or @UI annotations.
 metadata:
-  version: 1.0.0
-  tags: abap fiori-elements annotations ui list-report object-page value-help abap-cloud
+  version: 2.0.0
+  tags: abap fiori-elements annotations ui value-help text-display projection-view interface-view metadata-extension
 ---
 
 # Fiori Elements UI Annotations for ABAP Cloud
 
-Expert guide for all CDS UI annotations that drive Fiori Elements applications — List Reports, Object Pages, Analytical views, and more.
+Expert guide for CDS and UI annotations that drive Fiori Elements applications, with annotation ownership determined by CDS artifact type.
 
-**Golden rule: Annotations go in Metadata Extensions (separate from data model). Never mix UI concerns into interface views.**
+**Golden rule: model reusable semantics in interface/provider views, service-specific consumption contracts in projections, and app-specific UI presentation in metadata extensions. A value help, a text source, and text arrangement are three separate contracts.**
 
 Reference files:
-- `references/ui-annotations-catalog.md` — complete annotation catalog with every option and pattern
+- `references/value-help-and-text-display.md` — mandatory CDS-type placement, value-help contracts, text-provider patterns, ID/text display, failure diagnosis, and validation
+- `references/ui-annotations-catalog.md` — broader UI annotation examples; verify each example against the target OData, UI5, and ABAP release before copying
 
 ## SAP Help Syntax Grounding (Mandatory)
 
@@ -51,12 +52,26 @@ Syntax output contract (mandatory when providing ABAP/CDS/BDL/EML syntax):
 ## Annotation Placement Architecture
 
 ```
-ZI_Travel (Interface View)     → NO UI annotations here
-    ↓
-ZC_Travel (Projection View)    → Minimal annotations (valueHelp, search)
-    ↓
-ZME_Travel (Metadata Extension) → ALL @UI annotations here
+ZI_AgencyText (Text Provider)  → language key + text semantics
+ZI_AgencyVH   (Value Help)     → selectable key + display/filter fields
+      ↘                    ↙
+ZI_Travel     (Interface)      → reusable business and text semantics
+  ↓
+ZC_Travel     (Projection)     → service-specific value-help contract
+  ↓
+ZME_Travel    (Metadata Ext.)  → app-specific UI and text arrangement
 ```
+
+| CDS artifact | Preferred annotation responsibility |
+|---|---|
+| Interface/basic view | Stable key, semantics, reusable text element/association |
+| Composite interface view | Reusable business joins and semantic relationships |
+| Transactional projection | Service-specific value-help binding and exposed text fields/associations; use release-supported denormalized text patterns when needed |
+| Value-help provider | Returned key, dialog display fields, search fields, dependent-filter fields |
+| Text provider | Business key, language key, descriptive text |
+| Metadata extension | `@UI.lineItem`, facets, selection fields, labels, and app-specific `@UI.textArrangement` |
+
+For any value-help or text-display request, read `references/value-help-and-text-display.md` before proposing annotations. Do not infer placement from the annotation prefix alone.
 
 ---
 
@@ -105,13 +120,46 @@ Status;
 
 ## Value Help Pattern
 
+Value help and text display must be modeled independently:
+
 ```cds
 @Consumption.valueHelpDefinition: [{
-  entity: { name: 'ZI_Agency', element: 'AgencyID' },
-  additionalBinding: [{ localElement: 'AgencyName', element: 'Name', usage: #RESULT }]
+  entity: {
+    name: 'ZI_AgencyVH',
+    element: 'AgencyID'
+  }
 }]
 AgencyID;
 ```
+
+- Prefer a dedicated value-help provider such as `ZI_AgencyVH`.
+- Put the annotation on the projection when the contract is service-specific; use the interface only when every consumer shares the same contract.
+- Do not use `additionalBinding` with `#RESULT` merely to display a description. Model a text element or text association instead.
+- For dependent value helps, specify `usage` explicitly. The documented default when omitted is `#FILTER_AND_RESULT`.
+- Verify all local/provider elements, type compatibility, writeability, authorization, Active Annotations, and generated `$metadata`.
+
+## Text Display Pattern
+
+When the description already exists in the same entity, define the text source separately from its UI arrangement:
+
+```cds
+@ObjectModel.text.element: ['AgencyName']
+AgencyID,
+AgencyName
+```
+
+Apply consumption-specific presentation to the service-exposed property, preferably in the metadata extension:
+
+```cds
+@UI.textArrangement: #TEXT_LAST
+AgencyID;
+```
+
+For language-dependent text, choose by consumption pattern: direct association consumption uses `@ObjectModel.text.association`; a denormalized projection follows the target-release `localized` plus text-element pattern and must not retain a prohibited text association. Do not combine strategies without target-release evidence.
+
+Text arrangement does not supply a text. The referenced text element or association must survive the projection and appear correctly in OData metadata.
+
+Metadata extensions require the target CDS entity to allow extensions, for example through `@Metadata.allowExtensions: true` where supported.
 
 ---
 
@@ -161,35 +209,9 @@ AgencyID;
 
 ---
 
-## Draft Action Buttons
+## Draft Actions
 
-```cds
-// In the Projection View — add action buttons for Edit/Save/Discard
-@UI.lineItem: [
-  { type: #FOR_ACTION, dataAction: 'Edit', label: 'Edit' },
-  { type: #FOR_ACTION, dataAction: 'Activate', label: 'Save' }
-]
-// Note: Draft actions (Edit, Activate, Discard) are exposed via the draft action imports
-// in the behavior definition, not as custom actions
-```
-
-```cds
-// Enable Edit button via BDEF draft action
-// In BDEF:
-//   draft action Edit;
-//   draft action Activate;
-//   draft action Discard;
-//   draft action Resume;
-//   draft determine action Prepare;
-```
-
-For the Edit button in the List Report (to show the pencil icon per row):
-```cds
-@UI.lineItem: [{ position: 10, label: 'Travel ID' },
-               { type: #FOR_ACTION, dataAction: 'Edit',
-                 label: 'Edit', position: 100 }]
-travel_id;
-```
+Do not model standard RAP draft Edit, Save/Activate, Resume, or Discard buttons as custom `@UI.lineItem` actions. Fiori Elements derives standard draft controls from the draft-enabled RAP/OData capabilities. Verify draft behavior and target-version UI behavior in SAP Help before adding any custom action annotation.
 
 ---
 
@@ -220,7 +242,10 @@ description;
 ### "How do I add a column to the list?" → @UI.lineItem
 ### "How do I create sections on Object Page?" → @UI.facet
 ### "How do I add a filter?" → @UI.selectionField
-### "How do I add a value help dropdown?" → @Consumption.valueHelpDefinition
+### "Where does this annotation belong?" → classify the CDS artifact first, then use the placement matrix
+### "How do I add a value help?" → read `references/value-help-and-text-display.md`; define provider and mappings before UI layout
+### "How do I show description instead of ID?" → define text source first, then `@UI.textArrangement`
+### "How do I add a dropdown?" → verify fixed-value semantics and generated metadata; valueHelpDefinition alone does not guarantee a dropdown
 ### "How do I show a chart?" → @UI.chart + @UI.dataPoint (see Chart section above)
 
 ## Unified Response Contract
@@ -236,6 +261,10 @@ Hard rules:
 - Do not invent SAP objects, APIs, CDS entities, annotations, or transactions.
 - Prefer released APIs and upgrade-safe extension mechanisms.
 - Flag version-sensitive guidance explicitly when release context is uncertain.
+- Never use value-help result binding as a substitute for text modeling.
+- Never recommend text arrangement without identifying the text source.
+- Never recommend `additionalBinding` until every local and provider element has been verified.
+- Preserve the separation between value-help provider and associated text provider unless generated metadata proves the combined design works.
 
 ## Trigger-to-Action Matrix
 

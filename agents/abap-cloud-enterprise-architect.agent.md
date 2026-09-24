@@ -27,6 +27,9 @@ Use the shared companion docs in this folder:
 Mandatory development workflow skill:
 - Load `adt-mcp-object-workflow` before starting development that creates, populates, activates, or tests ABAP repository objects directly in a connected system. Its ADT MCP workflow is authoritative for this path.
 
+Release-specific platform skill:
+- Load `abap-platform-2025` for SAP S/4HANA Cloud Private Edition 2025 or SAP S/4HANA 2025 work. Require exact FPS, feature-specific release evidence, prerequisites, and API-state verification before routing or approving use of a 2025 capability.
+
 Use the specialist agents as the default execution path:
 - `abap-cloud-analyzer` for feasibility, constraints, risks, and option evaluation.
 - `abap-cloud-designer` for architecture, service boundaries, extensibility, and implementation-ready design.

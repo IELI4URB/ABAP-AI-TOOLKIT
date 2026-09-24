@@ -29,7 +29,7 @@ for that turn.
 * [`abap-devsecops-transport`](abap-devsecops-transport/) - DevSecOps and transport governance for ABAP Cloud, covering delivery pipelines, ATC, gCTS, Cloud Transport Management, approvals, rollback, and waivers.
 * [`abap-error-handling-resilience`](abap-error-handling-resilience/) - Error handling and resilience patterns for ABAP Cloud, including exceptions, retries, circuit breakers, application logs, RAP messages, and observability.
 * [`abap-events-and-enhancements`](abap-events-and-enhancements/) - RAP business events, Cloud BAdIs, and guidance for choosing among events, BAdIs, BDEF extensions, and CDS extensions.
-* [`abap-fiori-elements-annotations`](abap-fiori-elements-annotations/) - Fiori Elements annotations for ABAP Cloud, covering UI annotations, value helps, search, floorplans, side effects, drafts, and metadata extensions.
+* [`abap-fiori-elements-annotations`](abap-fiori-elements-annotations/) - CDS-type-aware Fiori Elements guidance for interface and projection views, value-help and text providers, metadata extensions, dependent bindings, and ID/text display.
 * [`abap-git-workflows`](abap-git-workflows/) - ABAP development with abapGit, including setup, cloning, branching, configuration, transport-versus-Git workflows, and CI/CD integration.
 * [`abap-iam-authorization`](abap-iam-authorization/) - IAM and authorization architecture for ABAP Cloud, covering authorization objects, RAP authorization, DCL, business roles, restrictions, catalogs, and privileges.
 * [`abap-integration-patterns`](abap-integration-patterns/) - ABAP Cloud integration patterns for HTTP REST, SOAP, RFC wrappers, communication arrangements, Event Mesh, AIF, and remote-call error handling.
@@ -37,6 +37,7 @@ for that turn.
 * [`abap-oops-design-patterns`](abap-oops-design-patterns/) - OOP principles and patterns for ABAP Cloud, including SOLID, Repository, Strategy, Factory, Application Service, Domain Events, and RAP integration.
 * [`abap-performance-db`](abap-performance-db/) - ABAP database performance guidance for traditional databases and HANA, covering buffering, SQL pushdown, CDS, AMDP, internal tables, and parallel processing.
 * [`abap-performance-optimization`](abap-performance-optimization/) - ABAP Cloud performance optimization covering N+1 elimination, CDS pushdown, pagination, projections, filtering, caching, indexing, and graph traversal.
+* [`abap-platform-2025`](abap-platform-2025/) - Release-specific ABAP Platform 2025 guidance for SAP S/4HANA Cloud Private Edition and SAP S/4HANA, including FPS-aware RAP, CDS, ADT, connectivity, security, and Clean Core capabilities.
 * [`abap-production-issues`](abap-production-issues/) - Production issue diagnosis for ABAP development across SQL, RAP/OData, AIF/HTTP, jobs, locks, authorization, transports, and Clean Core governance.
 * [`abap-rap-behavior-implementation`](abap-rap-behavior-implementation/) - RAP behavior implementation mechanics covering behavior pools, handlers, method categories, failed and reported structures, messages, prechecks, and numbering.
 * [`abap-released-classes`](abap-released-classes/) - A categorized quick reference to more than 50 released ABAP Cloud classes with ready-to-use examples.
@@ -67,6 +68,10 @@ for that turn.
 `abap-clean-core-principles`, `abap-cds-data-modeling`, `abap-rap-behavior-implementation`,
 `abap-api-design-versioning`, `abap-code-writing`, `abap-code-review-checklist`,
 `clean-abap`, `abap-oops-design-patterns`
+
+**Release-specific platform guidance**
+`abap-platform-2025` (SAP S/4HANA Cloud Private Edition 2025 and SAP S/4HANA
+2025, `SAP_BASIS 816`; requires feature/FPS verification before use)
 
 **Services & UI**
 `abap-odata-service-development`, `abap-fiori-elements-annotations`,

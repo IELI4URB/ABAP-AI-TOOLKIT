@@ -1,8 +1,10 @@
-# Fiori Elements UI Annotations — Complete Catalog
+# Fiori Elements UI Annotations Catalog
 
 ## Objective
 
-Provide the complete reference for all CDS UI annotations used to build Fiori Elements applications (List Report, Object Page, Analytical List Page, Overview Page).
+Provide a broad, release-sensitive reference for CDS UI annotations used to build Fiori Elements applications. This is not a complete vocabulary specification and its examples must be verified against the target ABAP release, OData version, UI5/Fiori Elements version, and generated metadata.
+
+For value help, additional binding, text providers, text associations/elements, or ID/text display, use `value-help-and-text-display.md` instead of this catalog.
 
 ---
 
@@ -18,9 +20,10 @@ Provide the complete reference for all CDS UI annotations used to build Fiori El
 | `@UI.identification` | Metadata Extension | Object page fields |
 | `@UI.dataPoint` | Metadata Extension | KPI/progress |
 | `@UI.chart` | Metadata Extension | Analytical chart |
-| `@Consumption.valueHelpDefinition` | Projection View | Data binding |
-| `@Search.defaultSearchElement` | Interface or Projection | Search behavior |
-| `@Semantics.*` | Interface View | Data semantics |
+| `@Consumption.valueHelpDefinition` | Interface when universally reusable; otherwise service projection | Value-help contract; see `value-help-and-text-display.md` |
+| `@Search.defaultSearchElement` | Search-capable provider/interface or projection | Marks a default search element; search also requires entity/service support |
+| Amount, quantity, currency, unit, and audit semantics | Interface/basic view | Reusable data semantics |
+| `@Semantics.language`, `@Semantics.text` | Text provider elements | Language key and descriptive text semantics |
 
 ---
 
@@ -280,32 +283,14 @@ CustomerRating;
 
 ## @Consumption.valueHelpDefinition
 
-```cds
-// Simple value help
-@Consumption.valueHelpDefinition: [{
-  entity: { name: 'ZI_Agency', element: 'AgencyID' }
-}]
-AgencyID;
+Do not use a generic copy-ready value-help example. Read `value-help-and-text-display.md` and first establish:
 
-// With additional bindings (auto-fill related fields)
-@Consumption.valueHelpDefinition: [{
-  entity: { name: 'ZI_Agency', element: 'AgencyID' },
-  additionalBinding: [
-    { localElement: 'AgencyName', element: 'Name', usage: #RESULT },
-    { localElement: 'AgencyCity', element: 'City', usage: #RESULT }
-  ]
-}]
-AgencyID;
-
-// With filter (restrict value help results)
-@Consumption.valueHelpDefinition: [{
-  entity: { name: 'ZI_Airport', element: 'AirportID' },
-  additionalBinding: [
-    { localElement: 'Country', element: 'CountryCode', usage: #FILTER }
-  ]
-}]
-DepartureAirport;
-```
+1. Consumer artifact type and service projection.
+2. Dedicated value-help provider and returned element.
+3. Display, filter, and result elements.
+4. Explicit `additionalBinding.usage` direction.
+5. Text source and text arrangement as separate contracts.
+6. Generated OData value-list metadata and authorization behavior.
 
 ---
 
@@ -354,33 +339,31 @@ define behavior for ZI_Travel alias Travel
 
 ## Draft Indicators
 
-```cds
-// In metadata extension:
-@UI.lineItem: [{ position: 99, type: #AS_DRAFT_INDICATOR }]
-HasDraftEntity;
-```
+Do not invent a `@UI.lineItem` record type for draft state. Fiori Elements derives standard draft state from RAP/OData draft metadata. Verify target-version documentation before adding any explicit draft-status presentation.
 
 ---
 
 ## Complete Metadata Extension Example
 
 ```cds
+// ZC_Travel must permit metadata extensions, for example:
+// @Metadata.allowExtensions: true
+
 @Metadata.layer: #CUSTOMER
+@UI.headerInfo: {
+  typeName: 'Travel',
+  typeNamePlural: 'Travels',
+  title: { type: #STANDARD, value: 'Description' },
+  description: { type: #STANDARD, value: 'TravelID' }
+}
+@UI.facet: [
+  { id: 'General', purpose: #STANDARD, type: #IDENTIFICATION_REFERENCE, label: 'General', position: 10 },
+  { id: 'Dates', purpose: #STANDARD, type: #FIELDGROUP_REFERENCE, label: 'Dates', targetQualifier: 'Dates', position: 20 },
+  { id: 'Bookings', purpose: #STANDARD, type: #LINEITEM_REFERENCE, label: 'Bookings', position: 30, targetElement: '_Booking' },
+  { id: 'HeaderPrice', purpose: #HEADER, type: #DATAPOINT_REFERENCE, targetQualifier: 'Price', position: 10 }
+]
 annotate entity ZC_Travel with
 {
-  @UI.headerInfo: {
-    typeName: 'Travel',
-    typeNamePlural: 'Travels',
-    title: { type: #STANDARD, value: 'Description' },
-    description: { type: #STANDARD, value: 'TravelID' }
-  }
-
-  @UI.facet: [
-    { id: 'General', purpose: #STANDARD, type: #IDENTIFICATION_REFERENCE, label: 'General', position: 10 },
-    { id: 'Dates', purpose: #STANDARD, type: #FIELDGROUP_REFERENCE, label: 'Dates', targetQualifier: 'Dates', position: 20 },
-    { id: 'Bookings', purpose: #STANDARD, type: #LINEITEM_REFERENCE, label: 'Bookings', position: 30, targetElement: '_Booking' },
-    { id: 'HeaderPrice', purpose: #HEADER, type: #DATAPOINT_REFERENCE, targetQualifier: 'Price', position: 10 }
-  ]
 
   @UI.lineItem: [{ position: 10, importance: #HIGH }]
   @UI.identification: [{ position: 10 }]
@@ -389,12 +372,12 @@ annotate entity ZC_Travel with
   @UI.lineItem: [{ position: 20, importance: #HIGH }]
   @UI.identification: [{ position: 20 }]
   @UI.selectionField: [{ position: 10 }]
-  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZI_Agency', element: 'AgencyID' } }]
+  @UI.textArrangement: #TEXT_LAST
   AgencyID;
 
   @UI.lineItem: [{ position: 30, importance: #MEDIUM }]
   @UI.identification: [{ position: 30 }]
-  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZI_Customer', element: 'CustomerID' } }]
+  @UI.textArrangement: #TEXT_LAST
   CustomerID;
 
   @UI.lineItem: [{ position: 40, importance: #HIGH, criticality: 'StatusCriticality' }]

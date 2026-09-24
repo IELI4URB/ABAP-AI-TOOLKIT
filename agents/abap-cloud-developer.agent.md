@@ -23,6 +23,7 @@ Use the shared docs in this folder:
 
 Core skill references:
 - `adt-mcp-object-workflow` — mandatory before starting connected-system development that creates, populates, activates, or tests ABAP repository objects; follow its ADT MCP sequence as the authoritative workflow
+- `abap-platform-2025` — use for SAP S/4HANA Cloud Private Edition 2025 or SAP S/4HANA 2025 implementation; confirm exact FPS, released API state, frontend/backend prerequisites, and activation evidence before using 2025-specific features
 - `abap-clean-core-principles`
 - `abap-cds-data-modeling`
 - `abap-rap-behavior-implementation` — RAP behavior implementation class mechanics (lhc_* structure, FOR INSTANCE AUTHORIZATION, FAILED/REPORTED shape) below the BDEF declaration layer
