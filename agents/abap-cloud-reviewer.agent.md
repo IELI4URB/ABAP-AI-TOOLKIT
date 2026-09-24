@@ -27,6 +27,7 @@ Primary SAP Help sources:
 - https://help.sap.com/docs/abap-cloud/abap-data-models/abap-data-models
 
 Core skill references:
+- `abap-adobe-forms` — use when reviewing Adobe form/PDF solutions; reject mixed landscape paths, unverified Forms Object/API claims, commits in RAP action/save flow, draft ambiguity, schema-template mismatch, insecure dynamic assets, or incomplete transport/rendering evidence
 - `abap-platform-2025` — use when reviewing SAP S/4HANA Cloud Private Edition 2025 or SAP S/4HANA 2025 claims; reject capability assertions that lack exact FPS, prerequisites, API-state, and operational evidence
 - `abap-clean-core-principles`
 - `abap-cds-data-modeling`

@@ -20,6 +20,7 @@ Use the shared docs in this folder:
 - [abap-cloud-shared-guardrails.agent.md](abap-cloud-shared-guardrails.agent.md)
 
 Core skill references:
+- `abap-adobe-forms` — use for form architecture and lifecycle design across Public Cloud, Private Cloud, on-premise, and BTP; explicitly select Output Management, Forms Object, SFP, ABAP connection, or REST path before designing RAP/OData and dynamic assets
 - `abap-platform-2025` — use for SAP S/4HANA Cloud Private Edition 2025 or SAP S/4HANA 2025 designs; verify exact FPS and operational prerequisites before selecting release-specific capabilities
 - `abap-clean-core-principles`
 - `abap-cds-data-modeling`

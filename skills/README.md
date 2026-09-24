@@ -20,6 +20,7 @@ for that turn.
 
 ## Skills in this repository
 
+* [`abap-adobe-forms`](abap-adobe-forms/) - Adobe Forms architecture for Public Cloud, Private Cloud, on-premise, and ABAP Cloud, covering RAP/OData PDF generation, Forms service by Adobe, SFP, dynamic texts, logos, templates, and output lifecycle.
 * [`abap-api-design-versioning`](abap-api-design-versioning/) - API design and versioning for SAP ABAP Cloud RAP services, including service binding versions, backward compatibility, deprecation policy, and versioned DTOs.
 * [`abap-application-jobs`](abap-application-jobs/) - Application Jobs architecture and operations for SAP ABAP Cloud, including catalogs, templates, scheduling, parameters, error handling, and monitoring.
 * [`abap-cds-data-modeling`](abap-cds-data-modeling/) - CDS data modeling for ABAP Cloud, including view entities, projections, associations, compositions, annotations, metadata extensions, and DCL roles.
@@ -74,7 +75,7 @@ for that turn.
 2025, `SAP_BASIS 816`; requires feature/FPS verification before use)
 
 **Services & UI**
-`abap-odata-service-development`, `abap-fiori-elements-annotations`,
+`abap-odata-service-development`, `abap-fiori-elements-annotations`, `abap-adobe-forms`,
 `abap-events-and-enhancements`
 
 **Performance**
