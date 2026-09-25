@@ -1,3 +1,9 @@
+---
+name: abap-cloud-delivery-gates
+description: "Evaluates definition of done, test and ATC evidence, release readiness, rollback planning, and residual-risk acceptance for ABAP delivery. Does not implement changes."
+tools: Read, Grep, Glob
+---
+
 ## Production Delivery Operating Model
 
 Use this gate flow for delivery-oriented requests:

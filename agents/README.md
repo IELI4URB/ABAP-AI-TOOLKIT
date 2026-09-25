@@ -26,9 +26,13 @@ ECC → S/4HANA brownfield conversion work (impact analysis, remediation, syntax
 modernization) and does not participate in the analyzer/designer/developer/reviewer
 routing.
 
+`abap-developer` handles standard or legacy ABAP implementation outside ABAP
+Cloud-specific ownership. It establishes the target release, database, and
+enhancement model before selecting syntax and APIs.
+
 ## Shared behavior files (not meant to be selected directly)
 
-These have `user-invocable: false` or no frontmatter and exist only to be linked
+These have `user-invocable: false` and can be loaded by the routing agent or linked
 from the agents above, keeping shared rules in one place instead of duplicated:
 
 | File | Purpose |
@@ -59,6 +63,8 @@ from the agents above, keeping shared rules in one place instead of duplicated:
 | Agent | Tools |
 |---|---|
 | `abap-cloud-analyzer`, `abap-cloud-designer`, `abap-cloud-reviewer` | read, search, web, todo (read-only — no edit/execute) |
-| `abap-cloud-developer`, `abap-cloud-enterprise-architect`, `abap-ecc-to-s4hana-migration` | read, search, edit, execute, web, todo |
+| `abap-cloud-developer`, `abap-developer`, `abap-cloud-enterprise-architect`, `abap-ecc-to-s4hana-migration` | read, search, edit, execute, web, todo |
+| `abap-cloud-delivery-gates` | read, search |
+| `abap-cloud-syntax-policy` | read, search, web |
 | `abap-cloud-shared-guardrails` | read |
 | `abap-cloud-vscode-adt-object-workflow` | read, edit |

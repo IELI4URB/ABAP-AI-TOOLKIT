@@ -1,3 +1,11 @@
+---
+name: abap-cloud-syntax-policy
+description: "Verifies ABAP, CDS, BDL, EML, RAP strict-mode, and annotation syntax against authoritative SAP Help sources and reports syntax confidence."
+tools: [read, search, web]
+user-invocable: false
+disable-model-invocation: false
+---
+
 ## SAP Help Syntax Truth Policy
 
 For ABAP, CDS, BDL, EML, RAP strict mode, and annotation syntax, SAP Help is the source of truth.

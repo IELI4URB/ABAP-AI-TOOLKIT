@@ -12,10 +12,35 @@ $agentsSrc = Join-Path $root 'agents'
 
 $skillsDst = Join-Path $HOME '.agents\skills'
 $agentsDst = Join-Path $HOME '.copilot\agents'
+$manifestName = '.sap-dev-ai-toolkit-manifest'
+
+function Update-ManagedItems {
+    param(
+        [Parameter(Mandatory)] [string] $Destination,
+        [Parameter(Mandatory)] [string[]] $CurrentNames
+    )
+
+    $manifestPath = Join-Path $Destination $manifestName
+    if (Test-Path $manifestPath) {
+        foreach ($oldName in Get-Content $manifestPath) {
+            if ($oldName -and $oldName -notin $CurrentNames -and $oldName -notmatch '[\\/]') {
+                $stalePath = Join-Path $Destination $oldName
+                if (Test-Path $stalePath) {
+                    Write-Host "Removing stale toolkit item $stalePath"
+                    Remove-Item $stalePath -Recurse -Force
+                }
+            }
+        }
+    }
+
+    $CurrentNames | Sort-Object | Set-Content $manifestPath -Encoding utf8
+}
 
 Write-Host "Installing skills to $skillsDst (VS Code / Copilot) ..."
 New-Item -ItemType Directory -Path $skillsDst -Force | Out-Null
 Copy-Item -Path (Join-Path $skillsSrc '*') -Destination $skillsDst -Recurse -Force
+$skillNames = @(Get-ChildItem $skillsSrc -Force | ForEach-Object Name)
+Update-ManagedItems -Destination $skillsDst -CurrentNames $skillNames
 
 Write-Host "Installing agents to $agentsDst (VS Code / Copilot) ..."
 New-Item -ItemType Directory -Path $agentsDst -Force | Out-Null
@@ -27,6 +52,11 @@ if (Test-Path $refSrc) {
     New-Item -ItemType Directory -Path $refDst -Force | Out-Null
     Copy-Item -Path (Join-Path $refSrc '*') -Destination $refDst -Recurse -Force
 }
+$agentNames = @(Get-ChildItem $agentsSrc -File -Filter '*.agent.md' | ForEach-Object Name)
+if (Test-Path $refSrc) {
+    $agentNames += 'references'
+}
+Update-ManagedItems -Destination $agentsDst -CurrentNames $agentNames
 
 # Warn about the legacy prompts folder, which causes duplicate agent-picker entries if used alongside .copilot\agents
 $legacyPrompts = Join-Path $env:APPDATA 'Code\User\prompts'
