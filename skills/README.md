@@ -49,6 +49,7 @@ for that turn.
 * [`abap-workflow-automation`](abap-workflow-automation/) - Workflow automation for ABAP Cloud, covering Classic Workflow, Flexible Workflow, SAP Build Process Automation, approvals, and RAP integration.
 * [`adt-api-discovery`](adt-api-discovery/) - Investigation of SAP ADT REST endpoints through discovery documents, application and handler classes, transformations, and XML schemas.
 * [`adt-mcp-object-workflow`](adt-mcp-object-workflow/) - Controlled creation, population, activation, and testing of ABAP repository objects through the configured SAP ADT MCP server.
+* [`atq-principles`](atq-principles/) - SAP ATQ agentic engineering and solutioning governance for planning, approvals, orchestration, handoffs, validation, and recovery.
 * [`cavecrew`](cavecrew/) - Guidance for spawning focused subagents for investigation, implementation, and review while compressing context and enabling parallel work.
 * [`clean-abap`](clean-abap/) - Clean ABAP standards for writing, reviewing, and refactoring code, including naming, modern syntax, design, errors, formatting, comments, and tests.
 * [`find-skills`](find-skills/) - Guidance for discovering and installing skills that provide specialized capabilities, workflows, and automation support.
@@ -106,6 +107,7 @@ ABAP remote-fs extension, detect DB type first)
 `sap-pp`, `sap-mm`, `sap-sd`, `sap-finance`, `sap-tm`
 
 **Meta / general-purpose**
+`atq-principles` (agentic process governance),
 `cavecrew` (multi-agent/subagent orchestration guidance),
 `find-skills` (discover/install new skills)
 
