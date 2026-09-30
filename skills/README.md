@@ -53,6 +53,7 @@ for that turn.
 * [`cavecrew`](cavecrew/) - Guidance for spawning focused subagents for investigation, implementation, and review while compressing context and enabling parallel work.
 * [`clean-abap`](clean-abap/) - Clean ABAP standards for writing, reviewing, and refactoring code, including naming, modern syntax, design, errors, formatting, comments, and tests.
 * [`find-skills`](find-skills/) - Guidance for discovering and installing skills that provide specialized capabilities, workflows, and automation support.
+* [`sap-basis-compilation-guides`](sap-basis-compilation-guides/) - Evidence-first SAP Basis administration troubleshooting and guide discovery, with release-aware verification and operational safety controls.
 * [`sap-clean-core-enterprise`](sap-clean-core-enterprise/) - End-to-end ABAP Clean Core guidance for S/4HANA Public Cloud, S/4HANA Private Cloud, and SAP BTP ABAP Environment.
 * [`sap-cloud-dev`](sap-cloud-dev/) - SAP Public Cloud ABAP development guidance for Clean Core, RAP, CDS, BTP ABAP Environment, service layers, naming, and BDEFs.
 * [`sap-customizing`](sap-customizing/) - Guidance for navigating SAP Customizing, SPRO, IMG activities, configuration tables, maintenance views, view clusters, and customizing data.
@@ -98,7 +99,7 @@ ABAP remote-fs extension, detect DB type first)
 **Operations / troubleshooting**
 `abap-production-issues`, `abap-research`, `sap-customizing`,
 `sap-system-personality-report`, `sap-data-workbook`, `adt-api-discovery`,
-`adt-mcp-object-workflow`
+`adt-mcp-object-workflow`, `sap-basis-compilation-guides`
 
 **End-to-end / quick-start**
 `sap-clean-core-enterprise`, `sap-cloud-dev`

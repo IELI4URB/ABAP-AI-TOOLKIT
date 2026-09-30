@@ -198,7 +198,7 @@ cp "$HOME/.copilot/agents/"*.agent.md "./agents/"
 
 ## Contents
 
-- **43 skills** in `skills\` — ABAP/RAP/CDS/Clean Core topics plus agentic
+- **44 skills** in `skills\` — ABAP/RAP/CDS/Clean Core topics plus agentic
   governance and general-purpose guidance (`atq-principles`, `find-skills`, `cavecrew`). Installed to `~/.agents/skills`
   (Copilot). The same `SKILL.md` format also works for Claude Code if copied manually.
 - **12 agents** in `agents\` — the `abap-cloud-*` specialist agents (analyzer,
