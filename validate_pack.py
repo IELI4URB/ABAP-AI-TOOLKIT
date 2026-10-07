@@ -100,6 +100,7 @@ def validate_skills(errors: list[str]) -> set[str]:
     official_guides = (
         SKILLS / "abap-cloud-governance" / "references" / "official-abap-cloud-apis-and-releases.md",
         SKILLS / "abap-rap-services" / "references" / "official-ddic-cds-rap-semantics.md",
+        SKILLS / "abap-rap-services" / "references" / "official-cds-annotations.md",
         SKILLS / "abap-engineering" / "references" / "official-abap-language-and-syntax.md",
         SKILLS / "abap-security" / "references" / "official-cds-access-control.md",
         SKILLS / "abap-data-performance" / "references" / "official-ddic-cds-data-access.md",
@@ -124,6 +125,8 @@ def validate_skills(errors: list[str]) -> set[str]:
         "Use in Cloud Development | **C1**": "Cloud visibility is separate from C1",
         "will inherit the restriction": "CDS DCL does not automatically propagate",
         "[C0 — not released]": "C0 is a valid extension contract",
+        "@UI` annotations MUST live exclusively": "MDE placement depends on Scope and MDE properties",
+        "#CORE` > `#PARTNER` > `#INDUSTRY` > `#LOCALIZATION` > `#CUSTOMER": "metadata-extension layer priority is reversed",
     }
     for markdown in SKILLS.rglob("*.md"):
         text = read(markdown)

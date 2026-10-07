@@ -15,14 +15,14 @@ annotation-override failures.
 |---|---|---|---|
 | **Interface / BO** | `ZI_*`, `ZR_*` | `@AbapCatalog`, `@AccessControl`, `@ObjectModel`, `@Semantics`, `@Search` | Persistence mapping, associations, access control |
 | **Projection / Service** | `ZC_*`, `ZP_*` | `@Consumption`, `@EndUserText`, basic `@ObjectModel` | OData exposure, value help binding, text elements |
-| **Metadata Extension** | `ZME_*` (file type `.cdsext`) | **All `@UI` annotations**, `@Consumption.filter` | Fiori Elements layout, facets, field groups, charts |
+| **Metadata Extension** | `ZME_*` (file type `.cdsext`) | Annotations whose official `MDE` property permits DDLX placement | Fiori Elements layout, facets, field groups, charts |
 
-### Golden Rule
+### Placement Rule
 
-> **`@UI` annotations MUST live exclusively in Metadata Extensions.**  
-> Placing `@UI` annotations directly in a CDS view entity compiles but breaks the
-> metadata-layer override mechanism and prevents SAP from shipping layout upgrades
-> transparently.
+> Prefer app-specific `@UI` annotations in metadata extensions when the target entity
+> allows extensions and the annotation's official `Scope` and `MDE` properties permit
+> DDLX placement. This is an architecture convention, not a universal CDS-language
+> rule that every UI annotation must live exclusively in a metadata extension.
 
 ---
 
@@ -69,7 +69,7 @@ annotate entity ZC_SalesOrder with
 
 ### `@Metadata.layer` priority (highest wins)
 
-`#CORE` > `#PARTNER` > `#INDUSTRY` > `#LOCALIZATION` > `#CUSTOMER`
+`#CUSTOMER` > `#PARTNER` > `#INDUSTRY` > `#LOCALIZATION` > `#CORE`
 
 Customer extensions always use `#CUSTOMER`. SAP ships content at `#CORE`.
 

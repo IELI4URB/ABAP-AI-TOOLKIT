@@ -28,6 +28,11 @@ Requested official section roots:
 - https://help.sap.com/docs/abap-cloud/abap-keyword/abap-glossary?locale=en-US
 - https://help.sap.com/docs/abap-cloud/abap-keyword/abap-syntax-conventions?locale=en-US
 
+Focused subtree review (already included beneath the ABAP CDS root):
+
+- https://help.sap.com/docs/abap-cloud/abap-keyword/abap-cds-annotations?locale=en-US
+- 937 descendant pages / 229,089 words, zero crawl failures
+
 ## Core ABAP Cloud Hub
 
 - https://help.sap.com/docs/abap-cloud

@@ -12,7 +12,7 @@ Use this skill as the UI-annotation and value-help router. Load only the referen
 
 ## Ownership
 
-This skill owns Fiori Elements presentation annotations, metadata-extension placement, value-help contracts, text display, and generated UI metadata. Use `abap-cds-data-modeling` for structural CDS design and `abap-rap-behavior-implementation` for behavior logic.
+This skill owns Fiori Elements presentation annotations, metadata-extension placement, value-help contracts, text display, and generated UI metadata. Use [the official annotation guide](./official-cds-annotations.md) for scope, MDE eligibility, layers, propagation, and annotation API properties; use `abap-cds-data-modeling` for structural CDS design and `abap-rap-behavior-implementation` for behavior logic.
 
 ## Workflow
 
@@ -27,6 +27,7 @@ This skill owns Fiori Elements presentation annotations, metadata-extension plac
 
 | Request | Read |
 |---|---|
+| Annotation legality, scope, MDE support, layers, propagation | [official annotation semantics](./official-cds-annotations.md) |
 | Value help, dependent binding, text display, dropdown | [value-help and text display](./abap-fiori-elements-annotations/references/value-help-and-text-display.md) |
 | Placement or metadata extension | `ui-annotations-catalog.md`, sections 1-2 |
 | List report columns | section 3 |

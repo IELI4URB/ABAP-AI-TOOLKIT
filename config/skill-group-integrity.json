@@ -26,7 +26,7 @@
     "abap-fiori-elements-annotations": {
       "group": "abap-rap-services",
       "files": {
-        "references/ui-annotations-catalog.md": "E4592A130B79BE94FF62EF497A2678DA9307A23753495B8718F6B7E8A0C27647",
+        "references/ui-annotations-catalog.md": "2387c442aee574077544becbe632e8fb644f9367ba065b25de0ef621e4d82341",
         "references/value-help-and-text-display.md": "1A9AB6D45A3204B8A238A799CFE55CDCC6A0AE790251847B3D1376973A3FB5D6",
         "SKILL.md": "02EE92DDD5B4F126CE30492B41D359DBCBF5277D868EC64A30F1ACDA1FBE6CF1"
       }

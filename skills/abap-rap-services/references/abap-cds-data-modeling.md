@@ -14,7 +14,7 @@ Use this skill as the CDS structure and entity-selection router. Load only the r
 
 ## Ownership
 
-This skill owns CDS entity selection, layering, keys, associations, compositions, structural annotations, custom entities, and DCL syntax. Use `abap-fiori-elements-annotations` for UI/value-help/text presentation, `abap-iam-authorization` for authorization architecture, `abap-sql-and-amdp` for table-function implementation, and `abap-platform-2025` for 2025-only capabilities.
+This skill owns CDS entity selection, layering, keys, associations, compositions, structural annotations, custom entities, and DCL syntax. Use [the official annotation guide](./official-cds-annotations.md) for annotation scope, values, metadata extensions, propagation, and API properties; use `abap-fiori-elements-annotations` for UI/value-help/text presentation, `abap-iam-authorization` for authorization architecture, `abap-sql-and-amdp` for table-function implementation, and `abap-platform-2025` for 2025-only capabilities.
 
 ## Workflow
 
@@ -37,7 +37,7 @@ This skill owns CDS entity selection, layering, keys, associations, compositions
 | Table entity | 6, plus `abap-platform-2025` |
 | Association or composition | 7, 8 |
 | DCL | 9, 11 |
-| Annotation lookup | 10 |
+| Annotation lookup | 10, then [official annotation semantics](./official-cds-annotations.md) |
 
 ## Mandatory Gates
 
