@@ -1,4 +1,4 @@
-# SAP DEV AI Toolkit
+# ABAP-DEVELOPMENT-AI-TOOLKIT
 
 A governed SAP ABAP engineering toolkit for GitHub Copilot in Visual Studio Code.
 
@@ -107,8 +107,8 @@ No administrator rights are required.
 
 ```powershell
 Set-Location $HOME
-git clone https://github.tools.sap/I756261/SAP-DEV-AI-TOOLKIT.git
-Set-Location .\SAP-DEV-AI-TOOLKIT
+git clone https://github.tools.sap/I756261/ABAP-DEVELOPMENT-AI-TOOLKIT.git
+Set-Location .\ABAP-DEVELOPMENT-AI-TOOLKIT
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 & .\install.ps1
 ```
@@ -117,8 +117,8 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
 ```bash
 cd "$HOME"
-git clone https://github.tools.sap/I756261/SAP-DEV-AI-TOOLKIT.git
-cd SAP-DEV-AI-TOOLKIT
+git clone https://github.tools.sap/I756261/ABAP-DEVELOPMENT-AI-TOOLKIT.git
+cd ABAP-DEVELOPMENT-AI-TOOLKIT
 chmod +x install.sh
 ./install.sh
 ```
@@ -201,7 +201,7 @@ Pull the latest version and rerun the installer:
 ### Windows
 
 ```powershell
-Set-Location "$HOME\SAP-DEV-AI-TOOLKIT"
+Set-Location "$HOME\ABAP-DEVELOPMENT-AI-TOOLKIT"
 git pull --ff-only
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 & .\install.ps1
@@ -210,7 +210,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ### macOS or Linux
 
 ```bash
-cd "$HOME/SAP-DEV-AI-TOOLKIT"
+cd "$HOME/ABAP-DEVELOPMENT-AI-TOOLKIT"
 git pull --ff-only
 ./install.sh
 ```
