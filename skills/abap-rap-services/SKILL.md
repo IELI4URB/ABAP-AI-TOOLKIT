@@ -14,6 +14,7 @@ Load only the guide matching the object or contract being changed.
 | Official DDIC/CDS/RAP object and transaction semantics | [DDIC, CDS, and RAP semantics](./references/official-ddic-cds-rap-semantics.md) |
 | Official annotation syntax, scope, MDE, layers, propagation, API properties | [CDS annotation semantics](./references/official-cds-annotations.md) |
 | CDS entities, associations, compositions, DCL structure | [CDS data modeling](./references/abap-cds-data-modeling.md) |
+| BDEF kinds, header, characteristics, operations, draft, projection/interface reuse, extensions | [RAP behavior definitions](./references/official-rap-behavior-definitions.md) |
 | Behavior pool, handlers, EML responses, saver | [RAP behavior implementation](./references/abap-rap-behavior-implementation.md) |
 | OData V2/V4, query options, ETags, batch | [OData services](./references/abap-odata-service-development.md) |
 | List report, object page, value help, text display | [Fiori Elements annotations](./references/abap-fiori-elements-annotations.md) |

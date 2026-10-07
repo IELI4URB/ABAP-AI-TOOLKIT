@@ -43,6 +43,11 @@ Focused subtree review (already included beneath the ABAP Programming Language r
 - https://help.sap.com/docs/abap-cloud/abap-keyword/abap-program-flow-logic?locale=en-US
 - 130 descendant topics / 59,877 words, zero crawl failures
 
+Focused distributed-topic review (already included beneath the RAP root):
+
+- https://help.sap.com/docs/abap-cloud/abap-keyword/rap-behavior-definitions?locale=en-US
+- 180 behavior-definition-related topics / 127,339 words, including 172 RAP BDL syntax topics, zero crawl failures
+
 ## Core ABAP Cloud Hub
 
 - https://help.sap.com/docs/abap-cloud
