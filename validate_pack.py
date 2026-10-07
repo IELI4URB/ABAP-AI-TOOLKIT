@@ -102,6 +102,7 @@ def validate_skills(errors: list[str]) -> set[str]:
         SKILLS / "abap-rap-services" / "references" / "official-ddic-cds-rap-semantics.md",
         SKILLS / "abap-rap-services" / "references" / "official-cds-annotations.md",
         SKILLS / "abap-rap-services" / "references" / "official-rap-behavior-definitions.md",
+        SKILLS / "abap-rap-services" / "references" / "official-abap-for-rap-business-objects.md",
         SKILLS / "abap-engineering" / "references" / "official-abap-language-and-syntax.md",
         SKILLS / "abap-engineering" / "references" / "official-internal-data-processing.md",
         SKILLS / "abap-engineering" / "references" / "official-program-flow-logic.md",

@@ -8,7 +8,7 @@ metadata:
 
 # RAP Behavior Implementation
 
-Use this skill for implementation-class mechanics below the BDEF declaration layer. Use [the official BDEF guide](./official-rap-behavior-definitions.md) for behavior declaration design and syntax; load only the relevant section of [the complete behavior implementation reference](./abap-rap-behavior-implementation/references/behavior-implementation-reference.md) for generated implementation mechanics.
+Use this skill for implementation-class mechanics below the BDEF declaration layer. Use [the official BDEF guide](./official-rap-behavior-definitions.md) for behavior declaration design and syntax, and [the ABAP-for-RAP guide](./official-abap-for-rap-business-objects.md) for EML, BDEF-derived types, transactional phases, and provider restrictions. Load only the relevant section of [the complete behavior implementation reference](./abap-rap-behavior-implementation/references/behavior-implementation-reference.md) for generated implementation mechanics.
 
 ## Workflow
 
