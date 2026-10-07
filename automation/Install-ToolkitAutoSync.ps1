@@ -36,6 +36,8 @@ if ($Action -eq 'Uninstall') {
 $repository = (Resolve-Path $RepositoryPath).Path
 $watcher = Join-Path $PSScriptRoot 'Watch-ToolkitChanges.ps1'
 $syncEngine = Join-Path $PSScriptRoot 'sync_toolkit.py'
+$currentIdentity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+$currentUserSid = $currentIdentity.User.Value
 if (-not (Test-Path $watcher) -or -not (Test-Path $syncEngine)) {
     throw 'Automation files are incomplete.'
 }
@@ -43,15 +45,17 @@ if (-not (Test-Path $watcher) -or -not (Test-Path $syncEngine)) {
 $pwsh = (Get-Command pwsh.exe -ErrorAction Stop).Source
 $arguments = "-NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File `"$watcher`" -RepositoryPath `"$repository`""
 $taskAction = New-ScheduledTaskAction -Execute $pwsh -Argument $arguments -WorkingDirectory $repository
-$trigger = New-ScheduledTaskTrigger -AtLogOn -User "$env:USERDOMAIN\$env:USERNAME"
+$trigger = New-ScheduledTaskTrigger -AtLogOn -User $currentUserSid
 $settings = New-ScheduledTaskSettingsSet `
     -ExecutionTimeLimit ([TimeSpan]::Zero) `
     -RestartCount 3 `
     -RestartInterval (New-TimeSpan -Minutes 1) `
     -StartWhenAvailable `
+    -AllowStartIfOnBatteries `
+    -DontStopIfGoingOnBatteries `
     -MultipleInstances IgnoreNew
 $principal = New-ScheduledTaskPrincipal `
-    -UserId "$env:USERDOMAIN\$env:USERNAME" `
+    -UserId $currentUserSid `
     -LogonType Interactive `
     -RunLevel Limited
 
