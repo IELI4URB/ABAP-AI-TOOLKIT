@@ -2,8 +2,6 @@
 
 A governed SAP ABAP engineering toolkit for GitHub Copilot in Visual Studio Code.
 
-**Author:** Pratibha Pandey
-
 It combines role-specific agents with progressively loaded SAP skills so analysis, architecture, implementation, review, and migration work follow consistent evidence, quality, and delivery standards. It supports ABAP Cloud, classic/Standard ABAP, and ECC-to-S/4HANA scenarios without mixing their landscape-specific rules.
 
 ## What It Does
@@ -285,3 +283,7 @@ install.ps1       Windows installer
 install.sh        macOS/Linux installer
 validate_pack.py  Repository validator
 ```
+
+## Author
+
+Pratibha Pandey
