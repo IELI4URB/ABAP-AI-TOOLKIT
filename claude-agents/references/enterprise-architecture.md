@@ -1,6 +1,6 @@
 # Enterprise Architecture Playbook
 
-The `abap-cloud-designer` owns cross-system target architecture and final architecture trade-offs.
+The `abap-cloud-enterprise-architect` owns cross-system target architecture and final architecture trade-offs.
 
 ## Architecture Sequence
 

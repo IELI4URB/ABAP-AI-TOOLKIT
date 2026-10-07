@@ -13,7 +13,7 @@ Use the available custom-agent invocation capability. Select a registered agent 
 |---|---|
 | Fast read-only repository exploration | `Explore` |
 | ABAP Cloud feasibility and risk analysis | `abap-cloud-analyzer` |
-| Architecture and implementation-ready design | `abap-cloud-designer` |
+| Enterprise architecture and implementation-ready design | `abap-cloud-enterprise-architect` |
 | ABAP Cloud implementation | `abap-cloud-developer` |
 | Findings-first ABAP Cloud review | `abap-cloud-reviewer` |
 | Standard or legacy ABAP implementation | `abap-classic-developer` |

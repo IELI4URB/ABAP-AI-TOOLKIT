@@ -3,10 +3,10 @@
 ## Role Flow
 
 ```text
-Analyzer -> Designer -> Developer -> Reviewer
-                 |          |
-                 |          +-> Classic Developer for Standard/ECC ownership
-                 +-> Migration specialist for ECC-to-S/4 work
+Analyzer -> Enterprise Architect -> Cloud Developer -> Reviewer
+                              |              |
+                              |              +-> Classic Developer for Standard/ECC ownership
+                              +-> Migration specialist for ECC-to-S/4 work
 ```
 
 `abap-cloud-routing-and-handoff` coordinates governed multi-phase work and delegates one bounded task to one specialist.

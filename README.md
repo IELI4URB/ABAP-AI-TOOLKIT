@@ -73,11 +73,15 @@ Each group has one short `SKILL.md`. Former skills and supporting references/scr
 |---|---|
 | `abap-cloud-routing-and-handoff` | Multi-phase routing and approval state |
 | `abap-cloud-analyzer` | Requirements, feasibility, constraints, risks |
-| `abap-cloud-designer` | Architecture and cross-system trade-offs |
+| `abap-cloud-enterprise-architect` | Enterprise architecture and cross-system trade-offs |
 | `abap-cloud-developer` | ABAP Cloud implementation and validation |
 | `abap-cloud-reviewer` | Findings-first review and release verdict |
 | `abap-classic-developer` | Classic/Standard ABAP for ECC and on-premise |
 | `abap-ecc-to-s4hana-migration` | ECC-to-S/4HANA impact and remediation |
+
+### Extension-Contributed ABAP Agent
+
+If VS Code also shows `abap-developer`, it is contributed by the SAP ADT VS Code extension (`sapse.adt-vscode`), not installed or managed by this toolkit. That generic agent assumes cloud-compliant ABAP, `$TMP`, ADT MCP object creation/activation, and mandatory unit tests. Use `abap-cloud-developer` for governed ABAP Cloud implementation and `abap-classic-developer` for Standard ABAP/ECC ownership.
 
 ## Installed Locations
 

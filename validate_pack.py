@@ -14,7 +14,7 @@ CONFIG = ROOT / "config"
 EXPECTED_AGENT_NAMES = {
     "abap-cloud-routing-and-handoff",
     "abap-cloud-analyzer",
-    "abap-cloud-designer",
+    "abap-cloud-enterprise-architect",
     "abap-cloud-developer",
     "abap-cloud-reviewer",
     "abap-classic-developer",
@@ -207,6 +207,10 @@ def validate_agents(errors: list[str], expected_groups: set[str]) -> None:
             errors.append(f"Claude agent name mismatch: {claude_file.relative_to(ROOT)}")
         if not metadata.get("description") or not metadata.get("tools"):
             errors.append(f"Incomplete Claude frontmatter: {claude_file.relative_to(ROOT)}")
+
+    for agent_file in (*agent_files, *claude_files):
+        if "abap-cloud-designer" in read(agent_file):
+            errors.append(f"Retired agent name in {agent_file.relative_to(ROOT)}: abap-cloud-designer")
 
 
 def validate_links(errors: list[str]) -> None:
