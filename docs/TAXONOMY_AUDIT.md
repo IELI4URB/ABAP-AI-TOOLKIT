@@ -2,7 +2,7 @@
 
 ## Scope and Method
 
-This audit rates the 11 registered skill groups and seven toolkit-managed agents. The 44 former standalone packages are immutable archives under `references/_legacy/`, not active skills, so rating them as active entries would recreate the ambiguity this taxonomy removes.
+This audit rates the registered skill groups and toolkit-managed agents. Immutable source snapshots under `references/_legacy/` are integrity evidence, not active skills, and are therefore outside the rating scope.
 
 Scores combine naming clarity, ownership separation, discoverability, progressive loading, and maintenance safety.
 
@@ -22,7 +22,7 @@ Scores combine naming clarity, ownership separation, discoverability, progressiv
 | `sap-business-domains` | 9.4/10 | Clear functional ownership across FI, MM, PP/DS, SD, and TM. |
 | `sap-system-operations` | 9.3/10 | Clear real-system investigation, discovery, ADT, Basis, and Customizing ownership. |
 
-**Overall skill taxonomy: 9.4/10**, improved from the pre-cleanup baseline of 5.4/10.
+**Overall skill taxonomy: 9.4/10.**
 
 ## Agent Ratings
 
@@ -43,6 +43,6 @@ The SAP ADT extension may additionally contribute `abap-developer`. It is extern
 - One registered `SKILL.md` per group.
 - One `references/README.md` ownership index per group.
 - Active guides are direct Markdown files under `references/`.
-- All 44 preserved packages live only under `references/_legacy/`.
+- Integrity source snapshots live only under `references/_legacy/`.
 - Zero active guide/directory basename collisions.
 - Validators enforce group counts, ownership indexes, archive sets, hashes, links, and agent topology.

@@ -1,8 +1,8 @@
 # SAP DEV AI Toolkit
 
-Team-ready GitHub Copilot agents and skills for SAP ABAP development in Visual Studio Code.
+A governed SAP ABAP engineering toolkit for GitHub Copilot in Visual Studio Code.
 
-The toolkit helps a team choose the right SAP development role, apply the relevant ABAP guidance, and validate work consistently across ABAP Cloud, classic ABAP, and ECC-to-S/4HANA migration scenarios.
+It combines role-specific agents with progressively loaded SAP skills so analysis, architecture, implementation, review, and migration work follow consistent evidence, quality, and delivery standards. It supports ABAP Cloud, classic/Standard ABAP, and ECC-to-S/4HANA scenarios without mixing their landscape-specific rules.
 
 ## What It Does
 
@@ -13,6 +13,17 @@ The toolkit helps a team choose the right SAP development role, apply the releva
 - Applies Clean Core, released-API, security, performance, testing, transport, rollback, and production-readiness checks.
 - Loads detailed guidance progressively, keeping routine Copilot context smaller.
 - Supports connected-system workflows through ADT and MCP tools when those tools are available and configured.
+
+## Practical Benefits
+
+- **Correct role for each phase:** analysis, architecture, implementation, and review have separate owners, reducing conflicting responsibilities and self-review bias.
+- **Landscape-aware guidance:** Cloud-only restrictions, released APIs, classic APIs, database assumptions, and migration concerns remain explicitly separated.
+- **Evidence before confidence:** agents require syntax, object-contract, data, and system evidence before presenting non-trivial conclusions as verified.
+- **Quality during development:** security, performance, testing, operability, ATC, transport, and rollback checks are applied while work is designed and built, not only at release time.
+- **Focused Copilot context:** agents select one primary skill and only the companion guidance needed for the active concern.
+- **Independent release review:** the reviewer reports findings by severity and blocks release-ready language when required evidence is missing.
+- **Useful with or without a live SAP connection:** the toolkit can analyze and draft from repository evidence, then use ADT/MCP workflows for object operations when configured and authorized.
+- **Repeatable team setup:** manifest-based installers update toolkit-managed content without deleting unrelated agents or skills.
 
 ## Why Use It Instead of a General Agent?
 
@@ -50,7 +61,7 @@ Select the agent from the Copilot Chat agent picker before entering the request.
 - Choose `abap-classic-developer` for Standard ABAP, ECC, classic enhancements, function modules, or unreleased on-premise APIs.
 - Choose `abap-ecc-to-s4hana-migration` when migration impact and remediation are the primary goal.
 
-If VS Code also shows `abap-developer`, that agent is contributed by the SAP ADT extension, not this toolkit. It is a lightweight agent for cloud-compliant local `$TMP` development through ADT MCP. Use the toolkit agents when landscape decisions, governance, transports, production quality gates, or classic ABAP ownership matter.
+If VS Code also shows `abap-developer`, that agent is contributed by the SAP ADT extension, not this toolkit. It is configured for cloud-compliant local `$TMP` development through ADT MCP. Use the toolkit agents when landscape decisions, governance, transports, production quality gates, or classic ABAP ownership matter.
 
 | Capability | SAP ADT `abap-developer` | Toolkit `abap-cloud-developer` |
 |---|---|---|

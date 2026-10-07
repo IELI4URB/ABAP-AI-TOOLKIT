@@ -272,7 +272,7 @@ def main() -> int:
         return 1
 
     print("Pack validation PASSED")
-    print("Validated 11 skill groups, 44 archived skill packages, 7 Copilot agents, and 7 Claude mirrors.")
+    print("Validated 11 skill groups, source integrity, 7 Copilot agents, and 7 Claude mirrors.")
     return 0
 
 

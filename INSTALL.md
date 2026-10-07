@@ -108,7 +108,7 @@ The installer writes `.sap-dev-ai-toolkit-manifest` files in both destination fo
 3. Reinstalls the current 11 groups and 7 agents.
 4. Leaves unrelated skills and agents from other packages untouched.
 
-This automatically migrates teammates from the older 44-skill/12-agent format.
+Obsolete toolkit-managed entries recorded by an earlier installation are removed automatically.
 
 ## Duplicate Agents
 
