@@ -4,6 +4,8 @@ This guide turns SAP's [Consuming RAP Business Objects and Events](https://help.
 
 Use it after a RAP provider or released API has been selected. It chooses among RAP BO interfaces, EML, CDS projections, OData UI/Web API consumption, local/remote OData client proxies, and local/remote business events.
 
+Use [RAP documentation version selection](./official-rap-documentation-versioning.md) first. This guide stores common consumption semantics once; the matrix selects `s4hana_cloud`, `s4_hana_cloud_pce`, `s4_hana`, `sap_btp`, or `sap_cross_product_abap` and records target-specific drift.
+
 ## Consumption Channels
 
 | Need | Select | Required release contract |
