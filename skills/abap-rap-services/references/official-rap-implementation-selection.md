@@ -184,6 +184,8 @@ Source: [Developing a UI Service with Access to a Remote Service](https://help.s
 
 ## UI Service, Web API, or EML Interface
 
+Use [RAP consumption selection](./official-rap-consumption-selection.md) to choose the concrete C1/C2 client channel after selecting the provider architecture.
+
 | Consumer | Choose | Contract implications |
 |---|---|---|
 | Fiori Elements | OData V4 UI service binding | UI/value-help/search annotations, draft UX, side effects, metadata/runtime tests |

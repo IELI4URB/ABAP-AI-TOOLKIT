@@ -70,6 +70,10 @@ Focused subtree review (already included beneath the RAP root):
 - https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model
 - https://help.sap.com/docs/abap-cloud/abap-rap/develop?version=sap_cross_product_abap
 - https://help.sap.com/docs/abap-cloud/abap-rap/develop-applications?version=sap_cross_product_abap
+- https://help.sap.com/docs/abap-cloud/abap-rap/consume?version=sap_cross_product_abap
+- https://help.sap.com/docs/abap-cloud/abap-rap/business-object-interface-consumption?version=sap_cross_product_abap
+- https://help.sap.com/docs/abap-cloud/abap-rap/odata-service-consumption?version=sap_cross_product_abap
+- https://help.sap.com/docs/abap-cloud/abap-rap/business-event-consumption?version=sap_cross_product_abap
 - https://help.sap.com/docs/abap-cloud/abap-data-models/abap-data-models
 - https://help.sap.com/docs/abap-cloud/abap-development-tools-user-guide/about-abap-development-tools-user-guide
 - https://help.sap.com/docs/abap-cloud/abap-development-tools-user-guide/basic-tutorial
