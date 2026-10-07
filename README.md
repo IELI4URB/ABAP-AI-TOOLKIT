@@ -1,31 +1,96 @@
 # SAP DEV AI Toolkit
 
-A shareable GitHub Copilot toolkit for SAP ABAP development. It installs:
+Team-ready GitHub Copilot agents and skills for SAP ABAP development in Visual Studio Code.
 
-- **11 object-focused skill groups** with progressive references
-- **7 role-focused Copilot agents**
-- Optional **7 Claude Code agent mirrors** for teammates who explicitly use Claude Code
+The toolkit helps a team choose the right SAP development role, apply the relevant ABAP guidance, and validate work consistently across ABAP Cloud, classic ABAP, and ECC-to-S/4HANA migration scenarios.
 
-All 44 former standalone skills are preserved inside the 11 groups. Only the short group routers are registered, which keeps navigation and prompt context small.
+## What It Does
 
-See [the taxonomy audit](docs/TAXONOMY_AUDIT.md) for ownership boundaries and ratings of all registered skills and managed agents.
+- Routes work to a focused analyzer, architect, developer, reviewer, or migration specialist.
+- Separates ABAP Cloud implementation from classic/Standard ABAP development.
+- Provides SAP-specific guidance for RAP, CDS, OData, SQL, security, integration, jobs, workflow, forms, operations, and business domains.
+- Grounds syntax and platform decisions in SAP Help and verified system evidence.
+- Applies Clean Core, released-API, security, performance, testing, transport, rollback, and production-readiness checks.
+- Loads detailed guidance progressively, keeping routine Copilot context smaller.
+- Supports connected-system workflows through ADT and MCP tools when those tools are available and configured.
 
-## Official ABAP Keyword Documentation Grounding
+## Why Use It Instead of a General Agent?
 
-The toolkit was refreshed against the nine requested ABAP Keyword Documentation sections and all of their descendants:
+A general coding agent can answer ABAP questions, but it does not automatically establish the SAP landscape, language version, API release state, database, transport model, or business-process ownership.
 
-- **4,962 unique SAP Help pages** retrieved and analyzed
-- **0 crawl failures**
-- DDIC, CDS, RAP, ABAP language/syntax, APIs/release contracts, release news, and glossary coverage
-- page bodies are not redistributed; Git contains original synthesized guides, a coverage report, and the reproducible crawler
+| General agent | SAP DEV AI Toolkit |
+|---|---|
+| Broad software-development behavior | SAP ABAP role and task-specific behavior |
+| May mix ABAP Cloud and classic patterns | Explicit Cloud, classic, and migration ownership |
+| Relies mainly on the prompt for SAP constraints | Built-in landscape, Clean Core, and release-state gates |
+| One agent analyzes, designs, codes, and reviews | Separate agents for analysis, architecture, implementation, and independent review |
+| Generic testing guidance | ABAP Unit, RAP, activation, ATC, transport, and rollback expectations |
+| Large static instruction sets can consume context | Short skill routers load detailed references only when relevant |
+| Limited SAP business context | Finance, MM, PP/DS, SD, and TM guidance |
 
-See [the crawl report](docs/ABAP_KEYWORD_CRAWL_REPORT.md), [SAP Help source index](docs/REFERENCE_SAP_HELP.md), and [ingestion script](scripts/ingest_abap_keyword_docs.py).
+The toolkit improves consistency and decision quality; it does not replace developer judgment, code review, SAP authorization, system testing, or release approval.
 
-Repository: https://github.tools.sap/I756261/SAP-DEV-AI-TOOLKIT
+## Choose an Agent
 
-## Quick Install
+Select the agent from the Copilot Chat agent picker before entering the request.
 
-Prerequisites: VS Code, GitHub Copilot, Git, and access to the SAP corporate network/VPN.
+| Agent | Use it when |
+|---|---|
+| `abap-cloud-analyzer` | Assessing feasibility, constraints, evidence gaps, landscape fit, Clean Core impact, or delivery risk before design |
+| `abap-cloud-enterprise-architect` | Designing target architecture, RAP BO boundaries, CDS layers, integrations, NFRs, and the implementation blueprint |
+| `abap-cloud-developer` | Implementing or fixing production-oriented ABAP Cloud, RAP, CDS, integrations, jobs, forms, or tests |
+| `abap-cloud-reviewer` | Reviewing code or design and issuing a findings-first release-readiness verdict |
+| `abap-classic-developer` | Implementing Standard ABAP for ECC or S/4HANA on-premise, including reports, enhancements, function modules, and classic APIs |
+| `abap-ecc-to-s4hana-migration` | Assessing or remediating custom code for an ECC-to-S/4HANA conversion |
+| `abap-cloud-routing-and-handoff` | Coordinating a multi-phase requirement across analysis, architecture, implementation, review, and approval |
+
+### Which Developer Agent?
+
+- Choose `abap-cloud-developer` for ABAP Cloud, RAP, released-only APIs, S/4HANA Cloud, or BTP ABAP Environment.
+- Choose `abap-classic-developer` for Standard ABAP, ECC, classic enhancements, function modules, or unreleased on-premise APIs.
+- Choose `abap-ecc-to-s4hana-migration` when migration impact and remediation are the primary goal.
+
+If VS Code also shows `abap-developer`, that agent is contributed by the SAP ADT extension, not this toolkit. It is a lightweight agent for cloud-compliant local `$TMP` development through ADT MCP. Use the toolkit agents when landscape decisions, governance, transports, production quality gates, or classic ABAP ownership matter.
+
+| Capability | SAP ADT `abap-developer` | Toolkit `abap-cloud-developer` |
+|---|---|---|
+| Primary use | Local cloud-compliant development in `$TMP` | Governed ABAP Cloud implementation for team delivery |
+| Package and transport assumption | `$TMP`; no transport | Real package, transport, release, and rollback requirements |
+| System interaction | ADT MCP object creation, activation, and tests | Guidance with or without a live system; governed ADT/MCP workflow when connected |
+| Validation | Activation and mandatory unit tests | Syntax, activation, tests, Clean Core, security, performance, ATC, transport, and production-readiness gates |
+| Landscape scope | Fixed cloud-compliant assumptions | S/4HANA Cloud, BTP ABAP Environment, and verified landscape/release constraints |
+
+Neither agent replaces `abap-classic-developer` for Standard ABAP or ECC work.
+
+## Skill Groups
+
+Agents use these skills as focused knowledge modules. Copilot loads the applicable guide based on the request; users normally select an agent and describe the task rather than manually opening skill files.
+
+| Skill | Use it for |
+|---|---|
+| `abap-rap-services` | CDS models, RAP behavior, EML, OData, Fiori Elements annotations, events, enhancements, and API versioning |
+| `abap-engineering` | ABAP language mechanics, implementation workflow, Clean ABAP, OOP, released classes, ABAP Unit, and code review |
+| `abap-data-performance` | ABAP SQL, AMDP, joins, pushdown, pagination, N+1 removal, database tuning, memory, and graph traversal |
+| `abap-security` | IAM, DCL, RAP authorization, input validation, injection prevention, secrets, sensitive data, and audit |
+| `abap-integration` | HTTP/REST, SOAP, RFC wrappers, communication arrangements, Event Mesh, AIF, retries, logging, and resilience |
+| `abap-process-automation` | Application Jobs, scheduling, Flexible Workflow, Classic Workflow, BRFplus, approvals, and monitoring |
+| `abap-cloud-governance` | Clean Core, released APIs, extension models, platform versions, ATC, transports, CI/CD, abapGit, and rollback |
+| `abap-forms` | Adobe Forms, ADS, XDP/XSD, Output Management, PDF rendering, templates, and assets |
+| `sap-business-domains` | Finance, Materials Management, Production Planning/PP-DS, Sales and Distribution, and Transportation Management |
+| `sap-system-operations` | Incidents, dumps, jobs, locks, object research, ADT APIs, MCP object lifecycle, Basis, SPRO, and system analysis |
+| `agentic-delivery` | Multi-step planning, approval gates, named-agent delegation, handoffs, recovery, and validation |
+
+## Installation
+
+### Prerequisites
+
+- Visual Studio Code with GitHub Copilot installed and signed in
+- Git
+- Access to the SAP corporate network or VPN for `github.tools.sap`
+- PowerShell on Windows, or bash/zsh on macOS and Linux
+- SAP ADT and MCP configuration only when direct connected-system operations are required
+
+No administrator rights are required.
 
 ### Windows PowerShell
 
@@ -47,77 +112,163 @@ chmod +x install.sh
 ./install.sh
 ```
 
-For upgrades, run `git pull --ff-only` and rerun the installer. The installer removes only files previously managed by this toolkit, including obsolete 44-skill or 12-agent installations.
-
-See [INSTALL.md](INSTALL.md) for ZIP installation, verification, optional Claude installation, troubleshooting, and team rollout guidance.
-
-## Skill Groups
-
-| Group | Covers |
-|---|---|
-| `abap-rap-services` | CDS, RAP behavior, OData, Fiori Elements, API lifecycle, events/extensions |
-| `abap-security` | IAM, DCL, RAP authorization, validation, secrets, sensitive data |
-| `abap-integration` | HTTP/SOAP/RFC/Event Mesh/AIF, exceptions, retries, logging |
-| `abap-process-automation` | Application Jobs, workflows, approvals, BRFplus |
-| `abap-data-performance` | ABAP SQL, AMDP, database/query performance, graph traversal |
-| `abap-engineering` | Code writing, Clean ABAP, OOP, released classes, tests, review |
-| `abap-cloud-governance` | Clean Core, platform versions, ATC, transports, Git, DevSecOps |
-| `abap-forms` | Adobe Forms, ADS, PDF output, templates, assets |
-| `sap-system-operations` | Incidents, research, ADT, Basis, SPRO, workbooks, system analysis |
-| `sap-business-domains` | Finance, MM, PP/DS, SD, TM |
-| `agentic-delivery` | ATQ governance, named-agent delegation, skill discovery |
-
-Each group uses the same layout:
-
-- `SKILL.md` is the only registered entry point.
-- `references/README.md` is the ownership and routing index.
-- `references/*.md` files are active guides loaded only when needed.
-- `references/_legacy/<package>/` holds immutable former skill packages for integrity and traceability; do not route to or edit them.
-
-## Copilot Agents
-
-| Agent | Role |
-|---|---|
-| `abap-cloud-routing-and-handoff` | Multi-phase routing and approval state |
-| `abap-cloud-analyzer` | Requirements, feasibility, constraints, risks |
-| `abap-cloud-enterprise-architect` | Enterprise architecture and cross-system trade-offs |
-| `abap-cloud-developer` | ABAP Cloud implementation and validation |
-| `abap-cloud-reviewer` | Findings-first review and release verdict |
-| `abap-classic-developer` | Classic/Standard ABAP for ECC and on-premise |
-| `abap-ecc-to-s4hana-migration` | ECC-to-S/4HANA impact and remediation |
-
-### Extension-Contributed ABAP Agent
-
-If VS Code also shows `abap-developer`, it is contributed by the SAP ADT VS Code extension (`sapse.adt-vscode`), not installed or managed by this toolkit. That generic agent assumes cloud-compliant ABAP, `$TMP`, ADT MCP object creation/activation, and mandatory unit tests. Use `abap-cloud-developer` for governed ABAP Cloud implementation and `abap-classic-developer` for Standard ABAP/ECC ownership.
-
-## Installed Locations
-
-| Repository source | Installed destination |
-|---|---|
-| `skills/` | `~/.agents/skills/` |
-| `agents/` | `~/.copilot/agents/` |
-| `claude-agents/` (optional) | `~/.claude/agents/` |
-
 After installation, run **Developer: Reload Window** from the VS Code Command Palette.
 
-## Validate the Package
+For ZIP installation, optional Claude Code agents, and platform-specific troubleshooting, see [INSTALL.md](INSTALL.md).
+
+## Verify Installation
+
+Open Copilot Chat and confirm that the seven toolkit agents appear in the agent picker.
+
+On Windows, you can also run:
+
+```powershell
+$skills = Get-ChildItem "$HOME\.agents\skills" -Directory |
+	Where-Object { Test-Path (Join-Path $_.FullName 'SKILL.md') }
+$agents = Get-ChildItem "$HOME\.copilot\agents" -Filter '*.agent.md'
+
+$skills.Count  # 11 toolkit skills, plus any unrelated installed skills
+$agents.Count  # 7 toolkit agents, plus any unrelated installed agents
+```
+
+Installed locations:
+
+| Content | Destination |
+|---|---|
+| Skills | `~/.agents/skills/` |
+| GitHub Copilot agents | `~/.copilot/agents/` |
+| Optional Claude Code agents | `~/.claude/agents/` |
+
+## Using the Toolkit
+
+Include enough system context for the selected agent to make a defensible decision:
+
+- Business goal and expected outcome
+- SAP product and deployment model
+- SAP/ABAP release and database when known
+- Package, application, or affected objects
+- ABAP language version
+- Data volume and performance constraints
+- Security and authorization requirements
+- Transport, testing, and rollback expectations
+
+For a multi-phase feature, use this sequence:
+
+1. Analyze feasibility and risks with `abap-cloud-analyzer`.
+2. Establish the target design with `abap-cloud-enterprise-architect`.
+3. Implement and validate with the appropriate cloud or classic developer.
+4. Request an independent findings-first review from `abap-cloud-reviewer`.
+
+Use `abap-cloud-routing-and-handoff` when one conversation must coordinate the complete sequence.
+
+Example requests:
+
+```text
+Analyze whether this unmanaged RAP requirement is feasible in S/4HANA Cloud
+Private Edition 2025. Identify released-API and authorization risks. Do not code yet.
+```
+
+```text
+Design a RAP business object for purchase requisition approval. Define CDS layers,
+behavior ownership, authorization, integration boundaries, and test strategy.
+```
+
+```text
+Implement this ABAP Cloud validation in package ZMM_APP, activate the affected
+objects, run the relevant ABAP Unit tests, and report remaining transport risks.
+```
+
+```text
+Review these changed RAP objects for correctness, Clean Core, security,
+performance, missing tests, and release readiness. List findings by severity.
+```
+
+## Updates
+
+Pull the latest version and rerun the installer:
+
+### Windows
+
+```powershell
+Set-Location "$HOME\SAP-DEV-AI-TOOLKIT"
+git pull --ff-only
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+& .\install.ps1
+```
+
+### macOS or Linux
+
+```bash
+cd "$HOME/SAP-DEV-AI-TOOLKIT"
+git pull --ff-only
+./install.sh
+```
+
+The installer refreshes only toolkit-managed items recorded in its manifest. Unrelated skills and agents remain untouched.
+
+## Optional Claude Code Agents
+
+Claude mirrors are not installed by default because some VS Code configurations display them alongside Copilot agents and create duplicate picker entries.
+
+```powershell
+& .\install.ps1 -InstallClaudeAgents
+```
+
+```bash
+INSTALL_CLAUDE_AGENTS=1 ./install.sh
+```
+
+## Important Limitations
+
+- The toolkit does not include SAP credentials, destinations, certificates, or system authorizations.
+- Direct SAP changes require a configured ADT/MCP connection and the user's own permissions.
+- SAP release and API availability must be verified against the target system; a documented feature may not be installed, configured, licensed, or released for the intended use.
+- Generated code still requires activation, executable tests, peer review, and the team's transport and release process.
+- Do not enter passwords, API keys, tokens, personal data, or production secrets into chat prompts.
+
+## Troubleshooting
+
+**Agents do not appear**
+
+Run **Developer: Reload Window**, then confirm the files exist under `~/.copilot/agents/`.
+
+**Duplicate agents appear**
+
+Remove obsolete `.agent.md` files from the legacy VS Code prompts directory. Do not remove the `abap-developer` agent if it is supplied by the SAP ADT extension and your team uses it.
+
+- Windows: `%APPDATA%\Code\User\prompts`
+- macOS: `~/Library/Application Support/Code/User/prompts`
+- Linux: `~/.config/Code/User/prompts`
+
+**Connected SAP operations are unavailable**
+
+Verify that the SAP ADT extension, ADT connection, and MCP server are installed, configured, and authorized. The toolkit can still provide analysis and code guidance without a live connection, but it must not claim activation or test execution.
+
+## Maintainer Validation
+
+Python 3.10 or newer is required only for repository validation:
 
 ```bash
 python validate_pack.py
 ```
 
-Expected result: 11 skills, 7 Copilot agents, 7 Claude mirrors, no broken links, and intact 44-skill migration archives.
+The validator checks skill and agent counts, ownership boundaries, frontmatter, local links, archived-source integrity, routing, and package structure.
+
+## Additional Documentation
+
+- [Detailed installation guide](INSTALL.md)
+- [SAP Help source index](docs/REFERENCE_SAP_HELP.md)
 
 ## Repository Layout
 
 ```text
-skills/             11 registered groups, active guides, and _legacy archives
-agents/             7 GitHub Copilot agents and shared references
-claude-agents/      7 optional Claude Code mirrors
-config/             44-to-11 mapping and integrity hashes
-docs/               routing, governance, and SAP Help references
-scripts/            reproducible SAP Help metadata/content inventory tooling
-install.ps1         Windows installer
-install.sh          macOS/Linux installer
-validate_pack.py    package integrity validation
+skills/           SAP knowledge and workflow modules
+agents/           GitHub Copilot role agents and shared policies
+claude-agents/    Optional Claude Code mirrors
+config/           Skill ownership and integrity metadata
+docs/             Team, governance, and SAP Help documentation
+scripts/          Documentation inventory and maintenance tooling
+install.ps1       Windows installer
+install.sh        macOS/Linux installer
+validate_pack.py  Repository validator
 ```
