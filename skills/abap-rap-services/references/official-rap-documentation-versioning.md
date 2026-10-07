@@ -18,17 +18,19 @@ Use this URL pattern:
 
 These version keys are moving aliases, not immutable release identifiers. For reproducible decisions, also record the displayed version/release, review date, and target system release/FPS.
 
+The unversioned RAP overview URL currently resolves to `sap_cross_product_abap`. Do not rely on that implicit default in stored evidence; specify the version key explicitly.
+
 ## Reviewed Deliverables
 
 Snapshot reviewed on 2026-10-07:
 
-| Version key | Deliverable ID | Build | Resolved topic LOIO |
-|---|---:|---:|---|
-| `sap_cross_product_abap` | `32800170` | `8557` | `d68d0242690343bfa327bf2413cb469b` |
-| `s4hana_cloud` | `31912690` | `2818` | `d68d0242690343bfa327bf2413cb469b` |
-| `s4_hana_cloud_pce` | `39392659` | `741` | `d68d0242690343bfa327bf2413cb469b` |
-| `s4_hana` | `31939402` | `436` | `d68d0242690343bfa327bf2413cb469b` |
-| `sap_btp` | `31905745` | `8220` | `d68d0242690343bfa327bf2413cb469b` |
+| Version key | Deliverable ID | Build | Consume LOIO | RAP overview LOIO |
+|---|---:|---:|---|---|
+| `sap_cross_product_abap` | `32800170` | `8557` | `d68d0242690343bfa327bf2413cb469b` | `289477a81eec4d4e84c0302fb6835035` |
+| `s4hana_cloud` | `31912690` | `2818` | `d68d0242690343bfa327bf2413cb469b` | `289477a81eec4d4e84c0302fb6835035` |
+| `s4_hana_cloud_pce` | `39392659` | `741` | `d68d0242690343bfa327bf2413cb469b` | `289477a81eec4d4e84c0302fb6835035` |
+| `s4_hana` | `31939402` | `436` | `d68d0242690343bfa327bf2413cb469b` | `289477a81eec4d4e84c0302fb6835035` |
+| `sap_btp` | `31905745` | `8220` | `d68d0242690343bfa327bf2413cb469b` | `289477a81eec4d4e84c0302fb6835035` |
 
 The matching topic LOIO proves conceptual identity, not feature parity. Deliverable/build differences remain authoritative for each landscape.
 
@@ -60,6 +62,28 @@ Each override should contain only:
 - links to the target-version pages and release notes.
 
 No override folder is needed while differences fit clearly in this matrix.
+
+## RAP Overview-Topic Drift Observed
+
+All five overview URLs resolve to LOIO `289477a81eec4d4e84c0302fb6835035`, use the same headings, and link to the same ABAP Cloud documentation-landscape child. The common sections cover architecture, evolution, RAP in simple terms, ABAP language version, documentation validity, prerequisites, constraints, and the relationship between RAP and ABAP Cloud.
+
+Reviewed overview URLs:
+
+- [ABAP Cross-Product](https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model?locale=en-US&version=sap_cross_product_abap)
+- [SAP S/4HANA Cloud Public Edition](https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model?locale=en-US&version=s4hana_cloud)
+- [SAP S/4HANA Cloud Private Edition](https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model?locale=en-US&version=s4_hana_cloud_pce)
+- [SAP S/4HANA](https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model?locale=en-US&version=s4_hana)
+- [SAP BTP ABAP Environment](https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model?locale=en-US&version=sap_btp)
+
+| Version | Words | Normalized SHA-256 | Material distinction |
+|---|---:|---|---|
+| ABAP Cross-Product | 794 | `701c873ae10e887ed442f65abcff460950ac429c95cf45411d38e8c1862d013d` | Validity lists Public Cloud, PCE, BTP, and S/4HANA; contains both cloud/on-premise markers |
+| BTP ABAP Environment | 775 | `2d6137882fa9881cb091270d13eea7035f7a941bcb6e6646f8f825535842045c` | Validity lists Public Cloud and BTP; cloud-specific links/markers |
+| S/4HANA Cloud Public Edition | 754 | `0d6d6ffc0f96f9ac2f1fea16e4de9978742a1b2c6448ae576a27268516501e8a` | Validity lists Public Cloud only; Public Cloud links |
+| S/4HANA Cloud Private Edition | 766 | `eadb6f705455e58224faed59112e08d06f7d59362c0c360a375761edf605e4d6` | Validity lists PCE and S/4HANA; on-premise-specific markers/links |
+| SAP S/4HANA | 766 | `eadb6f705455e58224faed59112e08d06f7d59362c0c360a375761edf605e4d6` | Byte-equivalent to the reviewed PCE overview content |
+
+These overview differences do not justify separate skill guides. They reinforce the same architecture and ABAP-for-Cloud-Development recommendation while varying product validity and navigation. Keep one canonical architecture/selection guide and verify the target version's prerequisites and constraints pages.
 
 ## Consumption-Topic Drift Observed
 

@@ -68,6 +68,11 @@ Focused subtree review (already included beneath the RAP root):
 ## RAP and Development Topics
 
 - https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model
+- https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model?locale=en-US&version=sap_cross_product_abap
+- https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model?locale=en-US&version=s4hana_cloud
+- https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model?locale=en-US&version=s4_hana_cloud_pce
+- https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model?locale=en-US&version=s4_hana
+- https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model?locale=en-US&version=sap_btp
 - https://help.sap.com/docs/abap-cloud/abap-rap/develop?version=sap_cross_product_abap
 - https://help.sap.com/docs/abap-cloud/abap-rap/develop-applications?version=sap_cross_product_abap
 - https://help.sap.com/docs/abap-cloud/abap-rap/consume?version=sap_cross_product_abap
