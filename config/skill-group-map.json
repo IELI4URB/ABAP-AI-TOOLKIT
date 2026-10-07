@@ -1,0 +1,71 @@
+{
+  "version": "1.0.0",
+  "groups": {
+    "abap-rap-services": [
+      "abap-api-design-versioning",
+      "abap-cds-data-modeling",
+      "abap-events-and-enhancements",
+      "abap-fiori-elements-annotations",
+      "abap-odata-service-development",
+      "abap-rap-behavior-implementation"
+    ],
+    "abap-security": [
+      "abap-iam-authorization",
+      "abap-security-hardening"
+    ],
+    "abap-integration": [
+      "abap-error-handling-resilience",
+      "abap-integration-patterns"
+    ],
+    "abap-process-automation": [
+      "abap-application-jobs",
+      "abap-workflow-automation"
+    ],
+    "abap-data-performance": [
+      "abap-performance-db",
+      "abap-performance-optimization",
+      "abap-sql-and-amdp"
+    ],
+    "abap-engineering": [
+      "abap-code-review-checklist",
+      "abap-code-writing",
+      "abap-oops-design-patterns",
+      "abap-released-classes",
+      "abap-unit-testing",
+      "clean-abap"
+    ],
+    "abap-cloud-governance": [
+      "abap-clean-core-principles",
+      "abap-devsecops-transport",
+      "abap-git-workflows",
+      "abap-platform-2025",
+      "sap-clean-core-enterprise",
+      "sap-cloud-dev"
+    ],
+    "abap-forms": [
+      "abap-adobe-forms"
+    ],
+    "sap-system-operations": [
+      "abap-production-issues",
+      "abap-research",
+      "adt-api-discovery",
+      "adt-mcp-object-workflow",
+      "sap-basis-compilation-guides",
+      "sap-customizing",
+      "sap-data-workbook",
+      "sap-system-personality-report"
+    ],
+    "sap-business-domains": [
+      "sap-finance",
+      "sap-mm",
+      "sap-pp",
+      "sap-sd",
+      "sap-tm"
+    ],
+    "agentic-delivery": [
+      "atq-principles",
+      "cavecrew",
+      "find-skills"
+    ]
+  }
+}

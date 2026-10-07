@@ -1,0 +1,19 @@
+---
+name: abap-cloud-governance
+description: 'Govern SAP ABAP Cloud and Clean Core delivery. Use for C0/C1 release contracts, API states, language versions, Tier 1/2 wrappers, extension models, Public versus Private Cloud, ABAP Platform 2025/FPS features, ATC, transports, gCTS, cTMS, Cloud ALM, CI/CD, abapGit, branches, rollback, and enterprise release governance.'
+---
+
+# ABAP Cloud Governance
+
+| Concern | Guide |
+|---|---|
+| Release state, extension choice, Tier 2 | [Clean Core principles](./references/abap-clean-core-principles.md) |
+| Pipeline, ATC, transports, rollback | [DevSecOps and transport](./references/abap-devsecops-transport.md) |
+| abapGit, branches, Git/transport hybrid | [Git workflows](./references/abap-git-workflows.md) |
+| Platform 2025 and FPS-specific capability | [ABAP Platform 2025](./references/abap-platform-2025.md) |
+| End-to-end Clean Core program | [Enterprise Clean Core](./references/sap-clean-core-enterprise.md) |
+| Public Cloud implementation constraints | [SAP Cloud development](./references/sap-cloud-dev.md) |
+
+## Workflow
+
+Establish landscape and exact release first. Load only the guide owning the current governance decision; load delivery/release guides only when that phase begins.

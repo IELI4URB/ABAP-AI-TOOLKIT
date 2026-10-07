@@ -1,104 +1,194 @@
 from __future__ import annotations
 
+import hashlib
+import json
 import re
 import sys
 from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parent
 SKILLS = ROOT / "skills"
 AGENTS = ROOT / "agents"
 CLAUDE_AGENTS = ROOT / "claude-agents"
+CONFIG = ROOT / "config"
+EXPECTED_AGENT_NAMES = {
+    "abap-cloud-routing-and-handoff",
+    "abap-cloud-analyzer",
+    "abap-cloud-designer",
+    "abap-cloud-developer",
+    "abap-cloud-reviewer",
+    "abap-classic-developer",
+    "abap-ecc-to-s4hana-migration",
+}
 
 
 def read(path: Path) -> str:
     return path.read_text(encoding="utf-8-sig")
 
 
-def frontmatter(text: str) -> str | None:
-    if not text.startswith("---"):
-        return None
-    parts = text.split("---", 2)
-    return parts[1] if len(parts) == 3 else None
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def validate_skills(errors: list[str]) -> None:
-    for skill_dir in sorted(path for path in SKILLS.iterdir() if path.is_dir()):
-        skill_file = skill_dir / "SKILL.md"
-        if not skill_file.exists():
-            errors.append(f"Missing SKILL.md: {skill_dir.relative_to(ROOT)}")
-            continue
+def frontmatter(text: str) -> dict[str, str]:
+    lines = text.splitlines()
+    if not lines or lines[0].strip() != "---":
+        return {}
+    try:
+        end = lines.index("---", 1)
+    except ValueError:
+        return {}
+    fields: dict[str, str] = {}
+    for line in lines[1:end]:
+        match = re.match(r"^([A-Za-z][A-Za-z0-9-]*):\s*(.*)$", line)
+        if match:
+            fields[match.group(1)] = match.group(2).strip().strip("'\"")
+    return fields
+
+
+def local_links(text: str) -> list[str]:
+    return re.findall(r"\]\((?!https?://|mailto:|#)([^)#]+)(?:#[^)]*)?\)", text)
+
+
+def validate_skills(errors: list[str]) -> set[str]:
+    group_map = json.loads(read(CONFIG / "skill-group-map.json"))["groups"]
+    integrity = json.loads(read(CONFIG / "skill-group-integrity.json"))["packages"]
+    expected_groups = set(group_map)
+    skill_files = sorted(SKILLS.glob("*/SKILL.md"))
+    actual_groups = {path.parent.name for path in skill_files}
+
+    if actual_groups != expected_groups:
+        errors.append(
+            f"Skill groups differ: missing={sorted(expected_groups - actual_groups)}, "
+            f"extra={sorted(actual_groups - expected_groups)}"
+        )
+    if len(expected_groups) != 11:
+        errors.append(f"Expected 11 groups, found {len(expected_groups)}")
+
+    legacy_names = [name for members in group_map.values() for name in members]
+    if len(legacy_names) != 44 or len(legacy_names) != len(set(legacy_names)):
+        errors.append("Group map must preserve 44 unique former skills")
+    if set(integrity) != set(legacy_names):
+        errors.append("Integrity package names differ from group map")
+
+    nested_skills = sorted(SKILLS.glob("*/*/SKILL.md"))
+    for nested in nested_skills:
+        errors.append(f"Nested registered SKILL.md: {nested.relative_to(ROOT)}")
+
+    for skill_file in skill_files:
         metadata = frontmatter(read(skill_file))
-        if metadata is None:
-            errors.append(f"Missing frontmatter: {skill_file.relative_to(ROOT)}")
-            continue
-        name = re.search(r"(?m)^name:\s*['\"]?([^'\"\r\n]+)", metadata)
-        if not name or name.group(1).strip() != skill_dir.name:
+        if metadata.get("name") != skill_file.parent.name:
             errors.append(f"Skill name mismatch: {skill_file.relative_to(ROOT)}")
-        if not re.search(r"(?m)^description:\s*\S", metadata):
+        if not metadata.get("description"):
             errors.append(f"Missing skill description: {skill_file.relative_to(ROOT)}")
 
+    for legacy, record in integrity.items():
+        group = record["group"]
+        guide = SKILLS / group / "references" / f"{legacy}.md"
+        module = SKILLS / group / "references" / legacy
+        if not guide.exists():
+            errors.append(f"Missing adapted guide: {guide.relative_to(ROOT)}")
+        for relative, expected_hash in record["files"].items():
+            archived = module / ("source-SKILL.md" if relative == "SKILL.md" else relative)
+            if not archived.exists():
+                errors.append(f"Missing archived file: {archived.relative_to(ROOT)}")
+            elif sha256(archived) != expected_hash.lower():
+                errors.append(f"Archived hash mismatch: {archived.relative_to(ROOT)}")
+        if (SKILLS / legacy).exists():
+            errors.append(f"Former top-level skill remains: {legacy}")
 
-def validate_agents(errors: list[str]) -> None:
+    return expected_groups
+
+
+def validate_agents(errors: list[str], expected_groups: set[str]) -> None:
     agent_files = sorted(AGENTS.glob("*.agent.md"))
     agent_names = {path.name.removesuffix(".agent.md") for path in agent_files}
+    if agent_names != EXPECTED_AGENT_NAMES:
+        errors.append(
+            f"Copilot agents differ: missing={sorted(EXPECTED_AGENT_NAMES - agent_names)}, "
+            f"extra={sorted(agent_names - EXPECTED_AGENT_NAMES)}"
+        )
+
     for agent_file in agent_files:
         metadata = frontmatter(read(agent_file))
-        if metadata is None:
-            errors.append(f"Missing agent frontmatter: {agent_file.relative_to(ROOT)}")
-        elif not re.search(r"(?m)^description:\s*\S", metadata):
+        if metadata.get("name") != agent_file.name.removesuffix(".agent.md"):
+            errors.append(f"Agent name mismatch: {agent_file.relative_to(ROOT)}")
+        if not metadata.get("description"):
             errors.append(f"Missing agent description: {agent_file.relative_to(ROOT)}")
 
-    router = read(AGENTS / "abap-cloud-routing-and-handoff.agent.md")
-    declared_match = re.search(r"(?m)^agents:\s*\[(.*?)\]", router)
-    if not declared_match:
-        errors.append("Routing agent has no agents list")
-    else:
-        for name in (item.strip() for item in declared_match.group(1).split(",")):
-            if name not in agent_names:
-                errors.append(f"Routing agent references missing agent: {name}")
+    router_text = read(AGENTS / "abap-cloud-routing-and-handoff.agent.md")
+    match = re.search(r"(?m)^agents:\s*\[(.*?)\]", router_text)
+    declared = {item.strip() for item in match.group(1).split(",")} if match else set()
+    expected_delegates = EXPECTED_AGENT_NAMES - {"abap-cloud-routing-and-handoff"}
+    if declared != expected_delegates:
+        errors.append("Routing-agent allowlist does not match six specialists")
 
-    expected_claude = {f"{name}.md" for name in agent_names}
-    claude_files = sorted(CLAUDE_AGENTS.glob("*.md"))
-    actual_claude = {path.name for path in claude_files}
-    for name in sorted(expected_claude - actual_claude):
-        errors.append(f"Missing Claude agent mirror: {name}")
+    legacy_names = {
+        name
+        for members in json.loads(read(CONFIG / "skill-group-map.json"))["groups"].values()
+        for name in members
+    }
+    for agent_file in agent_files:
+        text = read(agent_file)
+        for legacy in legacy_names:
+            if re.search(rf"(?<![a-z0-9-]){re.escape(legacy)}(?![a-z0-9-])", text):
+                errors.append(f"{agent_file.name} references former skill {legacy}")
+        mentioned_groups = {
+            group for group in expected_groups
+            if re.search(rf"(?<![a-z0-9-]){re.escape(group)}(?![a-z0-9-])", text)
+        }
+        if agent_file.name != "abap-cloud-routing-and-handoff.agent.md" and not mentioned_groups:
+            errors.append(f"{agent_file.name} does not route to a grouped skill")
+
+    claude_files = sorted(
+        path for path in CLAUDE_AGENTS.glob("*.md") if path.name != "README.md"
+    )
+    claude_names = {path.stem for path in claude_files}
+    if claude_names != EXPECTED_AGENT_NAMES:
+        errors.append(
+            f"Claude mirrors differ: missing={sorted(EXPECTED_AGENT_NAMES - claude_names)}, "
+            f"extra={sorted(claude_names - EXPECTED_AGENT_NAMES)}"
+        )
     for claude_file in claude_files:
         metadata = frontmatter(read(claude_file))
-        if metadata is None:
-            errors.append(f"Missing Claude agent frontmatter: {claude_file.relative_to(ROOT)}")
-        elif not re.search(r"(?m)^description:\s*\S", metadata):
-            errors.append(f"Missing Claude agent description: {claude_file.relative_to(ROOT)}")
-
-    claude_router = read(CLAUDE_AGENTS / "abap-cloud-routing-and-handoff.md")
-    if "atq-principles" not in claude_router:
-        errors.append("Claude routing agent does not reference atq-principles")
-    for stale_name in ("abap-performance-ecc", "abap-performance-hana"):
-        if stale_name in claude_router:
-            errors.append(f"Claude routing agent references stale skill: {stale_name}")
+        if metadata.get("name") != claude_file.stem:
+            errors.append(f"Claude agent name mismatch: {claude_file.relative_to(ROOT)}")
+        if not metadata.get("description") or not metadata.get("tools"):
+            errors.append(f"Incomplete Claude frontmatter: {claude_file.relative_to(ROOT)}")
 
 
 def validate_links(errors: list[str]) -> None:
-    pattern = re.compile(r"\[[^\]]+\]\((?!https?://|mailto:|#)([^)#]+)(?:#[^)]+)?\)")
     for markdown in ROOT.rglob("*.md"):
-        for target in pattern.findall(read(markdown)):
+        for target in local_links(read(markdown)):
             resolved = markdown.parent / target.replace("%20", " ")
             if not resolved.exists():
                 errors.append(f"Broken link in {markdown.relative_to(ROOT)}: {target}")
 
 
+def validate_installers(errors: list[str]) -> None:
+    for installer in (ROOT / "install.ps1", ROOT / "install.sh"):
+        text = read(installer)
+        if "11" not in text or "7" not in text:
+            errors.append(f"Installer lacks expected-count guards: {installer.name}")
+        if ".sap-dev-ai-toolkit-manifest" not in text:
+            errors.append(f"Installer lacks managed-item manifest: {installer.name}")
+
+
 def main() -> int:
     errors: list[str] = []
-    validate_skills(errors)
-    validate_agents(errors)
+    groups = validate_skills(errors)
+    validate_agents(errors, groups)
     validate_links(errors)
+    validate_installers(errors)
+
     if errors:
         print("Pack validation FAILED")
         for error in errors:
             print(f"  - {error}")
         return 1
+
     print("Pack validation PASSED")
-    print(f"Validated {len(list(SKILLS.glob('*/SKILL.md')))} skills and {len(list(AGENTS.glob('*.agent.md')))} agents.")
+    print("Validated 11 skill groups, 44 archived skill packages, 7 Copilot agents, and 7 Claude mirrors.")
     return 0
 
 

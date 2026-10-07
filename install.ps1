@@ -1,73 +1,103 @@
 #!/usr/bin/env pwsh
-# Installs the bundled skills and agents for GitHub Copilot in VS Code (Windows).
-# Copilot-only by design: Claude Code agents are NOT installed, because they surface
-# in the Copilot agent picker and create duplicate entries.
-# Usage: run this script from anywhere - it locates its own folder automatically.
+[CmdletBinding()]
+param(
+    [switch] $InstallClaudeAgents,
+    [string] $HomePath = $HOME
+)
 
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
-
-$skillsSrc = Join-Path $root 'skills'
-$agentsSrc = Join-Path $root 'agents'
-
-$skillsDst = Join-Path $HOME '.agents\skills'
-$agentsDst = Join-Path $HOME '.copilot\agents'
 $manifestName = '.sap-dev-ai-toolkit-manifest'
+$expectedSkillCount = 11
+$expectedAgentCount = 7
 
-function Update-ManagedItems {
+function Reset-ManagedItems {
     param(
         [Parameter(Mandatory)] [string] $Destination,
         [Parameter(Mandatory)] [string[]] $CurrentNames
     )
 
+    New-Item -ItemType Directory -Path $Destination -Force | Out-Null
     $manifestPath = Join-Path $Destination $manifestName
     if (Test-Path $manifestPath) {
         foreach ($oldName in Get-Content $manifestPath) {
-            if ($oldName -and $oldName -notin $CurrentNames -and $oldName -notmatch '[\\/]') {
-                $stalePath = Join-Path $Destination $oldName
-                if (Test-Path $stalePath) {
-                    Write-Host "Removing stale toolkit item $stalePath"
-                    Remove-Item $stalePath -Recurse -Force
-                }
+            if (-not $oldName -or $oldName -match '[\\/]') { continue }
+            $oldPath = Join-Path $Destination $oldName
+            if (Test-Path $oldPath) {
+                Write-Host "Refreshing toolkit item $oldPath"
+                Remove-Item $oldPath -Recurse -Force
             }
         }
     }
 
-    $CurrentNames | Sort-Object | Set-Content $manifestPath -Encoding utf8
+    $CurrentNames | Sort-Object -Unique | Set-Content $manifestPath -Encoding utf8
 }
 
-Write-Host "Installing skills to $skillsDst (VS Code / Copilot) ..."
-New-Item -ItemType Directory -Path $skillsDst -Force | Out-Null
-Copy-Item -Path (Join-Path $skillsSrc '*') -Destination $skillsDst -Recurse -Force
-$skillNames = @(Get-ChildItem $skillsSrc -Force | ForEach-Object Name)
-Update-ManagedItems -Destination $skillsDst -CurrentNames $skillNames
+function Install-AgentSet {
+    param(
+        [Parameter(Mandatory)] [string] $Source,
+        [Parameter(Mandatory)] [string] $Destination,
+        [Parameter(Mandatory)] [string] $Pattern,
+        [Parameter(Mandatory)] [int] $ExpectedCount
+    )
 
-Write-Host "Installing agents to $agentsDst (VS Code / Copilot) ..."
-New-Item -ItemType Directory -Path $agentsDst -Force | Out-Null
-Copy-Item -Path (Join-Path $agentsSrc '*.agent.md') -Destination $agentsDst -Force
+    $agentFiles = @(Get-ChildItem $Source -File -Filter $Pattern)
+    if ($agentFiles.Count -ne $ExpectedCount) {
+        throw "Expected $ExpectedCount agent files in $Source, found $($agentFiles.Count)."
+    }
 
-$refSrc = Join-Path $agentsSrc 'references'
-if (Test-Path $refSrc) {
-    $refDst = Join-Path $agentsDst 'references'
-    New-Item -ItemType Directory -Path $refDst -Force | Out-Null
-    Copy-Item -Path (Join-Path $refSrc '*') -Destination $refDst -Recurse -Force
-}
-$agentNames = @(Get-ChildItem $agentsSrc -File -Filter '*.agent.md' | ForEach-Object Name)
-if (Test-Path $refSrc) {
-    $agentNames += 'references'
-}
-Update-ManagedItems -Destination $agentsDst -CurrentNames $agentNames
+    $managedNames = @($agentFiles | ForEach-Object Name)
+    $references = Join-Path $Source 'references'
+    if (Test-Path $references) { $managedNames += 'references' }
+    Reset-ManagedItems -Destination $Destination -CurrentNames $managedNames
 
-# Warn about the legacy prompts folder, which causes duplicate agent-picker entries if used alongside .copilot\agents
-$legacyPrompts = Join-Path $env:APPDATA 'Code\User\prompts'
-if (Test-Path $legacyPrompts) {
-    $dupes = Get-ChildItem -Path $legacyPrompts -Filter '*.agent.md' -ErrorAction SilentlyContinue
-    if ($dupes) {
-        Write-Warning "Found *.agent.md files in the legacy prompts folder ($legacyPrompts)."
-        Write-Warning "These cause duplicate entries in the Copilot agent picker. Remove them:"
-        Write-Warning "  Remove-Item '$legacyPrompts\*.agent.md' -Force"
+    Copy-Item -LiteralPath $agentFiles.FullName -Destination $Destination -Force
+    if (Test-Path $references) {
+        Copy-Item -LiteralPath $references -Destination $Destination -Recurse -Force
     }
 }
 
-Write-Host ""
-Write-Host "Done. Restart VS Code (or run 'Developer: Reload Window') to load the new skills and agents." -ForegroundColor Green
+$skillsSrc = Join-Path $root 'skills'
+$agentsSrc = Join-Path $root 'agents'
+$claudeSrc = Join-Path $root 'claude-agents'
+$skillsDst = Join-Path $HomePath '.agents\skills'
+$agentsDst = Join-Path $HomePath '.copilot\agents'
+$claudeDst = Join-Path $HomePath '.claude\agents'
+
+$skillDirs = @(Get-ChildItem $skillsSrc -Directory | Where-Object {
+    Test-Path (Join-Path $_.FullName 'SKILL.md')
+})
+if ($skillDirs.Count -ne $expectedSkillCount) {
+    throw "Expected $expectedSkillCount grouped skills, found $($skillDirs.Count)."
+}
+
+$skillNames = @($skillDirs | ForEach-Object Name)
+if (Test-Path (Join-Path $skillsSrc 'README.md')) { $skillNames += 'README.md' }
+Write-Host "Installing $expectedSkillCount grouped skills to $skillsDst ..."
+Reset-ManagedItems -Destination $skillsDst -CurrentNames $skillNames
+foreach ($skillDir in $skillDirs) {
+    Copy-Item -LiteralPath $skillDir.FullName -Destination $skillsDst -Recurse -Force
+}
+if (Test-Path (Join-Path $skillsSrc 'README.md')) {
+    Copy-Item -LiteralPath (Join-Path $skillsSrc 'README.md') -Destination $skillsDst -Force
+}
+
+Write-Host "Installing $expectedAgentCount Copilot agents to $agentsDst ..."
+Install-AgentSet -Source $agentsSrc -Destination $agentsDst -Pattern '*.agent.md' -ExpectedCount $expectedAgentCount
+
+if ($InstallClaudeAgents) {
+    Write-Warning 'Claude agents may also appear in the VS Code Copilot picker and cause duplicate entries.'
+    Write-Host "Installing $expectedAgentCount Claude agents to $claudeDst ..."
+    Install-AgentSet -Source $claudeSrc -Destination $claudeDst -Pattern '*.md' -ExpectedCount $expectedAgentCount
+}
+
+$legacyPrompts = Join-Path $env:APPDATA 'Code\User\prompts'
+if (Test-Path $legacyPrompts) {
+    $duplicates = Get-ChildItem $legacyPrompts -Filter '*.agent.md' -ErrorAction SilentlyContinue
+    if ($duplicates) {
+        Write-Warning "Legacy agents found in $legacyPrompts; remove them to avoid duplicate picker entries."
+    }
+}
+
+Write-Host ''
+Write-Host 'Installation complete. Run Developer: Reload Window in VS Code.' -ForegroundColor Green

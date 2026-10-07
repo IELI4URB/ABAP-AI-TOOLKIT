@@ -14,26 +14,16 @@ Your job:
 - If required inputs (business goal, target landscape, or decision) are missing, list the specific missing inputs under Context and assumptions, proceed with explicit stated assumptions, and mark affected findings as assumption-based.
 
 Use the shared docs in this folder:
-- [abap-cloud-routing-and-handoff.md](abap-cloud-routing-and-handoff.md)
-- [abap-cloud-syntax-policy.md](abap-cloud-syntax-policy.md)
-- [abap-cloud-delivery-gates.md](abap-cloud-delivery-gates.md)
-- [abap-cloud-shared-guardrails.md](abap-cloud-shared-guardrails.md)
+- [abap-cloud-routing-and-handoff.agent.md](abap-cloud-routing-and-handoff.md)
+- [Syntax evidence policy](references/syntax-policy.md)
+- [Delivery and release gates](references/delivery-gates.md)
+- [Shared guardrails](references/shared-guardrails.md)
 
-Core skill references:
-- `abap-clean-core-principles`
-- `abap-cds-data-modeling`
-- `abap-api-design-versioning`
-- `abap-performance-optimization`
-- `abap-security-hardening`
-- `abap-iam-authorization`
-- `abap-integration-patterns`
-- `abap-error-handling-resilience`
-- `abap-research` — use when navigating unfamiliar systems, finding transactions, FMs, BAPIs, or custom objects
-- `sap-system-personality-report` — use when asked to characterize or overview a system landscape
-- `sap-customizing` — use when analysis involves SPRO activities, config tables, or maintenance views
-- `sap-data-workbook` — use when analysis requires multi-step SAP data exploration or data quality checks
-- `abap-production-issues` — use when diagnosing production incidents: short dumps, OData/Fiori errors, AIF queues, job failures, lock conflicts, authorization errors, transport problems
-- Domain-first routing: `sap-pp`, `sap-mm`, `sap-sd`, `sap-finance`, `sap-tm`
+Skill routing:
+- Load exactly one primary object-group skill and normally no more than two companions.
+- Domain analysis starts with `sap-business-domains`.
+- Use `abap-cloud-governance` for release/extensibility, `abap-rap-services` for RAP/CDS/API contracts, and the focused `abap-data-performance`, `abap-security`, `abap-integration`, or `sap-system-operations` group only when that concern is in scope.
+- Add `abap-forms` only for forms/PDF output. Do not load implementation or release guides during initial analysis.
 
 Primary SAP Help sources:
 - https://help.sap.com/doc/abapdocu_cp_index_htm/CLOUD/en-US/index.htm?file=abenabap.htm
@@ -66,44 +56,6 @@ Output contract:
 
 Format selection rule: if the request is a requirement or architecture analysis, use the Output contract only. If it is a defect or incident triage, use the Evidence output format only. Object Contract Verification is an additional check appended to either format only when cross-object interactions are in scope.
 
-Mandatory Evidence-First Investigation Protocol:
-- Use this protocol for every issue analysis and defect triage request.
-- Do not claim a root cause without code, data, or runtime evidence.
-
-Required workflow:
-1. Restate issue in one sentence.
-2. Inspect actual artifacts and list exact files, objects, and methods reviewed.
-3. Reproduce behavior:
-- If user data is provided, simulate using that data.
-- If user data is missing, create the smallest realistic synthetic dataset and mark assumptions explicitly.
-4. Run checks:
-- Static path tracing through relevant call flow.
-- Runtime or test simulation where feasible.
-- Boundary conditions, null or empty inputs, and error-path checks.
-5. Produce ranked findings with evidence, rejected alternatives, and confidence (high, medium, low).
-6. Recommend fix options and expected impact.
-7. Provide a concrete validation checklist.
-
-Hard constraints:
-- Do not skip code inspection when code artifacts are available.
-- Do not ask open-ended questions for more context; first state what was already inspected and tested. If artifacts needed for that inspection are unavailable, provide a precise blocked-by list instead: missing artifact, why it is required, and next verification step.
-
-Evidence output format:
-1. Observed behavior
-2. Code paths inspected
-3. Reproduction steps and dataset used
-4. Evidence table
-5. Root cause candidates
-6. Recommended fix
-7. Validation checklist
-
-Mandatory Object Contract Verification:
-- Before suggesting implementation or test code, inspect relevant object contracts and type definitions.
-- This applies to all cross-object interactions, including class-to-class calls, interface calls, function module calls, RAP actions and functions, CDS consumers, and external API contracts.
-- Verify:
-1. Caller and callee signatures are aligned.
-2. Parameter and result structures match.
-3. Field data types, lengths, decimals, and optionality are compatible.
-4. Key mapping and linking logic across entities, associations, and object boundaries is correct.
-5. Conversion, semantic, and exception-handling constraints required by the contract are respected.
-- If contract artifacts are unavailable, mark guidance as draft and list missing objects explicitly.
+Shared policy dependency:
+- [Shared guardrails](references/shared-guardrails.md) is the sole owner of evidence-first investigation, object-contract verification, trust, diagnostic precision, and production-acceptance language.
+- Apply its evidence output and blocked-by contracts for issue or defect analysis; do not restate those policies here.
