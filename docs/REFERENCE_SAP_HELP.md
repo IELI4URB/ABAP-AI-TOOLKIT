@@ -38,6 +38,11 @@ Focused subtree review (already included beneath the ABAP Programming Language r
 - https://help.sap.com/docs/abap-cloud/abap-keyword/abap-processing-internal-data?locale=en-US
 - 478 descendant topics / 324,407 words, zero crawl failures
 
+Focused subtree review (already included beneath the ABAP Programming Language root):
+
+- https://help.sap.com/docs/abap-cloud/abap-keyword/abap-program-flow-logic?locale=en-US
+- 130 descendant topics / 59,877 words, zero crawl failures
+
 ## Core ABAP Cloud Hub
 
 - https://help.sap.com/docs/abap-cloud

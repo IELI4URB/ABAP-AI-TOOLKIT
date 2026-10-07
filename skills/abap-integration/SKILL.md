@@ -6,6 +6,7 @@ description: 'Design and operate ABAP Cloud integrations and resilience. Use for
 # ABAP Integration and Resilience
 
 - [Integration patterns](./references/abap-integration-patterns.md)
+- [Engineering: exception and program-flow mechanics](../abap-engineering/references/official-program-flow-logic.md)
 - [Error handling and resilience](./references/abap-error-handling-resilience.md)
 
 ## Workflow
