@@ -7,6 +7,7 @@ description: 'Write and optimize ABAP data access and calculations. Use for ABAP
 
 | Concern | Guide |
 |---|---|
+| ABAP assignments, internal-table semantics, strings, dates, meshes, RTTS, streams | [Engineering: internal data processing](../abap-engineering/references/official-internal-data-processing.md) |
 | Official DDIC/CDS persistence, activation, and data-access gates | [DDIC/CDS data access](./references/official-ddic-cds-data-access.md) |
 | ABAP SQL, DML, AMDP, table functions | [SQL and AMDP](./references/abap-sql-and-amdp.md) |
 | Cloud query/runtime optimization and graph traversal | [Performance optimization](./references/abap-performance-optimization.md) |

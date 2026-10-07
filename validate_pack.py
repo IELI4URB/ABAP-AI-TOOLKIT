@@ -102,12 +102,19 @@ def validate_skills(errors: list[str]) -> set[str]:
         SKILLS / "abap-rap-services" / "references" / "official-ddic-cds-rap-semantics.md",
         SKILLS / "abap-rap-services" / "references" / "official-cds-annotations.md",
         SKILLS / "abap-engineering" / "references" / "official-abap-language-and-syntax.md",
+        SKILLS / "abap-engineering" / "references" / "official-internal-data-processing.md",
         SKILLS / "abap-security" / "references" / "official-cds-access-control.md",
         SKILLS / "abap-data-performance" / "references" / "official-ddic-cds-data-access.md",
     )
     for guide in official_guides:
         if not guide.exists():
             errors.append(f"Missing official ABAP Keyword guide: {guide.relative_to(ROOT)}")
+
+    misplaced_internal_data = (
+        SKILLS / "abap-data-performance" / "references" / "official-internal-data-processing.md"
+    )
+    if misplaced_internal_data.exists():
+        errors.append("Internal-data processing guide must be owned by abap-engineering")
 
     crawl_report = ROOT / "docs" / "ABAP_KEYWORD_CRAWL_REPORT.md"
     crawler = ROOT / "scripts" / "ingest_abap_keyword_docs.py"

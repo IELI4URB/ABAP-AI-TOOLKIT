@@ -33,6 +33,11 @@ Focused subtree review (already included beneath the ABAP CDS root):
 - https://help.sap.com/docs/abap-cloud/abap-keyword/abap-cds-annotations?locale=en-US
 - 937 descendant pages / 229,089 words, zero crawl failures
 
+Focused subtree review (already included beneath the ABAP Programming Language root):
+
+- https://help.sap.com/docs/abap-cloud/abap-keyword/abap-processing-internal-data?locale=en-US
+- 478 descendant topics / 324,407 words, zero crawl failures
+
 ## Core ABAP Cloud Hub
 
 - https://help.sap.com/docs/abap-cloud
