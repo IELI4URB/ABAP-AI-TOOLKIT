@@ -4,7 +4,7 @@ This guide synthesizes the [RAP - Behavior Definitions](https://help.sap.com/doc
 
 ## Ownership Boundary
 
-Use this guide to design and review BDEF declarations. Use [RAP behavior implementation](./abap-rap-behavior-implementation.md) for generated handler signatures, behavior-pool classes, `FAILED`/`REPORTED`/`MAPPED`, saver methods, and implementation diagnostics.
+Use [RAP implementation selection](./official-rap-implementation-selection.md) before choosing a BDEF kind for a new solution. Use this guide to design and review BDEF declarations after the scenario and transaction owner are established. Use [RAP behavior implementation](./abap-rap-behavior-implementation.md) for generated handler signatures, behavior-pool classes, `FAILED`/`REPORTED`/`MAPPED`, saver methods, and implementation diagnostics.
 
 A BDEF is based on a CDS model with one root entity; a root entity can have at most one BDEF. The BDEF defines the transactional contract visible to RAP consumers. It contains a header and one or more entity behavior definitions; each entity definition contains characteristics and a body.
 

@@ -1,6 +1,6 @@
 ---
 name: abap-rap-services
-description: 'Design, implement, and troubleshoot ABAP Cloud RAP and service objects. Use for CDS view/projection/custom entities, BDEF behavior handlers, EML, OData V2/V4, service definitions/bindings, API versioning, business events, Fiori Elements annotations, value help, text display, draft, actions, authorization handlers, and RAP activation errors.'
+description: 'Select, design, implement, and troubleshoot ABAP Cloud RAP and service objects. Use for managed versus unmanaged RAP, read-only/custom-query scenarios, draft models, UI versus Web API services, CDS view/projection/custom entities, BDEF behavior handlers, EML, OData V2/V4, service definitions/bindings, API versioning, business events, Fiori Elements annotations, value help, text display, actions, authorization handlers, and RAP activation errors.'
 ---
 
 # ABAP RAP and Services
@@ -11,6 +11,7 @@ Load only the guide matching the object or contract being changed.
 
 | Object or concern | Guide |
 |---|---|
+| Choose read-only/managed/unmanaged/draft/remote/UI/API implementation scenario | [RAP implementation selection](./references/official-rap-implementation-selection.md) |
 | Official DDIC/CDS/RAP object and transaction semantics | [DDIC, CDS, and RAP semantics](./references/official-ddic-cds-rap-semantics.md) |
 | Official annotation syntax, scope, MDE, layers, propagation, API properties | [CDS annotation semantics](./references/official-cds-annotations.md) |
 | CDS entities, associations, compositions, DCL structure | [CDS data modeling](./references/abap-cds-data-modeling.md) |
@@ -24,7 +25,7 @@ Load only the guide matching the object or contract being changed.
 
 ## Workflow
 
-1. Establish landscape/release and identify the owning RAP/CDS/service object.
-2. Load one primary guide; add a second only for a real cross-object contract.
+1. For a new solution, establish landscape/release and use the implementation selector before choosing CDS/BDEF/service artifacts.
+2. For an existing object, identify its owning RAP/CDS/service contract and load one primary guide; add a second only for a real cross-object contract.
 3. Verify keys, types, cardinalities, behavior signatures, release state, and generated metadata.
 4. Activate and run the smallest relevant behavior, metadata, or service test.
