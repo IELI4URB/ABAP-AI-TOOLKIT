@@ -217,6 +217,16 @@ git pull --ff-only
 
 The installer refreshes only toolkit-managed items recorded in its manifest. Unrelated skills and agents remain untouched.
 
+## Automatic Git Synchronization
+
+On Windows, managed local skill and agent changes can be validated, committed, and pushed automatically through a current-user Scheduled Task.
+
+```powershell
+& .\automation\Install-ToolkitAutoSync.ps1
+```
+
+The automation stops on conflicts, validation failures, dirty repository content, unavailable credentials, or non-fast-forward remote changes. It never commits unrelated skills, extension-owned agents, logs, secrets, or immutable source snapshots. See [the automation guide](automation/README.md) for scope, logs, dry runs, status, and uninstall commands.
+
 ## Optional Claude Code Agents
 
 Claude mirrors are not installed by default because some VS Code configurations display them alongside Copilot agents and create duplicate picker entries.
@@ -279,6 +289,7 @@ claude-agents/    Optional Claude Code mirrors
 config/           Skill ownership and integrity metadata
 docs/             Team, governance, and SAP Help documentation
 scripts/          Documentation inventory and maintenance tooling
+automation/       Validated local-to-Git synchronization and task setup
 install.ps1       Windows installer
 install.sh        macOS/Linux installer
 validate_pack.py  Repository validator

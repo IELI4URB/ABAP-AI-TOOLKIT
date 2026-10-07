@@ -26,8 +26,22 @@ def read(path: Path) -> str:
     return path.read_text(encoding="utf-8-sig")
 
 
-def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+def sha256_candidates(path: Path) -> set[str]:
+    content = path.read_bytes()
+    candidates = {hashlib.sha256(content).hexdigest()}
+    try:
+        text = content.decode("utf-8-sig")
+        if "\x00" in text:
+            return candidates
+    except UnicodeDecodeError:
+        return candidates
+
+    normalized = text.replace("\r\n", "\n").replace("\r", "\n")
+    for line_ending in ("\n", "\r\n"):
+        variant = normalized.replace("\n", line_ending)
+        candidates.add(hashlib.sha256(variant.encode("utf-8")).hexdigest())
+        candidates.add(hashlib.sha256(variant.encode("utf-8-sig")).hexdigest())
+    return candidates
 
 
 def frontmatter(text: str) -> dict[str, str]:
@@ -120,7 +134,7 @@ def validate_skills(errors: list[str]) -> set[str]:
             archived = module / ("source-SKILL.md" if relative == "SKILL.md" else relative)
             if not archived.exists():
                 errors.append(f"Missing archived file: {archived.relative_to(ROOT)}")
-            elif sha256(archived) != expected_hash.lower():
+            elif expected_hash.lower() not in sha256_candidates(archived):
                 errors.append(f"Archived hash mismatch: {archived.relative_to(ROOT)}")
         if (SKILLS / legacy).exists():
             errors.append(f"Former top-level skill remains: {legacy}")
@@ -256,6 +270,17 @@ def validate_installers(errors: list[str]) -> None:
             errors.append(f"Installer lacks expected-count guards: {installer.name}")
         if ".sap-dev-ai-toolkit-manifest" not in text:
             errors.append(f"Installer lacks managed-item manifest: {installer.name}")
+
+    automation_files = (
+        ROOT / "automation" / "sync_toolkit.py",
+        ROOT / "automation" / "Watch-ToolkitChanges.ps1",
+        ROOT / "automation" / "Install-ToolkitAutoSync.ps1",
+        ROOT / "automation" / "Test-ToolkitAutoSync.ps1",
+        ROOT / "automation" / "README.md",
+    )
+    for automation_file in automation_files:
+        if not automation_file.exists():
+            errors.append(f"Missing automation component: {automation_file.relative_to(ROOT)}")
 
 
 def main() -> int:

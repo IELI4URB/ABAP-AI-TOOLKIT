@@ -110,6 +110,16 @@ The installer writes `.sap-dev-ai-toolkit-manifest` files in both destination fo
 
 Obsolete toolkit-managed entries recorded by an earlier installation are removed automatically.
 
+## Optional Automatic Git Synchronization
+
+Maintainers on Windows can watch managed local skills and agents and push validated changes automatically:
+
+```powershell
+& .\automation\Install-ToolkitAutoSync.ps1
+```
+
+See [the automation guide](automation/README.md) before enabling it. Git authentication must already work non-interactively, and conflicts or validation failures always require manual resolution.
+
 ## Duplicate Agents
 
 If agents appear twice, remove old `.agent.md` files from the legacy VS Code prompts directory:
