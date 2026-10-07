@@ -18,8 +18,8 @@ Open a PowerShell terminal in VS Code.
 
 ```powershell
 Set-Location $HOME
-git clone https://github.tools.sap/I756261/SAP-DEV-AI-TOOLKIT.git
-Set-Location .\SAP-DEV-AI-TOOLKIT
+git clone https://github.tools.sap/I756261/ABAP-DEVELOPMENT-AI-TOOLKIT.git
+Set-Location .\ABAP-DEVELOPMENT-AI-TOOLKIT
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 & .\install.ps1
 ```
@@ -27,7 +27,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ### Upgrade an existing installation
 
 ```powershell
-Set-Location "$HOME\SAP-DEV-AI-TOOLKIT"
+Set-Location "$HOME\ABAP-DEVELOPMENT-AI-TOOLKIT"
 git pull --ff-only
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 & .\install.ps1
@@ -41,8 +41,8 @@ The execution-policy change lasts only for that terminal session.
 
 ```bash
 cd "$HOME"
-git clone https://github.tools.sap/I756261/SAP-DEV-AI-TOOLKIT.git
-cd SAP-DEV-AI-TOOLKIT
+git clone https://github.tools.sap/I756261/ABAP-DEVELOPMENT-AI-TOOLKIT.git
+cd ABAP-DEVELOPMENT-AI-TOOLKIT
 chmod +x install.sh
 ./install.sh
 ```
@@ -50,7 +50,7 @@ chmod +x install.sh
 ### Upgrade an existing installation
 
 ```bash
-cd "$HOME/SAP-DEV-AI-TOOLKIT"
+cd "$HOME/ABAP-DEVELOPMENT-AI-TOOLKIT"
 git pull --ff-only
 ./install.sh
 ```

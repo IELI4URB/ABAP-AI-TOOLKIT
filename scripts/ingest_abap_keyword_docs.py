@@ -100,7 +100,7 @@ def get_json(url: str, attempts: int = 5) -> dict[str, Any]:
         url,
         headers={
             "Accept": "application/json",
-            "User-Agent": "SAP-DEV-AI-TOOLKIT keyword-doc inventory/1.0",
+            "User-Agent": "ABAP-DEVELOPMENT-AI-TOOLKIT keyword-doc inventory/1.0",
         },
     )
     last_error: Exception | None = None
