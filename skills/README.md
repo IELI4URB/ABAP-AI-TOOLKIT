@@ -8,18 +8,21 @@ Each group uses this structure:
 group-name/
   SKILL.md
   references/
-    former-skill-name.md
-    former-skill-name/
+    README.md
+    active-guide.md
+    _legacy/
+      former-package-name/
       source-SKILL.md
       references/
       scripts/
       assets/
 ```
 
-- `former-skill-name.md` is the adapted guide loaded by the group router.
-- `source-SKILL.md` preserves the exact former entry point.
-- Supporting references, scripts, and assets preserve their original relative structure.
-- Repository file `config/skill-group-map.json` is the authoritative 44-to-11 mapping.
+- `SKILL.md` is the only registered entry point.
+- `references/README.md` states active ownership and routing boundaries.
+- Direct Markdown files in `references/` are active guides loaded by the group router.
+- `_legacy/` preserves exact former packages and must not be routed to or edited.
+- The pack's `skill-group-map.json` is the authoritative 44-to-11 mapping.
 
 ## Groups
 

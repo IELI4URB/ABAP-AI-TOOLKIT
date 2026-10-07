@@ -1,11 +1,11 @@
 ---
-name: abap-git-workflows
+name: abapgit-and-branch-workflows
 description: 'Manage ABAP development with abapGit and Git. Use for repository setup, clone, pull, push, branching, .abapgit.xml, abaplint, CI/CD, gCTS, and transport-versus-Git workflow decisions for on-premise or BTP systems.'
 ---
 
-# abapGit Workflows
+# abapGit and Branch Workflows
 
-Use this skill as the ABAP Git workflow router. Load only the relevant section of [the complete workflow reference](./abap-git-workflows/references/workflows-complete.md).
+Use this skill as the ABAP Git workflow router. Load only the relevant section of [the complete workflow reference](./_legacy/abap-git-workflows/references/workflows-complete.md).
 
 ## Workflow
 

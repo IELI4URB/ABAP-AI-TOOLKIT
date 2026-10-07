@@ -10,7 +10,7 @@ metadata:
 
 SAP Help baseline: https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model
 
-Use this skill as the extensibility-mechanism router. Load only the relevant part of [the complete events and BAdI reference](./abap-events-and-enhancements/references/events-and-badi-patterns.md).
+Use this skill as the extensibility-mechanism router. Load only the relevant part of [the complete events and BAdI reference](./_legacy/abap-events-and-enhancements/references/events-and-badi-patterns.md).
 
 ## Ownership
 

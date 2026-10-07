@@ -24,7 +24,7 @@ Do not rediscover which extension or MCP server to use on every request.
    workspace URI. If multiple ABAP destinations are open and the requested target is
    ambiguous, ask the user once. Do not assume that every system is SD9.
 5. When native ADT MCP tools are unavailable in the current tool palette, use
-   [Invoke-AdtMcp.ps1](./adt-mcp-object-workflow/scripts/Invoke-AdtMcp.ps1). Do not probe unrelated MCP
+   [Invoke-AdtMcp.ps1](./_legacy/adt-mcp-object-workflow/scripts/Invoke-AdtMcp.ps1). Do not probe unrelated MCP
    servers or inspect extensions first.
 
 ## Mandatory Creation Sequence

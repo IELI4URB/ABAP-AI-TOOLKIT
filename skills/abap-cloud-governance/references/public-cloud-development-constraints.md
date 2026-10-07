@@ -1,11 +1,11 @@
 ---
-name: sap-cloud-dev
-description: 'Apply SAP Public Cloud ABAP development guidance for RAP, CDS, BTP ABAP Environment, Clean Core, service layers, naming, BDEF structure, released APIs, and Public Cloud-specific implementation constraints.'
+name: public-cloud-development-constraints
+description: 'Apply SAP S/4HANA Public Cloud and BTP ABAP Environment constraints. Use for landscape eligibility, released-API requirements, ABAP language restrictions, extensibility boundaries, and Public Cloud delivery gates; route RAP, CDS, security, and implementation mechanics to their owning skills.'
 ---
 
-# SAP Public Cloud Development
+# Public Cloud Development Constraints
 
-Use this skill for focused Public Cloud decisions. Prior guidelines are preserved in [the entry-point reference](./sap-cloud-dev/references/entrypoint-reference.md).
+Use this guide for focused Public Cloud constraints, not general RAP or CDS implementation. Prior guidelines are preserved in [the entry-point reference](./_legacy/sap-cloud-dev/references/entrypoint-reference.md).
 
 ## Workflow
 

@@ -128,4 +128,4 @@ Before sharing or publishing:
 python validate_pack.py
 ```
 
-The validator checks group count, frontmatter, local links, archived content hashes, agent topology, Claude mirrors, and grouped routing.
+The validator checks group count, ownership indexes, the `_legacy` archive boundary, frontmatter, local links, archived content hashes, agent topology, Claude mirrors, and grouped routing.

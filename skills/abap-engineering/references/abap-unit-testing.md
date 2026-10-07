@@ -8,7 +8,7 @@ metadata:
 
 # ABAP Unit Testing
 
-Load only the needed pattern from [the ABAP Unit reference](./abap-unit-testing/references/abap-unit-patterns.md). Prior entry-point examples are preserved in [the entry-point reference](./abap-unit-testing/references/unit-testing-entrypoint-reference.md).
+Load only the needed pattern from [the ABAP Unit reference](./_legacy/abap-unit-testing/references/abap-unit-patterns.md). Prior entry-point examples are preserved in [the entry-point reference](./_legacy/abap-unit-testing/references/unit-testing-entrypoint-reference.md).
 
 ## Workflow
 

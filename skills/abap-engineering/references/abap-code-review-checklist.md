@@ -5,7 +5,7 @@ description: 'Review ABAP Cloud code during development and before transport. Us
 
 # ABAP Cloud Review Checklist
 
-Use [the full checklist](./abap-code-review-checklist/references/full-checklist.md) for release reviews and [the Clean ABAP checklist](./abap-code-review-checklist/references/clean-abap-checklist.md) for code-level checks. Prior entry-point guidance is preserved in [the entry-point reference](./abap-code-review-checklist/references/entrypoint-reference.md).
+Use [the full checklist](./_legacy/abap-code-review-checklist/references/full-checklist.md) for release reviews and [the Clean ABAP checklist](./_legacy/abap-code-review-checklist/references/clean-abap-checklist.md) for code-level checks. Prior entry-point guidance is preserved in [the entry-point reference](./_legacy/abap-code-review-checklist/references/entrypoint-reference.md).
 
 ## Workflow
 

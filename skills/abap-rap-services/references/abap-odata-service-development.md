@@ -8,7 +8,7 @@ metadata:
 
 # OData Service Development
 
-Load only the relevant section of [the complete OData patterns](./abap-odata-service-development/references/odata-complete-patterns.md). Prior entry-point guidance is preserved in [the entry-point reference](./abap-odata-service-development/references/odata-entrypoint-reference.md).
+Load only the relevant section of [the complete OData patterns](./_legacy/abap-odata-service-development/references/odata-complete-patterns.md). Prior entry-point guidance is preserved in [the entry-point reference](./_legacy/abap-odata-service-development/references/odata-entrypoint-reference.md).
 
 ## Workflow
 

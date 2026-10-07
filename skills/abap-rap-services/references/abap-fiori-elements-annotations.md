@@ -28,7 +28,7 @@ This skill owns Fiori Elements presentation annotations, metadata-extension plac
 | Request | Read |
 |---|---|
 | Annotation legality, scope, MDE support, layers, propagation | [official annotation semantics](./official-cds-annotations.md) |
-| Value help, dependent binding, text display, dropdown | [value-help and text display](./abap-fiori-elements-annotations/references/value-help-and-text-display.md) |
+| Value help, dependent binding, text display, dropdown | [value-help and text display](./_legacy/abap-fiori-elements-annotations/references/value-help-and-text-display.md) |
 | Placement or metadata extension | `ui-annotations-catalog.md`, sections 1-2 |
 | List report columns | section 3 |
 | Header, facets, field groups, identification | sections 4-7 |
@@ -39,7 +39,7 @@ This skill owns Fiori Elements presentation annotations, metadata-extension plac
 | Search | section 14 |
 | Review or complete examples | sections 15-18 |
 
-The catalog is [the UI annotations reference](./abap-fiori-elements-annotations/references/ui-annotations-catalog.md).
+The catalog is [the UI annotations reference](./_legacy/abap-fiori-elements-annotations/references/ui-annotations-catalog.md).
 
 ## Mandatory Gates
 

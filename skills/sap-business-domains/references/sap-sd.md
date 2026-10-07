@@ -8,7 +8,7 @@ metadata:
 
 # SAP Sales and Distribution
 
-Use this skill as the SD domain owner. Load only the relevant file under `references/`; prior governance is preserved in [the domain entry-point reference](./sap-sd/references/domain-entrypoint-reference.md).
+Use this skill as the SD domain owner. Load only the relevant file under `references/`; prior governance is preserved in [the domain entry-point reference](./_legacy/sap-sd/references/domain-entrypoint-reference.md).
 
 ## Workflow
 

@@ -1,11 +1,11 @@
 ---
-name: sap-clean-core-enterprise
+name: enterprise-clean-core-delivery
 description: 'Orchestrate end-to-end SAP ABAP Clean Core solution architecture and release governance across S/4HANA Public Cloud, Private Cloud ABAP Cloud, and BTP ABAP Environment, including extensions, C1 APIs, ATC, tests, operations, transport, and residual risk.'
 ---
 
-# SAP Clean Core Enterprise
+# Enterprise Clean Core Delivery
 
-Use this skill only for end-to-end, cross-phase solutioning. Prior governance is preserved in [the entry-point reference](./sap-clean-core-enterprise/references/entrypoint-reference.md).
+Use this skill only for end-to-end, cross-phase solutioning. Prior governance is preserved in [the entry-point reference](./_legacy/sap-clean-core-enterprise/references/entrypoint-reference.md).
 
 ## Workflow
 
@@ -16,5 +16,5 @@ Use this skill only for end-to-end, cross-phase solutioning. Prior governance is
 
 ## Boundary
 
-Use `abap-clean-core-principles` for focused release-state or extension questions. Do not load this enterprise orchestrator as a blanket companion to analyzer, designer, developer, or reviewer agents.
+Use `clean-core-api-extension-governance` for focused release-state or extension questions. Do not load this enterprise orchestrator as a blanket companion to analyzer, architect, developer, or reviewer agents.
 

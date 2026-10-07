@@ -8,12 +8,12 @@ description: 'Govern SAP ABAP Cloud and Clean Core delivery. Use for C0/C1 relea
 | Concern | Guide |
 |---|---|
 | Official language versions, C0-C4 contracts, API checks, release news | [ABAP Cloud APIs and releases](./references/official-abap-cloud-apis-and-releases.md) |
-| Release state, extension choice, Tier 2 | [Clean Core principles](./references/abap-clean-core-principles.md) |
-| Pipeline, ATC, transports, rollback | [DevSecOps and transport](./references/abap-devsecops-transport.md) |
-| abapGit, branches, Git/transport hybrid | [Git workflows](./references/abap-git-workflows.md) |
-| Platform 2025 and FPS-specific capability | [ABAP Platform 2025](./references/abap-platform-2025.md) |
-| End-to-end Clean Core program | [Enterprise Clean Core](./references/sap-clean-core-enterprise.md) |
-| Public Cloud implementation constraints | [SAP Cloud development](./references/sap-cloud-dev.md) |
+| Release state, extension choice, Tier 2 | [Clean Core API and extension governance](./references/clean-core-api-extension-governance.md) |
+| Pipeline, ATC, transports, rollback | [Quality gates and transports](./references/quality-gates-and-transports.md) |
+| abapGit, branches, Git/transport hybrid | [abapGit and branch workflows](./references/abapgit-and-branch-workflows.md) |
+| Platform 2025 and FPS-specific capability | [ABAP Platform 2025 release guide](./references/abap-platform-2025-release-guide.md) |
+| End-to-end Clean Core program | [Enterprise Clean Core delivery](./references/enterprise-clean-core-delivery.md) |
+| Public Cloud implementation constraints | [Public Cloud development constraints](./references/public-cloud-development-constraints.md) |
 
 ## Workflow
 

@@ -162,6 +162,7 @@
     },
     "abap-clean-core-principles": {
       "group": "abap-cloud-governance",
+      "guide": "clean-core-api-extension-governance.md",
       "files": {
         "references/clean-core-detail.md": "5EC74C36D3B739AF721A114999EA8B79A7C96853F824CEC4811FDCAB1A84F072",
         "references/clean-core-entrypoint-reference.md": "C6CFB2EA0A2516E2CA86EC75BDE32D661F4A58136FC2E7C3EB654256123313C1",
@@ -170,6 +171,7 @@
     },
     "abap-devsecops-transport": {
       "group": "abap-cloud-governance",
+      "guide": "quality-gates-and-transports.md",
       "files": {
         "references/entrypoint-reference.md": "0E6B6A99369E77BAF1B31DEDA88B9A2418442C318A7B84FEB9DB2C252226A5AD",
         "references/pipeline-and-transport.md": "27C51C7F1BC55520B8854B3B2BA403D2563802463402529A9FE573F87E921ECB",
@@ -178,6 +180,7 @@
     },
     "abap-git-workflows": {
       "group": "abap-cloud-governance",
+      "guide": "abapgit-and-branch-workflows.md",
       "files": {
         "references/workflows-complete.md": "0473FC0320FB4A6A1F9B46CF9C9FCE1C5EA42B7E9B513D9AD6CE00D7D7DEDF4E",
         "SKILL.md": "7C7412644F30B2794383B983D3BFDDA54A9D9062E35B12B4EED6396B4E0FED29"
@@ -185,6 +188,7 @@
     },
     "abap-platform-2025": {
       "group": "abap-cloud-governance",
+      "guide": "abap-platform-2025-release-guide.md",
       "files": {
         "references/verified-capabilities.md": "41EAD3378B05FFFDB19D926901DB2C9B4E829FAAC40798666FF183F14EB8CFD3",
         "SKILL.md": "E410DC971BCB2A02AEFE1BB3DF35C2717D5A7A208A93FEEB4C6C83AF67146FBC"
@@ -192,6 +196,7 @@
     },
     "sap-clean-core-enterprise": {
       "group": "abap-cloud-governance",
+      "guide": "enterprise-clean-core-delivery.md",
       "files": {
         "references/entrypoint-reference.md": "2B1F452D8BFF929DE87703C102D8418985A3A1ECFEE701BD1045115D506E0C59",
         "SKILL.md": "628840D95BE65F7039FEA8B8A65949BF156CF8526D2F0CA4ACE4D513B3832DF2"
@@ -199,6 +204,7 @@
     },
     "sap-cloud-dev": {
       "group": "abap-cloud-governance",
+      "guide": "public-cloud-development-constraints.md",
       "files": {
         "references/entrypoint-reference.md": "BA0B207DD834DCD43AA60EC45B7D481C5681EEC51F1983D20F7E9364BACB5F8C",
         "SKILL.md": "C4A7C7199C1EB5A0964CC225B628BAC6D14D2E1C00B6CECD04EB416F1EF1EC3B"

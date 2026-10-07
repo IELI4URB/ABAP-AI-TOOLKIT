@@ -7,7 +7,7 @@ description: 'Generate a SAP System Personality Report covering system identity,
 
 SAP Help baseline: https://help.sap.com/docs/SAP_S4HANA_CLOUD
 
-Use [the complete report playbook](./sap-system-personality-report/references/report-playbook.md) as an ordered workflow. Load only the current collection step, retaining compact aggregate results between steps.
+Use [the complete report playbook](./_legacy/sap-system-personality-report/references/report-playbook.md) as an ordered workflow. Load only the current collection step, retaining compact aggregate results between steps.
 
 ## Workflow
 

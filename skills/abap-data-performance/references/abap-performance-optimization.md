@@ -5,7 +5,7 @@ description: 'Optimize SAP ABAP Cloud performance. Use for N+1 queries, CDS/SQL 
 
 # ABAP Cloud Performance
 
-Load only the relevant reference: [performance patterns](./abap-performance-optimization/references/performance-patterns.md), [database optimization](./abap-performance-optimization/references/database-optimization.md), or [search/traversal algorithms](./abap-performance-optimization/references/search-traversal-algorithms.md). Prior entry-point guidance is preserved in [the entry-point reference](./abap-performance-optimization/references/entrypoint-reference.md).
+Load only the relevant reference: [performance patterns](./_legacy/abap-performance-optimization/references/performance-patterns.md), [database optimization](./_legacy/abap-performance-optimization/references/database-optimization.md), or [search/traversal algorithms](./_legacy/abap-performance-optimization/references/search-traversal-algorithms.md). Prior entry-point guidance is preserved in [the entry-point reference](./_legacy/abap-performance-optimization/references/entrypoint-reference.md).
 
 ## Workflow
 

@@ -5,7 +5,7 @@ description: 'Harden SAP ABAP Cloud solutions. Use for input validation, SQL inj
 
 # ABAP Cloud Security Hardening
 
-Load detailed controls from [security patterns](./abap-security-hardening/references/security-patterns.md). Prior entry-point guidance is preserved in [the entry-point reference](./abap-security-hardening/references/entrypoint-reference.md).
+Load detailed controls from [security patterns](./_legacy/abap-security-hardening/references/security-patterns.md). Prior entry-point guidance is preserved in [the entry-point reference](./_legacy/abap-security-hardening/references/entrypoint-reference.md).
 
 ## Workflow
 

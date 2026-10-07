@@ -5,7 +5,7 @@ description: 'Design and evolve SAP ABAP Cloud RAP APIs. Use for service-binding
 
 # ABAP API Design and Versioning
 
-Load the relevant pattern from [API patterns](./abap-api-design-versioning/references/api-patterns.md). Prior governance is preserved in [the entry-point reference](./abap-api-design-versioning/references/entrypoint-reference.md).
+Load the relevant pattern from [API patterns](./_legacy/abap-api-design-versioning/references/api-patterns.md). Prior governance is preserved in [the entry-point reference](./_legacy/abap-api-design-versioning/references/entrypoint-reference.md).
 
 ## Workflow
 

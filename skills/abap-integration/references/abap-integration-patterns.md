@@ -10,7 +10,7 @@ metadata:
 
 SAP Help baseline: https://help.sap.com/docs/ABAP_Cloud
 
-Use this skill as the integration router. Load only the required part of [the complete integration reference](./abap-integration-patterns/references/integration-complete.md).
+Use this skill as the integration router. Load only the required part of [the complete integration reference](./_legacy/abap-integration-patterns/references/integration-complete.md).
 
 ## Ownership
 

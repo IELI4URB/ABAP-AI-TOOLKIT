@@ -8,7 +8,7 @@ disable-model-invocation: false
 
 # Clean ABAP
 
-Use this skill as the style router. Read only the relevant section of [the complete Clean ABAP rules](./clean-abap/references/clean-abap-complete.md).
+Use this skill as the style router. Read only the relevant section of [the complete Clean ABAP rules](./_legacy/clean-abap/references/clean-abap-complete.md).
 
 ## Workflow
 

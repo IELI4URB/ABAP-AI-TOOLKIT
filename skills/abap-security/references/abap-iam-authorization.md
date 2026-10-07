@@ -10,7 +10,7 @@ metadata:
 
 SAP Help baseline: https://help.sap.com/docs/ABAP_Cloud
 
-Use this skill as the authorization router. Keep the entry point small and load only the relevant part of [the complete IAM reference](./abap-iam-authorization/references/iam-complete.md).
+Use this skill as the authorization router. Keep the entry point small and load only the relevant part of [the complete IAM reference](./_legacy/abap-iam-authorization/references/iam-complete.md).
 
 ## Ownership
 

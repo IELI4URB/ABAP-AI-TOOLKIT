@@ -14,7 +14,7 @@ Use this skill to turn a Basis administration question into a scoped, evidence-b
 
 The source page is a landing page for SAP Basis administration tips, tutorials, and troubleshooting guides. It contains no individual procedures, commands, prerequisites, or fixes. SAP labels it as **Additional Content**, not Documentation under the applicable SAP terms.
 
-Read [source-notes.md](./sap-basis-compilation-guides/references/source-notes.md) before citing or characterizing the source. Never attribute a specific technical procedure to this landing page.
+Read [source-notes.md](./_legacy/sap-basis-compilation-guides/references/source-notes.md) before citing or characterizing the source. Never attribute a specific technical procedure to this landing page.
 
 ## Workflow
 

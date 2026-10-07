@@ -10,7 +10,7 @@ metadata:
 
 SAP Help baseline: https://help.sap.com/doc/abapdocu_cp_index_htm/CLOUD/en-US/index.htm
 
-Use this skill as the SQL syntax and database-computation router. Load only the relevant part of [the complete SQL and AMDP reference](./abap-sql-and-amdp/references/sql-complete-reference.md).
+Use this skill as the SQL syntax and database-computation router. Load only the relevant part of [the complete SQL and AMDP reference](./_legacy/abap-sql-and-amdp/references/sql-complete-reference.md).
 
 ## Ownership
 

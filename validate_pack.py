@@ -75,6 +75,33 @@ def validate_skills(errors: list[str]) -> set[str]:
     for nested in nested_skills:
         errors.append(f"Nested registered SKILL.md: {nested.relative_to(ROOT)}")
 
+    for group in expected_groups:
+        references = SKILLS / group / "references"
+        index = references / "README.md"
+        archive_root = references / "_legacy"
+        if not index.exists():
+            errors.append(f"Missing ownership index: {index.relative_to(ROOT)}")
+        else:
+            index_text = read(index)
+            if "only registered entry point" not in index_text or "_legacy/" not in index_text:
+                errors.append(f"Incomplete entry-point/archive boundary: {index.relative_to(ROOT)}")
+        if not archive_root.is_dir():
+            errors.append(f"Missing archive namespace: {archive_root.relative_to(ROOT)}")
+            continue
+        for directory in sorted(
+            path for path in references.iterdir()
+            if path.is_dir() and path.name != "_legacy"
+        ):
+            errors.append(f"Active reference directory outside _legacy: {directory.relative_to(ROOT)}")
+        expected_archives = set(group_map[group])
+        actual_archives = {path.name for path in archive_root.iterdir() if path.is_dir()}
+        if actual_archives != expected_archives:
+            errors.append(
+                f"Archive set differs for {group}: "
+                f"missing={sorted(expected_archives - actual_archives)}, "
+                f"extra={sorted(actual_archives - expected_archives)}"
+            )
+
     for skill_file in skill_files:
         metadata = frontmatter(read(skill_file))
         if metadata.get("name") != skill_file.parent.name:
@@ -84,8 +111,9 @@ def validate_skills(errors: list[str]) -> set[str]:
 
     for legacy, record in integrity.items():
         group = record["group"]
-        guide = SKILLS / group / "references" / f"{legacy}.md"
-        module = SKILLS / group / "references" / legacy
+        guide_name = record.get("guide", f"{legacy}.md")
+        guide = SKILLS / group / "references" / guide_name
+        module = SKILLS / group / "references" / "_legacy" / legacy
         if not guide.exists():
             errors.append(f"Missing adapted guide: {guide.relative_to(ROOT)}")
         for relative, expected_hash in record["files"].items():

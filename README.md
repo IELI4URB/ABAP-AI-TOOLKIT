@@ -8,6 +8,8 @@ A shareable GitHub Copilot toolkit for SAP ABAP development. It installs:
 
 All 44 former standalone skills are preserved inside the 11 groups. Only the short group routers are registered, which keeps navigation and prompt context small.
 
+See [the taxonomy audit](docs/TAXONOMY_AUDIT.md) for ownership boundaries and ratings of all registered skills and managed agents.
+
 ## Official ABAP Keyword Documentation Grounding
 
 The toolkit was refreshed against the nine requested ABAP Keyword Documentation sections and all of their descendants:
@@ -65,7 +67,12 @@ See [INSTALL.md](INSTALL.md) for ZIP installation, verification, optional Claude
 | `sap-business-domains` | Finance, MM, PP/DS, SD, TM |
 | `agentic-delivery` | ATQ governance, named-agent delegation, skill discovery |
 
-Each group has one short `SKILL.md`. Former skills and supporting references/scripts are under the group's `references/` directory and load only when needed.
+Each group uses the same layout:
+
+- `SKILL.md` is the only registered entry point.
+- `references/README.md` is the ownership and routing index.
+- `references/*.md` files are active guides loaded only when needed.
+- `references/_legacy/<package>/` holds immutable former skill packages for integrity and traceability; do not route to or edit them.
 
 ## Copilot Agents
 
@@ -104,7 +111,7 @@ Expected result: 11 skills, 7 Copilot agents, 7 Claude mirrors, no broken links,
 ## Repository Layout
 
 ```text
-skills/             11 registered skill groups
+skills/             11 registered groups, active guides, and _legacy archives
 agents/             7 GitHub Copilot agents and shared references
 claude-agents/      7 optional Claude Code mirrors
 config/             44-to-11 mapping and integrity hashes

@@ -10,7 +10,7 @@ metadata:
 
 SAP Help baseline: https://help.sap.com/docs/abap-cloud/abap-data-models/abap-data-models
 
-Use this skill as the CDS structure and entity-selection router. Load only the relevant part of [the complete CDS syntax reference](./abap-cds-data-modeling/references/cds-complete-syntax.md).
+Use this skill as the CDS structure and entity-selection router. Load only the relevant part of [the complete CDS syntax reference](./_legacy/abap-cds-data-modeling/references/cds-complete-syntax.md).
 
 ## Ownership
 

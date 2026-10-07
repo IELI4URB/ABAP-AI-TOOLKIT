@@ -8,7 +8,7 @@ metadata:
 
 # SAP Production Planning
 
-Use this skill as the PP/PP-DS domain owner. Load only the relevant file under `references/`; prior governance is preserved in [the domain entry-point reference](./sap-pp/references/domain-entrypoint-reference.md).
+Use this skill as the PP/PP-DS domain owner. Load only the relevant file under `references/`; prior governance is preserved in [the domain entry-point reference](./_legacy/sap-pp/references/domain-entrypoint-reference.md).
 
 ## Workflow
 

@@ -10,7 +10,7 @@ disable-model-invocation: false
 
 SAP Help baseline: https://help.sap.com/doc/abapdocu_cp_index_htm/CLOUD/en-US/index.htm
 
-Use [the complete code-writing process](./abap-code-writing/references/code-writing-process.md) for non-trivial implementation. Load only the active phase and keep completed findings compressed.
+Use [the complete code-writing process](./_legacy/abap-code-writing/references/code-writing-process.md) for non-trivial implementation. Load only the active phase and keep completed findings compressed.
 
 ## Workflow
 

@@ -1,14 +1,14 @@
 ---
-name: abap-clean-core-principles
+name: clean-core-api-extension-governance
 description: 'Apply Clean Core governance for SAP ABAP Cloud. Use for C0/C1 release contracts, API states, ABAP language versions, Tier 1 and Tier 2 wrappers, A-D maturity, extensibility choices, ATC readiness, upgrade safety, and released-object verification.'
 metadata:
   version: 3.0.0
   tags: abap clean-core released-api extension wrapper atc governance
 ---
 
-# Clean Core Principles
+# Clean Core API and Extension Governance
 
-Use [the complete Clean Core reference](./abap-clean-core-principles/references/clean-core-detail.md) for detailed patterns and [the preserved entry-point reference](./abap-clean-core-principles/references/clean-core-entrypoint-reference.md) for prior governance text.
+Use [the complete Clean Core reference](./_legacy/abap-clean-core-principles/references/clean-core-detail.md) for detailed patterns and [the preserved entry-point reference](./_legacy/abap-clean-core-principles/references/clean-core-entrypoint-reference.md) for prior governance text.
 
 ## Workflow
 
@@ -26,5 +26,5 @@ Use [the complete Clean Core reference](./abap-clean-core-principles/references/
 
 ## Ownership
 
-This skill owns release-state and extension governance. Use `sap-clean-core-enterprise` only for end-to-end program orchestration.
+This guide owns focused release-state and extension decisions. Use `enterprise-clean-core-delivery` only for end-to-end, cross-phase governance.
 

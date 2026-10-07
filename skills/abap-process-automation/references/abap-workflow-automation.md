@@ -10,7 +10,7 @@ metadata:
 
 SAP Help baseline: https://help.sap.com/docs/ABAP_Cloud
 
-Use this skill as the workflow-technology and approval-flow router. Load only the required part of [the complete workflow reference](./abap-workflow-automation/references/workflow-complete.md).
+Use this skill as the workflow-technology and approval-flow router. Load only the required part of [the complete workflow reference](./_legacy/abap-workflow-automation/references/workflow-complete.md).
 
 ## Ownership
 

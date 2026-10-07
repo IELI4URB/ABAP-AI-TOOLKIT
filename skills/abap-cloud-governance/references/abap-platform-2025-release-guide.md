@@ -1,5 +1,5 @@
 ---
-name: abap-platform-2025
+name: abap-platform-2025-release-guide
 description: >-
   Release-specific guidance for ABAP Platform 2025 in SAP S/4HANA Cloud Private Edition 2025 and SAP S/4HANA 2025 (SAP_BASIS 816). Covers clean core levels A-D, Joule for Developers, RAP 2025 features, CDS table entities, ADT improvements, ABAP language additions, HANA-centric data integration, embedded analytics, business events, Communication Targets, OData V4, HTTP/RFC outbound communication, key user extensibility, and security updates. Use when asked about ABAP Platform 2025, SAP_BASIS 816, S/4HANA 2025 ABAP features, 2025 FPS dependencies, collaborative draft, cross-BO RAP, CDS updatable views, Communication Targets, TLS 1.3, or upgrade capabilities.
 argument-hint: Describe the ABAP Platform 2025 feature, landscape, and release/FPS level to assess.
@@ -8,9 +8,9 @@ metadata:
   tags: abap-platform-2025 sap-basis-816 s4hana-private-cloud rap cds adt clean-core connectivity security joule
 ---
 
-# ABAP Platform 2025
+# ABAP Platform 2025 Release Guide
 
-Use this skill for release-specific analysis of ABAP Platform 2025. Combine it with domain skills such as `abap-clean-core-principles`, `abap-rap-behavior-implementation`, `abap-cds-data-modeling`, or `abap-integration-patterns` when implementation details are requested.
+Use this guide only for release-specific analysis of ABAP Platform 2025. Route implementation details through the owning registered skill, such as `abap-cloud-governance`, `abap-rap-services`, `abap-data-performance`, or `abap-integration`.
 
 **Golden rule: a release overview proves that SAP announced a capability, not that the capability is installed, licensed, configured, released for ABAP Cloud, or available in every 2025 FPS.**
 
@@ -18,7 +18,7 @@ Use this skill for release-specific analysis of ABAP Platform 2025. Combine it w
 
 Before answering any feature, availability, migration, implementation, or architecture question, read:
 
-- `references/verified-capabilities.md` - source ledger, exact capability inventory, cross-source wrapper guidance, prohibited inferences, and system-verification checklist.
+- [`verified-capabilities.md`](./_legacy/abap-platform-2025/references/verified-capabilities.md) - source ledger, exact capability inventory, cross-source wrapper guidance, prohibited inferences, and system-verification checklist.
 
 Do not answer from the frontmatter description alone. The reference contains scope qualifiers that are intentionally omitted from the discovery description.
 

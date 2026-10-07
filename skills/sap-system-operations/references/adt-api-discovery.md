@@ -7,7 +7,7 @@ description: 'Investigate SAP ADT REST endpoints, HTTP methods, request and resp
 
 SAP Help baseline: https://help.sap.com/docs/ABAP_Cloud
 
-Use [the complete ADT API discovery reference](./adt-api-discovery/references/api-discovery-reference.md) as a staged investigation. Load only the current stage.
+Use [the complete ADT API discovery reference](./_legacy/adt-api-discovery/references/api-discovery-reference.md) as a staged investigation. Load only the current stage.
 
 ## Workflow
 

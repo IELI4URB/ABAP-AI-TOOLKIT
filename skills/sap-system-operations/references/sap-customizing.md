@@ -7,7 +7,7 @@ description: 'Trace SAP Customizing and SPRO configuration to IMG activities, tr
 
 SAP Help baseline: https://help.sap.com/docs/SAP_S4HANA_CLOUD
 
-Use this skill as the SPRO-to-storage router. Load only the relevant procedure from [the complete Customizing trace reference](./sap-customizing/references/customizing-trace-reference.md).
+Use this skill as the SPRO-to-storage router. Load only the relevant procedure from [the complete Customizing trace reference](./_legacy/sap-customizing/references/customizing-trace-reference.md).
 
 ## Workflow
 

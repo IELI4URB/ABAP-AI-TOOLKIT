@@ -5,7 +5,7 @@ description: 'Find released ABAP classes and interfaces for ABAP Cloud. Use for 
 
 # Released ABAP Classes
 
-Search [the released-class catalog](./abap-released-classes/references/released-classes-catalog.md) by capability. Prior examples are preserved in [the entry-point reference](./abap-released-classes/references/released-classes-entrypoint-reference.md).
+Search [the released-class catalog](./_legacy/abap-released-classes/references/released-classes-catalog.md) by capability. Prior examples are preserved in [the entry-point reference](./_legacy/abap-released-classes/references/released-classes-entrypoint-reference.md).
 
 ## Workflow
 

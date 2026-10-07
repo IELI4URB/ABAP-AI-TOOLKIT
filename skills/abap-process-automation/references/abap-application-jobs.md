@@ -10,7 +10,7 @@ metadata:
 
 SAP Help baseline: https://help.sap.com/docs/ABAP_Cloud
 
-Use this skill as the background-processing router. Load only the relevant part of [the complete Application Jobs reference](./abap-application-jobs/references/jobs-complete.md).
+Use this skill as the background-processing router. Load only the relevant part of [the complete Application Jobs reference](./_legacy/abap-application-jobs/references/jobs-complete.md).
 
 ## Ownership
 

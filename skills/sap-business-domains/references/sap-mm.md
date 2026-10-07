@@ -8,7 +8,7 @@ metadata:
 
 # SAP Materials Management
 
-Use this skill as the MM domain owner. Load only the relevant file under `references/`; prior governance is preserved in [the domain entry-point reference](./sap-mm/references/domain-entrypoint-reference.md).
+Use this skill as the MM domain owner. Load only the relevant file under `references/`; prior governance is preserved in [the domain entry-point reference](./_legacy/sap-mm/references/domain-entrypoint-reference.md).
 
 ## Workflow
 

@@ -10,7 +10,7 @@ metadata:
 
 SAP Help baseline: https://help.sap.com/docs/ABAP_Cloud
 
-Use this skill as the failure-semantics and observability router. Load only the relevant part of [the complete error-pattern reference](./abap-error-handling-resilience/references/error-patterns.md).
+Use this skill as the failure-semantics and observability router. Load only the relevant part of [the complete error-pattern reference](./_legacy/abap-error-handling-resilience/references/error-patterns.md).
 
 ## Ownership
 

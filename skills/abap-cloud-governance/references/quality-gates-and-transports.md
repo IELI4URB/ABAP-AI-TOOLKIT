@@ -1,11 +1,11 @@
 ---
-name: abap-devsecops-transport
+name: quality-gates-and-transports
 description: 'Govern ABAP Cloud delivery, ATC, transports, gCTS, cTMS, CI/CD, Cloud ALM, branches, approvals, rollback, emergency fixes, and waivers. Use for release pipelines and transport-readiness decisions.'
 ---
 
-# ABAP Cloud DevSecOps and Transport
+# ABAP Cloud Quality Gates and Transports
 
-Load detailed controls from [the preserved entry-point reference](./abap-devsecops-transport/references/entrypoint-reference.md) and the package reference files.
+Load detailed controls from [the preserved entry-point reference](./_legacy/abap-devsecops-transport/references/entrypoint-reference.md) and the package reference files.
 
 ## Workflow
 

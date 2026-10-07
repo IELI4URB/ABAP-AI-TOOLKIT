@@ -8,7 +8,7 @@ disable-model-invocation: false
 
 # ATQ Agentic Delivery
 
-This skill is the sole process-governance owner. The full protocol is preserved in [the ATQ delivery reference](./atq-principles/references/atq-delivery-protocol.md); the source learning map is [here](./atq-principles/references/atq-learning-map.md).
+This skill is the sole process-governance owner. The full protocol is preserved in [the ATQ delivery reference](./_legacy/atq-principles/references/atq-delivery-protocol.md); the source learning map is [here](./_legacy/atq-principles/references/atq-learning-map.md).
 
 ## Operating Loop
 
