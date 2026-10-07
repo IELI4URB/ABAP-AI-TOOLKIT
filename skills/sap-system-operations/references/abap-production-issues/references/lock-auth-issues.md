@@ -394,7 +394,7 @@ Maintain Business Roles
 |-------|--------|
 | **Launchpad cache** | After role changes, instruct the user to clear browser cache and log out/in. Fiori Launchpad caches tile visibility aggressively. |
 | **IAM app objects** | Every activated service binding generates a corresponding IAM app object. If the binding is re-created, the IAM app must be re-assigned to the catalog manually. |
-| **CDS DCL propagation** | Access control is evaluated at the CDS view layer. A projection view that selects from a base view with DCL will inherit the restriction — check both layers. |
+| **CDS DCL propagation** | Access control is evaluated for the entry-level CDS entity read by ABAP SQL. A wrapping/projection entity does not automatically inherit DCL from its source; define and test authorization on every exposed entry point. |
 | **Restriction type `#UNRESTRICTED` vs. blank** | Setting a restriction type to "Unrestricted" is not the same as leaving it blank. A blank value may be interpreted as "no value matches" by certain restriction type implementations. |
 
 ---

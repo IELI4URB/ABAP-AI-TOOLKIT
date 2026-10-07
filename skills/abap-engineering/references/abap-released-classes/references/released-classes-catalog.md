@@ -2,7 +2,7 @@
 
 Companion reference for the `abap-released-classes` skill. Lists additional released classes, interfaces, and key usage patterns for ABAP Cloud (BTP ABAP Environment, S/4HANA Public Cloud).
 
-> **C1 Contract:** All entries here are released (C1) unless explicitly marked `[C0 — not released]`.
+> **Discovery catalog only:** Verify each entry's API state, C1 contract, and visibility for the target language version/release. C0 means an extension contract, not "not released."
 
 ---
 

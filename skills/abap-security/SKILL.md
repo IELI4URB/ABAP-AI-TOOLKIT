@@ -9,6 +9,7 @@ Load one guide for the active security boundary.
 
 - [IAM and authorization architecture](./references/abap-iam-authorization.md)
 - [Security hardening](./references/abap-security-hardening.md)
+- [Official CDS access-control semantics](./references/official-cds-access-control.md)
 
 ## Workflow
 

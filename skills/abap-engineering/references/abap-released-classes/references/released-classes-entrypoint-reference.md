@@ -7,7 +7,7 @@ description: Quick reference for released ABAP classes available in ABAP Cloud. 
 
 Complete catalog of released classes available in **ABAP Cloud (BTP ABAP Environment, S/4HANA Public Cloud)** and on-premise S/4HANA systems. Use this skill to find the correct released class for your use case and get ready-to-use code examples.
 
-> **Key:** Released classes (C1 contract) are guaranteed to remain available across ABAP Cloud upgrades. Use these instead of unreleased classes when available.
+> **Key:** C1 provides a stable system-internal API contract, but target-release API state and Cloud Development visibility must still be verified. Treat this catalog as discovery evidence, not proof for every system.
 
 ## SAP Help Syntax Grounding (Mandatory)
 

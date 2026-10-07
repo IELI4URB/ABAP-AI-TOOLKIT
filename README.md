@@ -8,6 +8,17 @@ A shareable GitHub Copilot toolkit for SAP ABAP development. It installs:
 
 All 44 former standalone skills are preserved inside the 11 groups. Only the short group routers are registered, which keeps navigation and prompt context small.
 
+## Official ABAP Keyword Documentation Grounding
+
+The toolkit was refreshed against the nine requested ABAP Keyword Documentation sections and all of their descendants:
+
+- **4,962 unique SAP Help pages** retrieved and analyzed
+- **0 crawl failures**
+- DDIC, CDS, RAP, ABAP language/syntax, APIs/release contracts, release news, and glossary coverage
+- page bodies are not redistributed; Git contains original synthesized guides, a coverage report, and the reproducible crawler
+
+See [the crawl report](docs/ABAP_KEYWORD_CRAWL_REPORT.md), [SAP Help source index](docs/REFERENCE_SAP_HELP.md), and [ingestion script](scripts/ingest_abap_keyword_docs.py).
+
 Repository: https://github.tools.sap/I756261/SAP-DEV-AI-TOOLKIT
 
 ## Quick Install
@@ -94,6 +105,7 @@ agents/             7 GitHub Copilot agents and shared references
 claude-agents/      7 optional Claude Code mirrors
 config/             44-to-11 mapping and integrity hashes
 docs/               routing, governance, and SAP Help references
+scripts/            reproducible SAP Help metadata/content inventory tooling
 install.ps1         Windows installer
 install.sh          macOS/Linux installer
 validate_pack.py    package integrity validation

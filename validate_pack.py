@@ -97,6 +97,42 @@ def validate_skills(errors: list[str]) -> set[str]:
         if (SKILLS / legacy).exists():
             errors.append(f"Former top-level skill remains: {legacy}")
 
+    official_guides = (
+        SKILLS / "abap-cloud-governance" / "references" / "official-abap-cloud-apis-and-releases.md",
+        SKILLS / "abap-rap-services" / "references" / "official-ddic-cds-rap-semantics.md",
+        SKILLS / "abap-engineering" / "references" / "official-abap-language-and-syntax.md",
+        SKILLS / "abap-security" / "references" / "official-cds-access-control.md",
+        SKILLS / "abap-data-performance" / "references" / "official-ddic-cds-data-access.md",
+    )
+    for guide in official_guides:
+        if not guide.exists():
+            errors.append(f"Missing official ABAP Keyword guide: {guide.relative_to(ROOT)}")
+
+    crawl_report = ROOT / "docs" / "ABAP_KEYWORD_CRAWL_REPORT.md"
+    crawler = ROOT / "scripts" / "ingest_abap_keyword_docs.py"
+    if not crawl_report.exists() or not crawler.exists():
+        errors.append("Missing ABAP Keyword crawl report or reproducible ingestion script")
+    else:
+        report_text = read(crawl_report)
+        if "Unique pages retrieved: **4962**" not in report_text:
+            errors.append("ABAP Keyword crawl report does not prove 4,962-page coverage")
+        if "Failed pages: **0**" not in report_text:
+            errors.append("ABAP Keyword crawl report contains failures")
+
+    forbidden_guidance = {
+        "C0 is internal": "C0 is an extension contract",
+        "Use in Cloud Development | **C1**": "Cloud visibility is separate from C1",
+        "will inherit the restriction": "CDS DCL does not automatically propagate",
+        "[C0 — not released]": "C0 is a valid extension contract",
+    }
+    for markdown in SKILLS.rglob("*.md"):
+        text = read(markdown)
+        for marker, reason in forbidden_guidance.items():
+            if marker in text:
+                errors.append(
+                    f"Obsolete guidance in {markdown.relative_to(ROOT)}: {marker} ({reason})"
+                )
+
     return expected_groups
 
 

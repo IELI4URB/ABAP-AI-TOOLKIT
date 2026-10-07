@@ -20,7 +20,7 @@ Use [the complete Clean Core reference](./abap-clean-core-principles/references/
 ## Gates
 
 - Never infer release state from naming; verify source annotation, ADT API state, official catalog, or compiler evidence.
-- C0 is internal; C1 is the relevant Cloud Development contract.
+- C0 stabilizes extension points; C1 stabilizes system-internal API consumption. Cloud Development visibility is a separate API classification that must also be verified. Use C2 for remote APIs, C3 for configuration content, and C4 for AMDP contracts.
 - Do not modify SAP standard or present an unreleased dependency as production-safe.
 - Keep Tier 2 wrappers thin, governed, tested, and replaceable.
 

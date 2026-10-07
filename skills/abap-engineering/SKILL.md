@@ -7,6 +7,7 @@ description: 'Engineer and review maintainable ABAP. Use for implementation work
 
 | Need | Guide |
 |---|---|
+| Official ABAP syntax notation, language topics, glossary, release gate | [ABAP language and syntax](./references/official-abap-language-and-syntax.md) |
 | Requirement-to-code workflow and contract research | [Code writing](./references/abap-code-writing.md) |
 | Naming, methods, errors, formatting | [Clean ABAP](./references/clean-abap.md) |
 | SOLID and design patterns | [OOP design patterns](./references/abap-oops-design-patterns.md) |

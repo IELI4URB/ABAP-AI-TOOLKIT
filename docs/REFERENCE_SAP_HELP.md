@@ -1,5 +1,33 @@
 # SAP Help References Used
 
+## Exhaustive ABAP Keyword Documentation Review
+
+Reviewed on 2026-10-07 using SAP Help deliverable `abap-cloud-docs_abap-keyword-documentation_abap-for-cloud-development`, version `latest`, build `19`.
+
+- 9 requested section roots resolved through SAP Help metadata
+- 4,962 unique descendant pages retrieved and parsed
+- 0 crawl failures
+- 2,004,590 words analyzed in memory
+- Page bodies were not copied into the toolkit; the local inventory stores topic metadata, headings, hashes, links, and aggregate signals only
+
+Audit artifacts:
+
+- `docs/abap-keyword/abap-keyword-crawl-report.md`
+- `docs/abap-keyword/abap-keyword-topic-inventory.json` (local canonical pack only)
+- `scripts/ingest_abap_keyword_docs.py`
+
+Requested official section roots:
+
+- https://help.sap.com/docs/abap-cloud/abap-keyword/abap-cloud-documentation-landscape?locale=en-US
+- https://help.sap.com/docs/abap-cloud/abap-keyword/abap-dictionary-ddic?locale=en-US
+- https://help.sap.com/docs/abap-cloud/abap-keyword/abap-core-data-services-abap-cds?locale=en-US
+- https://help.sap.com/docs/abap-cloud/abap-keyword/abap-programming-language?locale=en-US
+- https://help.sap.com/docs/abap-cloud/abap-keyword/abap-rap-business-objects?locale=en-US
+- https://help.sap.com/docs/abap-cloud/abap-keyword/abap-apis?locale=en-US
+- https://help.sap.com/docs/abap-cloud/abap-keyword/abap-release-news?locale=en-US
+- https://help.sap.com/docs/abap-cloud/abap-keyword/abap-glossary?locale=en-US
+- https://help.sap.com/docs/abap-cloud/abap-keyword/abap-syntax-conventions?locale=en-US
+
 ## Core ABAP Cloud Hub
 
 - https://help.sap.com/docs/abap-cloud

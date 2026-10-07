@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "packages": {
     "abap-api-design-versioning": {
       "group": "abap-rap-services",
@@ -19,7 +19,7 @@
     "abap-events-and-enhancements": {
       "group": "abap-rap-services",
       "files": {
-        "references/events-and-badi-patterns.md": "97F625D759AC72993DCC8EE6CBC286BC462BB3E860ECE14CDE50EDE39E7DF24E",
+        "references/events-and-badi-patterns.md": "7EA54FD4D8C9B66ECEE6921EC876D679BDCE3922A4E15D6A4A4BE2C947C380CA",
         "SKILL.md": "5B798B041A29D705366E07DA17EFB8CE9A20BC7E786A7D36EBCB6B08C1B145A2"
       }
     },
@@ -140,8 +140,8 @@
     "abap-released-classes": {
       "group": "abap-engineering",
       "files": {
-        "references/released-classes-catalog.md": "07889B2BED5FAEDA05904DB40CD49A24F6A50F6B2987E168808DD053C0A132B5",
-        "references/released-classes-entrypoint-reference.md": "B66C920C07B5E9DC482B222868B0B11BCC7D2B7CB421EAA715F2F356ECBE587D",
+        "references/released-classes-catalog.md": "52CF1D6FD66D314A69D89C1615286351B7C244AC7D412D3D6F8793E6B421BC39",
+        "references/released-classes-entrypoint-reference.md": "B19F9DF249EF148C8F9E7EDF65DD792791879ABF5EC9BBF18CEA77184CDF027F",
         "SKILL.md": "F47F97B58DBB28BCC2A146DB58D7F4DB29E431599D03DF37B44276846A5B20F5"
       }
     },
@@ -164,8 +164,8 @@
       "group": "abap-cloud-governance",
       "files": {
         "references/clean-core-detail.md": "5EC74C36D3B739AF721A114999EA8B79A7C96853F824CEC4811FDCAB1A84F072",
-        "references/clean-core-entrypoint-reference.md": "27B709B3B7B5E79AA9DAC5D76B302C9D7254D70B2EAE129E72C229D686C54C70",
-        "SKILL.md": "C64B68A9EAF5DFAC3161BAE7F355BF62DC326E14B2DB46BD33F3BC7ED316F292"
+        "references/clean-core-entrypoint-reference.md": "C6CFB2EA0A2516E2CA86EC75BDE32D661F4A58136FC2E7C3EB654256123313C1",
+        "SKILL.md": "42AB73C0B450CF9018504831EA7A61B1220DD9385C6DD0C1A779578D958BB99C"
       }
     },
     "abap-devsecops-transport": {
@@ -218,7 +218,7 @@
       "group": "sap-system-operations",
       "files": {
         "references/framework-runtime.md": "0BEED108CA8A9CEAA0EE30143867A629669BDC50C5D1525B9068492FA0A92CFA",
-        "references/lock-auth-issues.md": "617395B0E5EBEAAF5271736F45DB1B97EDF0CD9FB2C45E8FD768E6D9A46D39EE",
+        "references/lock-auth-issues.md": "E9CBDF5BB745FD876B6FE1F84E5217B869B755606C4501810E36049D213CB6BE",
         "references/sql-data-volume.md": "CD9A5494D25EF9A970A6DF0DD8E857423E336DA65FAED30134472F2114B0902A",
         "references/transport-governance.md": "F6DDA5F3F089959620D811957A9861DF98A81F6A00596D165A449872623C2917",
         "SKILL.md": "2118E2BAAAA671E432410A9875A17FD69162CA49AC7B962841274A26965C0DA3"

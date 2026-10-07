@@ -7,6 +7,7 @@ description: 'Govern SAP ABAP Cloud and Clean Core delivery. Use for C0/C1 relea
 
 | Concern | Guide |
 |---|---|
+| Official language versions, C0-C4 contracts, API checks, release news | [ABAP Cloud APIs and releases](./references/official-abap-cloud-apis-and-releases.md) |
 | Release state, extension choice, Tier 2 | [Clean Core principles](./references/abap-clean-core-principles.md) |
 | Pipeline, ATC, transports, rollback | [DevSecOps and transport](./references/abap-devsecops-transport.md) |
 | abapGit, branches, Git/transport hybrid | [Git workflows](./references/abap-git-workflows.md) |

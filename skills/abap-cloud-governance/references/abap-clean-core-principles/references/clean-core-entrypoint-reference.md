@@ -52,8 +52,13 @@ Syntax output contract (mandatory when providing ABAP/CDS/BDL/EML syntax):
 
 | Contract | Code | Meaning |
 |---|---|---|
-| Use in Cloud Development | **C1** | Stable, backward-compatible, safe for ABAP Cloud |
-| Use System-Internally | **C0** | Internal SAP use only, can change without notice |
+| Extend | **C0** | Stable dedicated extension points; not a general consumption contract |
+| Use System-Internally | **C1** | Stable public interface for system-internal API consumption |
+| Use as Remote API | **C2** | Stable external contract; remote consumers should not require upgrade adaptation |
+| Manage Configuration Content | **C3** | Stable persistence for configuration tooling/content |
+| Use in AMDP | **C4** | Stable AMDP-consumption contract; no post-release changes |
+
+Release contract and visibility for ABAP for Cloud Development are separate classifications. For consumption from a restricted language version, verify both.
 
 | Release State | Meaning | Can Use? |
 |---|---|---|

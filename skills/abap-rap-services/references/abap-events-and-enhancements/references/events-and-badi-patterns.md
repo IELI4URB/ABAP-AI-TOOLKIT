@@ -783,7 +783,7 @@ CloudEvents:   enabled (auto-serialized by framework)
 | 3 | Event consumer crashes and propagates exception | Main LUW rolls back; user sees unrelated error | Always use TRY/CATCH in event handler methods; use application log |
 | 4 | Missing Event Binding artifact | Event raised locally but never sent to Event Mesh | Create and activate Event Binding in ADT |
 | 5 | Wrong topic format in Event Binding | Messages not routed to correct queue | Follow `sap/s4/beh/<module>/v<n>/<Entity>/<Type>/v<n>` exactly |
-| 6 | BDEF Extension without C1 contract check | Works in DEV, fails in transport to Cloud | Verify Business Accelerator Hub contract before extending |
+| 6 | BDEF extension without verified extensibility contract | Works in DEV, fails in transport to Cloud | Verify the provider's C0 extension contract and declared extension points; separately verify C1 contracts for APIs consumed by the extension |
 | 7 | `extend view entity` without extension include | DDIC activation error | Check that standard view has `_EXTENSION_INCLUDE` before extending |
 | 8 | BAdI implementation without filter match | BAdI called unexpectedly in wrong org context | Set correct filter values (sales org, company code) in BAdI implementation |
 | 9 | Calling `RAISE ENTITY EVENT` with wrong `%key` | Event fires with null payload; consumers receive empty events | Always populate `%key` exactly matching the BO's primary key fields |
