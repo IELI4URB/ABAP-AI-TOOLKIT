@@ -118,7 +118,7 @@ Maintainers on Windows can watch managed local skills and agents and push valida
 & .\automation\Install-ToolkitAutoSync.ps1
 ```
 
-See [the automation guide](automation/README.md) before enabling it. Git authentication must already work non-interactively, and conflicts or validation failures always require manual resolution.
+See the local auto-sync tooling (maintained outside this repository) before enabling it. Git authentication must already work non-interactively, and conflicts or validation failures always require manual resolution.
 
 ## Duplicate Agents
 

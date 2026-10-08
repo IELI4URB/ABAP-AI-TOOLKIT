@@ -225,7 +225,7 @@ On Windows, managed local skill and agent changes can be validated, committed, a
 & .\automation\Install-ToolkitAutoSync.ps1
 ```
 
-The automation stops on conflicts, validation failures, dirty repository content, unavailable credentials, or non-fast-forward remote changes. It never commits unrelated skills, extension-owned agents, logs, secrets, or immutable source snapshots. See [the automation guide](automation/README.md) for scope, logs, dry runs, status, and uninstall commands.
+The automation stops on conflicts, validation failures, dirty repository content, unavailable credentials, or non-fast-forward remote changes. It never commits unrelated skills, extension-owned agents, logs, secrets, or immutable source snapshots. See the local auto-sync tooling (maintained outside this repository) for scope, logs, dry runs, status, and uninstall commands.
 
 ## Optional Claude Code Agents
 

@@ -234,17 +234,6 @@ def validate_installers(errors: list[str]) -> None:
         if ".sap-dev-ai-toolkit-manifest" not in text:
             errors.append(f"Installer lacks managed-item manifest: {installer.name}")
 
-    automation_files = (
-        ROOT / "automation" / "sync_toolkit.py",
-        ROOT / "automation" / "Watch-ToolkitChanges.ps1",
-        ROOT / "automation" / "Install-ToolkitAutoSync.ps1",
-        ROOT / "automation" / "Test-ToolkitAutoSync.ps1",
-        ROOT / "automation" / "README.md",
-    )
-    for automation_file in automation_files:
-        if not automation_file.exists():
-            errors.append(f"Missing automation component: {automation_file.relative_to(ROOT)}")
-
 
 def main() -> int:
     errors: list[str] = []

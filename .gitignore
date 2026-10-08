@@ -11,3 +11,4 @@ __pycache__/
 *.p12
 secrets/
 credentials/
+automation/
