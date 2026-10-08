@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import hashlib
 import json
 import re
 import sys
@@ -24,24 +23,6 @@ EXPECTED_AGENT_NAMES = {
 
 def read(path: Path) -> str:
     return path.read_text(encoding="utf-8-sig")
-
-
-def sha256_candidates(path: Path) -> set[str]:
-    content = path.read_bytes()
-    candidates = {hashlib.sha256(content).hexdigest()}
-    try:
-        text = content.decode("utf-8-sig")
-        if "\x00" in text:
-            return candidates
-    except UnicodeDecodeError:
-        return candidates
-
-    normalized = text.replace("\r\n", "\n").replace("\r", "\n")
-    for line_ending in ("\n", "\r\n"):
-        variant = normalized.replace("\n", line_ending)
-        candidates.add(hashlib.sha256(variant.encode("utf-8")).hexdigest())
-        candidates.add(hashlib.sha256(variant.encode("utf-8-sig")).hexdigest())
-    return candidates
 
 
 def frontmatter(text: str) -> dict[str, str]:
