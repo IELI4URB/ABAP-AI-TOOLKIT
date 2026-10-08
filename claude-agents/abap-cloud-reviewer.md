@@ -47,7 +47,7 @@ Output contract:
 1. Findings first, ordered by severity
 2. SAP Help evidence for syntax or platform claims
 3. Open questions and assumptions
-4. Handoff feedback to analyzer, designer, or developer
+4. Handoff feedback to analyzer, architect, or developer
 5. Syntax confidence for any corrective code or syntax recommendation: verified, partial, or draft
 6. Release recommendation: block, conditional, or acceptable
 

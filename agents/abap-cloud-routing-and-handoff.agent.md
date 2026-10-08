@@ -2,7 +2,7 @@
 name: abap-cloud-routing-and-handoff
 description: 'Routes multi-phase ABAP work using ATQ governance. Use for requirements-to-code orchestration, role selection, context isolation, approval gates, artefact handoffs, and recovery. Does not implement or make domain decisions.'
 tools: [read, search, agent, todo]
-agents: [abap-cloud-analyzer, abap-cloud-designer, abap-cloud-enterprise-architect, abap-cloud-developer, abap-cloud-reviewer, abap-classic-developer, abap-ecc-to-s4hana-migration]
+agents: [abap-cloud-analyzer, abap-cloud-enterprise-architect, abap-cloud-developer, abap-cloud-reviewer, abap-classic-developer, abap-ecc-to-s4hana-migration]
 user-invocable: false
 disable-model-invocation: false
 ---

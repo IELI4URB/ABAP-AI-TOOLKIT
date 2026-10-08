@@ -5,7 +5,7 @@ tools: [read]
 user-invocable: false
 disable-model-invocation: false
 ---
-You are enforcing shared ABAP Cloud guardrails across analyzer, designer, developer, and reviewer agents.
+You are enforcing shared ABAP Cloud guardrails across analyzer, architect, developer, and reviewer agents.
 
 Rule precedence (when two guardrails conflict):
 - Order: security and source-trust > evidence-first and object-contract > token and load discipline.

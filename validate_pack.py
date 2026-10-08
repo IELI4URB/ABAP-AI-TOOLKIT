@@ -14,7 +14,6 @@ CONFIG = ROOT / "config"
 EXPECTED_AGENT_NAMES = {
     "abap-cloud-routing-and-handoff",
     "abap-cloud-analyzer",
-    "abap-cloud-designer",
     "abap-cloud-enterprise-architect",
     "abap-cloud-developer",
     "abap-cloud-reviewer",
@@ -217,6 +216,10 @@ def validate_agents(errors: list[str], expected_groups: set[str]) -> None:
         if not metadata.get("description") or not metadata.get("tools"):
             errors.append(f"Incomplete Claude frontmatter: {claude_file.relative_to(ROOT)}")
 
+    for agent_file in (*agent_files, *claude_files):
+        if "abap-cloud-designer" in read(agent_file):
+            errors.append(f"Retired agent name in {agent_file.relative_to(ROOT)}: abap-cloud-designer")
+
 
 def validate_links(errors: list[str]) -> None:
     for markdown in ROOT.rglob("*.md"):
@@ -229,7 +232,7 @@ def validate_links(errors: list[str]) -> None:
 def validate_installers(errors: list[str]) -> None:
     for installer in (ROOT / "install.ps1", ROOT / "install.sh"):
         text = read(installer)
-        if "11" not in text or "8" not in text:
+        if "11" not in text or "7" not in text:
             errors.append(f"Installer lacks expected-count guards: {installer.name}")
         if ".sap-dev-ai-toolkit-manifest" not in text:
             errors.append(f"Installer lacks managed-item manifest: {installer.name}")
@@ -249,7 +252,7 @@ def main() -> int:
         return 1
 
     print("Pack validation PASSED")
-    print("Validated 11 skill groups, self-contained references, 8 Copilot agents, and 8 Claude mirrors.")
+    print("Validated 11 skill groups, self-contained references, 7 Copilot agents, and 7 Claude mirrors.")
     return 0
 
 

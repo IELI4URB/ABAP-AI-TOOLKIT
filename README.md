@@ -1,8 +1,17 @@
-# ABAP-DEVELOPMENT-AI-TOOLKIT
+# ABAP Development AI Toolkit
 
-A governed SAP ABAP engineering toolkit for GitHub Copilot in Visual Studio Code.
+**Give GitHub Copilot an SAP ABAP brain — one that already knows Clean Core, RAP, released APIs, and your landscape before it writes a line.**
 
-It combines role-specific agents with progressively loaded SAP skills so analysis, architecture, implementation, review, and migration work follow consistent evidence, quality, and delivery standards. It supports ABAP Cloud, classic/Standard ABAP, and ECC-to-S/4HANA scenarios without mixing their landscape-specific rules.
+A governed SAP ABAP engineering toolkit for GitHub Copilot in Visual Studio Code. Role-specific agents and progressively loaded SAP skills keep analysis, architecture, implementation, review, and migration on consistent evidence, quality, and delivery standards — across ABAP Cloud, classic/Standard ABAP, and ECC-to-S/4HANA, without mixing their landscape-specific rules.
+
+**At a glance**
+
+- **7 role agents** — analyzer, architect, developer, reviewer, classic developer, ECC→S/4 migration, and a router that sequences them.
+- **11 SAP skill groups** — RAP/CDS, performance, security, integration, process automation, governance, forms, business domains, operations, and delivery.
+- **Evidence-first gates** — Clean Core, released-API, security, performance, testing, transport, and rollback checks applied *while building*, not just at release.
+- **Light by default** — short skill routers keep Copilot context small and load deep references only when the task needs them.
+
+> New here? Jump to [Installation](#installation) — clone, run one installer, reload VS Code.
 
 ## What It Does
 
@@ -217,16 +226,6 @@ git pull --ff-only
 
 The installer refreshes only toolkit-managed items recorded in its manifest. Unrelated skills and agents remain untouched.
 
-## Automatic Git Synchronization
-
-On Windows, managed local skill and agent changes can be validated, committed, and pushed automatically through a current-user Scheduled Task.
-
-```powershell
-& .\automation\Install-ToolkitAutoSync.ps1
-```
-
-The automation stops on conflicts, validation failures, dirty repository content, unavailable credentials, or non-fast-forward remote changes. It never commits unrelated skills, extension-owned agents, logs, secrets, or immutable source snapshots. See the local auto-sync tooling (maintained outside this repository) for scope, logs, dry runs, status, and uninstall commands.
-
 ## Optional Claude Code Agents
 
 Claude mirrors are not installed by default because some VS Code configurations display them alongside Copilot agents and create duplicate picker entries.
@@ -273,7 +272,7 @@ Python 3.10 or newer is required only for repository validation:
 python validate_pack.py
 ```
 
-The validator checks skill and agent counts, ownership boundaries, frontmatter, local links, archived-source integrity, routing, and package structure.
+The validator checks skill and agent counts, ownership boundaries, self-contained references, frontmatter, local links, routing, and package structure.
 
 ## Additional Documentation
 
@@ -286,7 +285,7 @@ The validator checks skill and agent counts, ownership boundaries, frontmatter, 
 skills/           SAP knowledge and workflow modules
 agents/           GitHub Copilot role agents and shared policies
 claude-agents/    Optional Claude Code mirrors
-config/           Skill ownership and integrity metadata
+config/           Skill ownership (group) map
 docs/             Team, governance, and SAP Help documentation
 scripts/          Documentation inventory and maintenance tooling
 install.ps1       Windows installer
