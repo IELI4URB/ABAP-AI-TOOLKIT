@@ -5,7 +5,7 @@ description: 'Discover installed or installable skills when users ask to find a 
 
 # Find Skills
 
-The prior catalog is preserved in [the entry-point reference](./_legacy/find-skills/references/entrypoint-reference.md), but verify recommendations against the live skill registry before presenting them.
+Verify recommendations against the live skill registry before presenting them.
 
 ## Workflow
 

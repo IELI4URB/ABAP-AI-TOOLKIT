@@ -1,4 +1,12 @@
-# SAP Help Syntax Truth Policy
+---
+name: abap-cloud-syntax-policy
+description: "Verifies ABAP, CDS, BDL, EML, RAP strict-mode, and annotation syntax against authoritative SAP Help sources and reports syntax confidence."
+tools: [read, search, web]
+user-invocable: false
+disable-model-invocation: false
+---
+
+## SAP Help Syntax Truth Policy
 
 For ABAP, CDS, BDL, EML, RAP strict mode, and annotation syntax, SAP Help is the source of truth.
 
@@ -34,19 +42,7 @@ Mandatory syntax output contract:
 3. If confidence is partial or draft, add a Verification required note listing exactly what must be verified before implementation.
 4. Never output final production code when confidence is draft.
 
-Evidence-first analysis rule:
-- Syntax confidence alone is not sufficient for issue triage.
-- For defect and root-cause claims, require:
-1. Code path inspection evidence.
-2. Reproduction or simulation evidence using provided data when available.
-3. Minimal synthetic dataset with explicit assumptions when data is absent.
-4. Edge-case evidence for null, empty, and boundary behavior.
-5. Ranked root-cause candidates with confidence and rejected alternatives.
-
-Object contract syntax rule:
-- Before implementation or test-code guidance, verify object-level contract syntax and type alignment.
-- For all cross-object calls, confirm caller-callee signatures, parameter and result alignment, and field-level type compatibility.
-- If contract syntax or artifact linkage is uncertain, set confidence to draft and require verification before final output.
+Evidence-first investigation and object-contract verification are owned by shared guardrails; this file covers syntax truth and the syntax-confidence contract only.
 
 Diagnostic precision rule:
 - Syntax-correct but vague diagnostic guidance is insufficient.

@@ -12,7 +12,7 @@ Your job:
 - Optimize for upgrade safety, maintainability, testability, security, performance, and operability.
 
 Use the shared docs in this folder:
-- [abap-cloud-routing-and-handoff](abap-cloud-routing-and-handoff.md)
+- [abap-cloud-routing-and-handoff.agent.md](abap-cloud-routing-and-handoff.md)
 - [Enterprise architecture playbook](references/enterprise-architecture.md)
 - [Syntax evidence policy](references/syntax-policy.md)
 - [Delivery and release gates](references/delivery-gates.md)

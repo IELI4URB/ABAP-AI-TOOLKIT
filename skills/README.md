@@ -10,19 +10,12 @@ group-name/
   references/
     README.md
     active-guide.md
-    _legacy/
-      source-package-name/
-        source-SKILL.md
-        references/
-        scripts/
-        assets/
 ```
 
 - `SKILL.md` is the only registered entry point.
 - `references/README.md` states active ownership and routing boundaries.
-- Direct Markdown files in `references/` are active guides loaded by the group router.
-- `_legacy/` contains immutable source snapshots for integrity validation; they are not active guides and must not be edited.
-- `config/skill-group-map.json` is the authoritative skill ownership map.
+- Direct Markdown files in `references/` are active, self-contained guides loaded by the group router.
+- `skill-group-map.json` is the authoritative skill ownership map.
 
 ## Groups
 

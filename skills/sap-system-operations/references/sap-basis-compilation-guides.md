@@ -14,7 +14,7 @@ Use this skill to turn a Basis administration question into a scoped, evidence-b
 
 The source page is a landing page for SAP Basis administration tips, tutorials, and troubleshooting guides. It contains no individual procedures, commands, prerequisites, or fixes. SAP labels it as **Additional Content**, not Documentation under the applicable SAP terms.
 
-Read [source-notes.md](./_legacy/sap-basis-compilation-guides/references/source-notes.md) before citing or characterizing the source. Never attribute a specific technical procedure to this landing page.
+Read the source notes inlined below before citing or characterizing the source. Never attribute a specific technical procedure to this landing page.
 
 ## Workflow
 
@@ -60,3 +60,22 @@ Read [source-notes.md](./_legacy/sap-basis-compilation-guides/references/source-
 ## Response Standard
 
 Keep the answer operational: state assumptions, provide the shortest discriminating checks first, and stop when evidence invalidates the current hypothesis. If authoritative guidance cannot be found, say so and provide a safe escalation package containing the symptom, timestamps, affected components, relevant logs, recent changes, and attempted checks.
+
+---
+
+## Source Notes
+
+## SAP Help Portal Page
+
+- Title: SAP Basis Compilation Guides
+- Collection: Basis Corner
+- URL: https://help.sap.com/docs/SUPPORT_CONTENT/basis/3354611513.html?locale=en-US
+- Accessed: 2026-09-30
+- Stated purpose: A page for SAP Basis administration tips, tutorials, and troubleshooting guides.
+- Authority label: Additional Content provided by SAP; not considered Documentation under the applicable SAP General Terms and Conditions.
+
+## Content Limitation
+
+The rendered article body contains only a brief welcome and purpose statement. It does not provide guide links, technical procedures, commands, prerequisites, troubleshooting trees, or product-version applicability.
+
+Use the page to establish topic scope only. For technical recommendations, locate product- and release-specific SAP Help, SAP Notes, Knowledge Base Articles, or other authoritative sources and cite those sources directly.

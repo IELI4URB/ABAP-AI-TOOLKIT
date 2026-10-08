@@ -5,7 +5,7 @@ description: 'Orchestrate end-to-end SAP ABAP Clean Core solution architecture a
 
 # Enterprise Clean Core Delivery
 
-Use this skill only for end-to-end, cross-phase solutioning. Prior governance is preserved in [the entry-point reference](./_legacy/sap-clean-core-enterprise/references/entrypoint-reference.md).
+Use this skill only for end-to-end, cross-phase solutioning.
 
 ## Workflow
 

@@ -5,7 +5,7 @@ description: 'Apply SAP S/4HANA Public Cloud and BTP ABAP Environment constraint
 
 # Public Cloud Development Constraints
 
-Use this guide for focused Public Cloud constraints, not general RAP or CDS implementation. Prior guidelines are preserved in [the entry-point reference](./_legacy/sap-cloud-dev/references/entrypoint-reference.md).
+Use this guide for focused Public Cloud constraints, not general RAP or CDS implementation.
 
 ## Workflow
 

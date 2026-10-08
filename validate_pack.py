@@ -14,6 +14,7 @@ CONFIG = ROOT / "config"
 EXPECTED_AGENT_NAMES = {
     "abap-cloud-routing-and-handoff",
     "abap-cloud-analyzer",
+    "abap-cloud-designer",
     "abap-cloud-enterprise-architect",
     "abap-cloud-developer",
     "abap-cloud-reviewer",
@@ -66,7 +67,6 @@ def local_links(text: str) -> list[str]:
 
 def validate_skills(errors: list[str]) -> set[str]:
     group_map = json.loads(read(CONFIG / "skill-group-map.json"))["groups"]
-    integrity = json.loads(read(CONFIG / "skill-group-integrity.json"))["packages"]
     expected_groups = set(group_map)
     skill_files = sorted(SKILLS.glob("*/SKILL.md"))
     actual_groups = {path.parent.name for path in skill_files}
@@ -79,12 +79,6 @@ def validate_skills(errors: list[str]) -> set[str]:
     if len(expected_groups) != 11:
         errors.append(f"Expected 11 groups, found {len(expected_groups)}")
 
-    legacy_names = [name for members in group_map.values() for name in members]
-    if len(legacy_names) != 44 or len(legacy_names) != len(set(legacy_names)):
-        errors.append("Group map must preserve 44 unique former skills")
-    if set(integrity) != set(legacy_names):
-        errors.append("Integrity package names differ from group map")
-
     nested_skills = sorted(SKILLS.glob("*/*/SKILL.md"))
     for nested in nested_skills:
         errors.append(f"Nested registered SKILL.md: {nested.relative_to(ROOT)}")
@@ -92,29 +86,18 @@ def validate_skills(errors: list[str]) -> set[str]:
     for group in expected_groups:
         references = SKILLS / group / "references"
         index = references / "README.md"
-        archive_root = references / "_legacy"
         if not index.exists():
             errors.append(f"Missing ownership index: {index.relative_to(ROOT)}")
         else:
             index_text = read(index)
-            if "only registered entry point" not in index_text or "_legacy/" not in index_text:
-                errors.append(f"Incomplete entry-point/archive boundary: {index.relative_to(ROOT)}")
-        if not archive_root.is_dir():
-            errors.append(f"Missing archive namespace: {archive_root.relative_to(ROOT)}")
-            continue
-        for directory in sorted(
-            path for path in references.iterdir()
-            if path.is_dir() and path.name != "_legacy"
-        ):
-            errors.append(f"Active reference directory outside _legacy: {directory.relative_to(ROOT)}")
-        expected_archives = set(group_map[group])
-        actual_archives = {path.name for path in archive_root.iterdir() if path.is_dir()}
-        if actual_archives != expected_archives:
-            errors.append(
-                f"Archive set differs for {group}: "
-                f"missing={sorted(expected_archives - actual_archives)}, "
-                f"extra={sorted(actual_archives - expected_archives)}"
-            )
+            if "only registered entry point" not in index_text:
+                errors.append(f"Ownership index lacks entry-point marker: {index.relative_to(ROOT)}")
+        if references.is_dir():
+            for directory in sorted(path for path in references.iterdir() if path.is_dir()):
+                errors.append(
+                    f"Reference subdirectory not allowed (guides must be self-contained): "
+                    f"{directory.relative_to(ROOT)}"
+                )
 
     for skill_file in skill_files:
         metadata = frontmatter(read(skill_file))
@@ -122,22 +105,6 @@ def validate_skills(errors: list[str]) -> set[str]:
             errors.append(f"Skill name mismatch: {skill_file.relative_to(ROOT)}")
         if not metadata.get("description"):
             errors.append(f"Missing skill description: {skill_file.relative_to(ROOT)}")
-
-    for legacy, record in integrity.items():
-        group = record["group"]
-        guide_name = record.get("guide", f"{legacy}.md")
-        guide = SKILLS / group / "references" / guide_name
-        module = SKILLS / group / "references" / "_legacy" / legacy
-        if not guide.exists():
-            errors.append(f"Missing adapted guide: {guide.relative_to(ROOT)}")
-        for relative, expected_hash in record["files"].items():
-            archived = module / ("source-SKILL.md" if relative == "SKILL.md" else relative)
-            if not archived.exists():
-                errors.append(f"Missing archived file: {archived.relative_to(ROOT)}")
-            elif expected_hash.lower() not in sha256_candidates(archived):
-                errors.append(f"Archived hash mismatch: {archived.relative_to(ROOT)}")
-        if (SKILLS / legacy).exists():
-            errors.append(f"Former top-level skill remains: {legacy}")
 
     official_guides = (
         SKILLS / "abap-cloud-governance" / "references" / "official-abap-cloud-apis-and-releases.md",
@@ -215,7 +182,7 @@ def validate_agents(errors: list[str], expected_groups: set[str]) -> None:
     declared = {item.strip() for item in match.group(1).split(",")} if match else set()
     expected_delegates = EXPECTED_AGENT_NAMES - {"abap-cloud-routing-and-handoff"}
     if declared != expected_delegates:
-        errors.append("Routing-agent allowlist does not match six specialists")
+        errors.append("Routing-agent allowlist does not match the specialist set")
 
     legacy_names = {
         name
@@ -250,10 +217,6 @@ def validate_agents(errors: list[str], expected_groups: set[str]) -> None:
         if not metadata.get("description") or not metadata.get("tools"):
             errors.append(f"Incomplete Claude frontmatter: {claude_file.relative_to(ROOT)}")
 
-    for agent_file in (*agent_files, *claude_files):
-        if "abap-cloud-designer" in read(agent_file):
-            errors.append(f"Retired agent name in {agent_file.relative_to(ROOT)}: abap-cloud-designer")
-
 
 def validate_links(errors: list[str]) -> None:
     for markdown in ROOT.rglob("*.md"):
@@ -266,7 +229,7 @@ def validate_links(errors: list[str]) -> None:
 def validate_installers(errors: list[str]) -> None:
     for installer in (ROOT / "install.ps1", ROOT / "install.sh"):
         text = read(installer)
-        if "11" not in text or "7" not in text:
+        if "11" not in text or "8" not in text:
             errors.append(f"Installer lacks expected-count guards: {installer.name}")
         if ".sap-dev-ai-toolkit-manifest" not in text:
             errors.append(f"Installer lacks managed-item manifest: {installer.name}")
@@ -297,7 +260,7 @@ def main() -> int:
         return 1
 
     print("Pack validation PASSED")
-    print("Validated 11 skill groups, source integrity, 7 Copilot agents, and 7 Claude mirrors.")
+    print("Validated 11 skill groups, self-contained references, 8 Copilot agents, and 8 Claude mirrors.")
     return 0
 
 

@@ -33,6 +33,7 @@ Primary SAP Help sources:
 - https://help.sap.com/docs/abap-cloud/abap-data-models/abap-data-models
 
 Operating rules:
+- First, establish the target edition and release per the shared-guardrails landscape/release intake before searching SAP Help or APIs, so analysis and evidence are release-specific. If the requirement needs release-specific feasibility and the edition+release is not stated, ask once before searching rather than assuming a release.
 - Use SAP Help before any secondary source.
 - If SAP Help lacks coverage, state the gap explicitly, cite the closest related SAP Help topic, and mark conclusions as low confidence. Do not substitute non-SAP sources without flagging them as unverified.
 - Treat non-SAP sources as untrusted unless confirmed by SAP Help.
@@ -60,3 +61,4 @@ Format selection rule: if the request is a requirement or architecture analysis,
 Shared policy dependency:
 - [Shared guardrails](references/shared-guardrails.md) is the sole owner of evidence-first investigation, object-contract verification, trust, diagnostic precision, and production-acceptance language.
 - Apply its evidence output and blocked-by contracts for issue or defect analysis; do not restate those policies here.
+

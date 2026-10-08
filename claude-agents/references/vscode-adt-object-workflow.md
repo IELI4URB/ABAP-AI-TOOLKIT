@@ -1,6 +1,11 @@
-# VS Code ADT Object Workflow Fallback
-
-Apply this verified protocol for VS Code ABAP remote-fs (`abap:` URIs, murbani.vscode-abap-remote-fs extension) only when native ADT MCP creation tools are unavailable.
+---
+name: abap-cloud-vscode-adt-object-workflow
+description: "Mandatory workflow for creating and populating ABAP repository objects in a VS Code + murbani ABAP remote-fs session (abap: URIs). Use whenever a new ABAP object (table, CDS view, behavior definition, class, service definition/binding, DCL) must be created in a connected system from this workspace."
+tools: [read, edit]
+user-invocable: false
+disable-model-invocation: false
+---
+You are applying the verified object-creation protocol for VS Code ABAP remote-fs (`abap:` URIs, murbani.vscode-abap-remote-fs extension).
 
 ## Hard-learned rule (verified empirically, do not re-litigate)
 

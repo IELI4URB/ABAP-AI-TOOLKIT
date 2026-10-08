@@ -10,7 +10,7 @@ metadata:
 
 SAP Help baseline: https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model
 
-Use this skill as the extensibility-mechanism router. Load only the relevant part of [the complete events and BAdI reference](./_legacy/abap-events-and-enhancements/references/events-and-badi-patterns.md).
+Use this skill as the extensibility-mechanism router. The complete events and BAdI reference is split across the sibling guides linked below.
 
 ## Ownership
 
@@ -27,19 +27,16 @@ This skill owns the choice and lifecycle of RAP events, event consumers, Cloud B
 
 ## Reference Routing
 
-| Request | Read sections in `events-and-badi-patterns.md` |
+| Request | Guide |
 |---|---|
-| Mechanism selection | 1, 13 |
-| RAP event producer | 2 |
-| Local event consumer | 3 |
-| Remote Event Mesh consumer | 4 |
-| Derived events | 5 |
-| Cross-BO events | 6, plus `abap-platform-2025` |
-| Cloud BAdI | 7 |
-| BDEF extension | 8 |
-| CDS or metadata extension | 9 |
-| Availability and review | 10, 12 |
-| End-to-end example | 11 |
+| Mechanism selection (events vs BAdIs vs extensions) | [RAP business events](./rap-business-events.md) |
+| RAP event producer, local and remote consumers, Event Mesh | [RAP business events](./rap-business-events.md) |
+| Derived events and cross-BO events | [RAP business events](./rap-business-events.md) |
+| End-to-end event chain example | [RAP business events](./rap-business-events.md) |
+| Platform availability, common pitfalls, quick reference | [RAP business events](./rap-business-events.md) |
+| Cloud BAdI implementation | [BAdIs and enhancements](./badis-and-enhancements.md) |
+| BDEF extension (validations, determinations, events) | [BAdIs and enhancements](./badis-and-enhancements.md) |
+| CDS or metadata extension | [BAdIs and enhancements](./badis-and-enhancements.md) |
 
 ## Mandatory Gates
 
@@ -53,4 +50,3 @@ This skill owns the choice and lifecycle of RAP events, event consumers, Cloud B
 ## Response Shape
 
 For non-trivial requests, state timing and coupling needs, selected mechanism, provider contracts, transaction and failure model, artifacts, tests, and released-object evidence.
-

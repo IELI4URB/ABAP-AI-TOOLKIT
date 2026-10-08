@@ -63,27 +63,27 @@ This skill applies when the user mentions any of the following:
 
 | Category | Issue | Reference File → Section |
 |---|---|---|
-| SQL | Large range / IN clause overflow (`CX_SY_SQL_TOO_MANY_IN_VALUES`) | `sql-data-volume.md` → §1 |
-| SQL | FOR ALL ENTRIES with empty driver table (silent full-table read) | `sql-data-volume.md` → §2 |
-| SQL | FOR ALL ENTRIES with 50K+ driver table (timeout / memory dump) | `sql-data-volume.md` → §3 |
-| SQL | TIME_OUT dump | `sql-data-volume.md` → §4 |
-| SQL | TSV_TNEW_PAGE_ALLOC_FAILED (memory dump) | `sql-data-volume.md` → §5 |
-| SQL | N+1 SELECT inside LOOP (extreme slowness at scale) | `sql-data-volume.md` → §6 |
-| RAP / OData | HTTP 500 from OData / Fiori generic "An error occurred" | `framework-runtime.md` → §1 |
-| RAP / OData | Draft activation failure / action error / FAILED without REPORTED | `framework-runtime.md` → §2 |
-| Integration | AIF message in ERROR status / stuck queue | `framework-runtime.md` → §3 |
-| Integration | HTTP outbound 401 / 403 / 408 / timeout | `framework-runtime.md` → §4 |
-| Jobs | Background job FAILED or stuck ACTIVE | `framework-runtime.md` → §5 |
-| Locks | ENQUEUE_FAILED / lock conflict / document locked | `lock-auth-issues.md` → §1 |
-| Locks | RAP draft lock — "Object is already being edited" | `lock-auth-issues.md` → §2 |
-| Locks | Database deadlock (`DBIF_RSQL_SQL_ERROR`) | `lock-auth-issues.md` → §3 |
-| Auth | AUTHORITY-CHECK sy-subrc = 4 in production | `lock-auth-issues.md` → §4 |
-| Auth | IAM / Business Role issues — empty Fiori tiles, no data, buttons missing | `lock-auth-issues.md` → §5 |
-| Transport | ATC P1 / P2 finding blocking transport release | `transport-governance.md` → §1 |
-| Transport | Activation error after transport import | `transport-governance.md` → §2 |
-| Transport | Downgrade check failure | `transport-governance.md` → §3 |
-| Transport | Clean core violation after transport (released API / release gap) | `transport-governance.md` → §4 |
-| Transport | Emergency transport procedure | `transport-governance.md` → §5 |
+| SQL | Large range / IN clause overflow (`CX_SY_SQL_TOO_MANY_IN_VALUES`) | [sql-data-volume.md](./sql-data-volume.md) → §1 |
+| SQL | FOR ALL ENTRIES with empty driver table (silent full-table read) | [sql-data-volume.md](./sql-data-volume.md) → §2 |
+| SQL | FOR ALL ENTRIES with 50K+ driver table (timeout / memory dump) | [sql-data-volume.md](./sql-data-volume.md) → §3 |
+| SQL | TIME_OUT dump | [sql-data-volume.md](./sql-data-volume.md) → §4 |
+| SQL | TSV_TNEW_PAGE_ALLOC_FAILED (memory dump) | [sql-data-volume.md](./sql-data-volume.md) → §5 |
+| SQL | N+1 SELECT inside LOOP (extreme slowness at scale) | [sql-data-volume.md](./sql-data-volume.md) → §6 |
+| RAP / OData | HTTP 500 from OData / Fiori generic "An error occurred" | [framework-runtime.md](./framework-runtime.md) → §1 |
+| RAP / OData | Draft activation failure / action error / FAILED without REPORTED | [framework-runtime.md](./framework-runtime.md) → §2 |
+| Integration | AIF message in ERROR status / stuck queue | [framework-runtime.md](./framework-runtime.md) → §3 |
+| Integration | HTTP outbound 401 / 403 / 408 / timeout | [framework-runtime.md](./framework-runtime.md) → §4 |
+| Jobs | Background job FAILED or stuck ACTIVE | [framework-runtime.md](./framework-runtime.md) → §5 |
+| Locks | ENQUEUE_FAILED / lock conflict / document locked | [lock-auth-issues.md](./lock-auth-issues.md) → §1 |
+| Locks | RAP draft lock — "Object is already being edited" | [lock-auth-issues.md](./lock-auth-issues.md) → §2 |
+| Locks | Database deadlock (`DBIF_RSQL_SQL_ERROR`) | [lock-auth-issues.md](./lock-auth-issues.md) → §3 |
+| Auth | AUTHORITY-CHECK sy-subrc = 4 in production | [lock-auth-issues.md](./lock-auth-issues.md) → §4 |
+| Auth | IAM / Business Role issues — empty Fiori tiles, no data, buttons missing | [lock-auth-issues.md](./lock-auth-issues.md) → §5 |
+| Transport | ATC P1 / P2 finding blocking transport release | [transport-governance.md](./transport-governance.md) → §1 |
+| Transport | Activation error after transport import | [transport-governance.md](./transport-governance.md) → §2 |
+| Transport | Downgrade check failure | [transport-governance.md](./transport-governance.md) → §3 |
+| Transport | Clean core violation after transport (released API / release gap) | [transport-governance.md](./transport-governance.md) → §4 |
+| Transport | Emergency transport procedure | [transport-governance.md](./transport-governance.md) → §5 |
 
 ## Response Format
 

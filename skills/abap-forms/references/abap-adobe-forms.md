@@ -5,15 +5,15 @@ description: 'Design and deliver Adobe Forms across S/4HANA Public Cloud, Privat
 
 # Adobe Forms
 
-Use this skill as the forms architecture router. Preserve governance details in [the complete entry-point reference](./_legacy/abap-adobe-forms/references/forms-entrypoint-reference.md) and load only the domain reference needed.
+Use this skill as the forms architecture router. The governing landscape, RAP/OData, and dynamic-content references are split into focused sibling guides. Load only the one needed.
 
 ## Routing
 
 | Concern | Reference |
 |---|---|
-| Landscape, runtime, template lifecycle | [Landscape and architecture](./_legacy/abap-adobe-forms/references/landscape-and-architecture.md) |
-| RAP/OData data provider and PDF rendering | [RAP, OData, and rendering](./_legacy/abap-adobe-forms/references/rap-odata-and-rendering.md) |
-| Dynamic text, logos, assets | [Dynamic content and assets](./_legacy/abap-adobe-forms/references/dynamic-content-and-assets.md) |
+| Landscape, runtime, template lifecycle | [Landscape and architecture](./adobe-forms-landscape-architecture.md) |
+| RAP/OData data provider and PDF rendering | [RAP, OData, rendering](./adobe-forms-rap-odata-rendering.md) |
+| Dynamic text, logos, assets | [Dynamic content and assets](./adobe-forms-dynamic-content-assets.md) |
 
 ## Workflow
 
@@ -25,4 +25,3 @@ Use this skill as the forms architecture router. Preserve governance details in 
 ## Gates
 
 Do not mix Public Cloud Forms Objects, Private/on-premise SFP, and BTP Forms service paths. Verify released APIs and template/schema compatibility for the exact target before production guidance.
-

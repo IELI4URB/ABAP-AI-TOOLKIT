@@ -15,7 +15,9 @@ description: 'Apply SAP S/4HANA business-domain guidance for Finance, Materials 
 
 1. Select one primary domain from the business process.
 2. Establish landscape, organizational scope, document/status lifecycle, controls, volume, and cross-module boundaries.
-3. Load another domain guide only for a real integration boundary.
-4. Add at most two technical group skills for the active implementation phase.
+3. Use that domain entry's explicit reference map and read at most one focused reference when needed.
+4. Classify technical candidates as C0, C1, C2, or classic/Tier 2 and verify the required contract in the target system.
+5. Load another domain guide only for a real integration boundary.
+6. Add at most two technical group skills for the active implementation phase.
 
-Preserve business document integrity and verify released technical contracts separately from familiar business object names.
+Focused legacy references provide candidate discovery only. Preserve business document integrity and verify released technical contracts separately from familiar business object names.

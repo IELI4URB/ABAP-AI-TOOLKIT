@@ -246,8 +246,8 @@ def managed_inventory(roots: Roots) -> tuple[list[str], list[str]]:
     )
     if len(skill_groups) != 11:
         raise SyncError(f"Expected 11 managed skill groups, found {len(skill_groups)}")
-    if len(agent_files) != 7:
-        raise SyncError(f"Expected 7 managed Copilot agents, found {len(agent_files)}")
+    if len(agent_files) != 8:
+        raise SyncError(f"Expected 8 managed Copilot agents, found {len(agent_files)}")
     return skill_groups, agent_files
 
 

@@ -1,4 +1,12 @@
-# Production Delivery Gates
+---
+name: abap-cloud-delivery-gates
+description: "Evaluates definition of done, test and ATC evidence, release readiness, rollback planning, and residual-risk acceptance for ABAP delivery. Does not implement changes."
+tools: [read, search]
+user-invocable: false
+disable-model-invocation: false
+---
+
+## Production Delivery Operating Model
 
 Use this gate flow for delivery-oriented requests:
 P0. Intake and constraints
@@ -48,13 +56,7 @@ Development-time gates:
 - Gate D3 before merge: perform ABAP Unit, ATC, and transport-readiness checks.
 
 Definition of done:
-- Cloud compliance and released-object constraints are satisfied.
-- Contracts are documented and backward compatibility is explicit.
-- Security, authorization, and resilience are validated.
-- Performance risks are assessed and mitigated.
-- Tests are present and passing.
-- ATC or readiness gates are green or waived with accepted risk.
-- Operational runbook exists.
+- Definition of done = the shared-guardrails production-acceptance checklist is fully satisfied (do not restate it here).
 
 Forbidden recommendations:
 - Unreleased object access in cloud-mode solutions.
@@ -66,4 +68,4 @@ Forbidden recommendations:
 
 ## Shared Guardrail Dependency
 
-Apply [shared guardrails](shared-guardrails.md) before evaluating this definition of done. The reviewer owns the final gate verdict.
+`abap-cloud-shared-guardrails` owns evidence-first investigation, object-contract verification, diagnostic precision, trust, and acceptance-language checks. Apply that policy before evaluating this delivery definition of done; do not duplicate it here.

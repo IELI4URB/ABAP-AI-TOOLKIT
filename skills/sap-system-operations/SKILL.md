@@ -16,4 +16,16 @@ description: 'Investigate and operate SAP ABAP systems. Use for production incid
 | Reproducible SAP data analysis | [Data workbook](./references/sap-data-workbook.md) |
 | System inventory and health narrative | [System personality](./references/sap-system-personality-report.md) |
 
+## Remote Workspace Routing
+
+Use the official SAP ABAP Development Tools for VS Code and the configured `adt-mcp-server/*` tools.
+
+| Landscape | Destination type |
+|---|---|
+| On-premise or SAP S/4HANA Cloud Private Edition | RFC |
+| SAP BTP ABAP environment or SAP S/4HANA Cloud Public Edition | HTTP |
+
+For repository discovery, first resolve the mounted `abap:` workspace destination and enumerate its virtual directory. Do not convert the URI to a Windows path, and do not rely on generic indexed workspace search because remote objects may not be indexed. If directory discovery is insufficient, call ADT MCP object search/source tools for that destination. Ask once when multiple destinations are ambiguous; report a missing mount or connection as the blocker.
+
 Load one workflow guide at a time and preserve evidence, authorization, and operational safety boundaries.
+

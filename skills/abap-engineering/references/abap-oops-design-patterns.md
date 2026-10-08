@@ -5,7 +5,7 @@ description: 'Apply OOP and design patterns in SAP ABAP Cloud. Use for SOLID, Re
 
 # ABAP Cloud OOP and Patterns
 
-Use [SOLID principles](./_legacy/abap-oops-design-patterns/references/solid-principles.md) and [design patterns](./_legacy/abap-oops-design-patterns/references/design-patterns.md) selectively. Prior entry-point guidance is preserved in [the entry-point reference](./_legacy/abap-oops-design-patterns/references/entrypoint-reference.md).
+SOLID principles and design patterns are included below; apply them selectively.
 
 ## Workflow
 
@@ -19,3 +19,9 @@ Use [SOLID principles](./_legacy/abap-oops-design-patterns/references/solid-prin
 
 Avoid pattern-driven ceremony, service locators, hidden globals, broad interfaces, and abstractions without a second use or clear volatility boundary.
 
+## Topics
+
+| Topic | Guide |
+|---|---|
+| OOP design principles (SOLID, class design, layering) | [OOP design principles](./abap-oop-design-principles.md) |
+| Design patterns catalog (Repository, Strategy, Factory, and more) | [Design patterns catalog](./abap-oop-design-patterns-catalog.md) |

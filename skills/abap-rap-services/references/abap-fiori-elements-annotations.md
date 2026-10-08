@@ -28,19 +28,10 @@ This skill owns Fiori Elements presentation annotations, metadata-extension plac
 | Request | Read |
 |---|---|
 | Annotation legality, scope, MDE support, layers, propagation | [official annotation semantics](./official-cds-annotations.md) |
-| Value help, dependent binding, text display, dropdown | [value-help and text display](./_legacy/abap-fiori-elements-annotations/references/value-help-and-text-display.md) |
-| Placement or metadata extension | `ui-annotations-catalog.md`, sections 1-2 |
-| List report columns | section 3 |
-| Header, facets, field groups, identification | sections 4-7 |
-| Filter bar | section 8 |
-| General value-help catalog | section 9, then the dedicated value-help reference |
-| Side effects or draft UI | sections 10-11 |
-| Charts or analytical list page | sections 12-13 |
-| Search | section 14 |
-| Review or complete examples | sections 15-18 |
+| Placement, metadata extension, line items, facets, field groups, header, filter bar, charts, ALP, search, complete examples | [UI annotations catalog](./fiori-ui-annotations-catalog.md) |
+| Value help, dependent binding, text display, dropdown, text arrangement | [Value help and text display](./fiori-value-help-and-text-display.md) |
 
-The catalog is [the UI annotations reference](./_legacy/abap-fiori-elements-annotations/references/ui-annotations-catalog.md).
-
+The [UI annotations catalog](./fiori-ui-annotations-catalog.md) and [Value help and text display](./fiori-value-help-and-text-display.md) references are sibling files.
 ## Mandatory Gates
 
 - Do not infer annotation placement from the annotation prefix; classify the CDS artifact and consumer first.
@@ -53,4 +44,3 @@ The catalog is [the UI annotations reference](./_legacy/abap-fiori-elements-anno
 ## Response Shape
 
 For non-trivial requests, state target versions and artifact type, annotation ownership, provider/text/value-help contracts, expected metadata, validation steps, and unresolved release assumptions.
-
