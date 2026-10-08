@@ -105,7 +105,7 @@ The installer writes `.sap-dev-ai-toolkit-manifest` files in both destination fo
 
 1. Reads the previous toolkit-owned item list.
 2. Removes only obsolete toolkit-owned items.
-3. Reinstalls the current 11 groups and 7 agents.
+3. Reinstalls the current 11 groups and 8 agents.
 4. Leaves unrelated skills and agents from other packages untouched.
 
 Obsolete toolkit-managed entries recorded by an earlier installation are removed automatically.
@@ -138,4 +138,4 @@ Before sharing or publishing:
 python validate_pack.py
 ```
 
-The validator checks group count, ownership indexes, the `_legacy` archive boundary, frontmatter, local links, archived content hashes, agent topology, Claude mirrors, and grouped routing.
+The validator checks group count, ownership indexes, self-contained references, frontmatter, local links, agent topology, Claude mirrors, and grouped routing.

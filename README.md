@@ -289,7 +289,6 @@ claude-agents/    Optional Claude Code mirrors
 config/           Skill ownership and integrity metadata
 docs/             Team, governance, and SAP Help documentation
 scripts/          Documentation inventory and maintenance tooling
-automation/       Validated local-to-Git synchronization and task setup
 install.ps1       Windows installer
 install.sh        macOS/Linux installer
 validate_pack.py  Repository validator

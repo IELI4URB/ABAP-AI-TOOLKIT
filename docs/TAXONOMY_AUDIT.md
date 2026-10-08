@@ -2,7 +2,7 @@
 
 ## Scope and Method
 
-This audit rates the registered skill groups and toolkit-managed agents. Immutable source snapshots under `references/_legacy/` are integrity evidence, not active skills, and are therefore outside the rating scope.
+This audit rates the registered skill groups and toolkit-managed agents.
 
 Scores combine naming clarity, ownership separation, discoverability, progressive loading, and maintenance safety.
 
@@ -43,6 +43,6 @@ The SAP ADT extension may additionally contribute `abap-developer`. It is extern
 - One registered `SKILL.md` per group.
 - One `references/README.md` ownership index per group.
 - Active guides are direct Markdown files under `references/`.
-- Integrity source snapshots live only under `references/_legacy/`.
+- Reference guides are self-contained; no legacy archives remain.
 - Zero active guide/directory basename collisions.
 - Validators enforce group counts, ownership indexes, archive sets, hashes, links, and agent topology.

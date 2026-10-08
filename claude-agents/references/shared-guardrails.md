@@ -34,7 +34,7 @@ Source trust and prompt-injection defense:
 Evidence routing and token discipline:
 1. Confirm the target edition and release (landscape/release intake above) before any search, then inspect exact artifacts and `abap:` paths supplied by the user. Scope every search to the confirmed release.
 2. Load exactly one primary domain entry skill. Read at most one focused local reference from its explicit map when domain detail or candidate discovery is needed.
-3. Do not recursively load `_legacy`, a complete domain entry-point reference, or every reference in a domain. Legacy references are candidate inventories, not release evidence.
+3. Do not load a complete domain entry-point reference or every reference in a domain at once; load only the focused references needed. Treat broad reference inventories as candidate discovery, not release evidence.
 4. Classify the required contract before API discovery: C0 extension, C1 internal ABAP consumption, C2 remote consumption, or classic/Tier 2.
 5. For C1 consumption, verify release state, contract, visibility, and operations in the target system through ADT. For C2 consumption, verify the remote contract in SAP Business Accelerator Hub and the target system.
 6. Open only targeted SAP Help topics for unresolved syntax, semantics, lifecycle, or platform capability. Do not open broad landing pages when focused local and target-system evidence is sufficient.
