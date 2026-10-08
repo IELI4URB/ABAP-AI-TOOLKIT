@@ -14,13 +14,23 @@ Use [the complete code-writing process](./_legacy/abap-code-writing/references/c
 
 ## Workflow
 
-1. Confirm requirement, inputs, outputs, landscape, constraints, and acceptance criteria.
+1. Confirm requirement, inputs, outputs, landscape, constraints, acceptance criteria,
+   destination, package, package language version, Clean Core tier, transport, and
+   direct ADT MCP versus explicitly approved local-prototype mode.
 2. Inspect the SAP system and search for standard or existing custom capabilities.
 3. Define architecture and capability boundaries.
 4. Verify every reused object, signature, DDIC type, key, and release contract.
 5. Produce an implementation-ready object and method plan.
 6. Write one bounded change, then run the smallest falsifying validation.
 7. Add focused tests and complete review/release gates appropriate to risk.
+
+For Tier 1 Clean Core implementation, do not edit or create until the package uses
+ABAP for Cloud Development. If it uses Standard ABAP, stop and request a package
+correction. Use Standard ABAP only for an explicitly approved Tier 2/classic scope.
+
+For connected-system development, create new repository objects through ADT MCP
+before populating their returned shells. Do not first create equivalent virtual or
+local files.
 
 ## Hard Rules
 
@@ -29,6 +39,16 @@ Use [the complete code-writing process](./_legacy/abap-code-writing/references/c
 - Match generated identifiers to ABAP limits and project naming conventions.
 - Use SQL/CDS test environments for database-dependent ABAP Unit tests.
 - Keep explanations outside copy-ready code blocks and clearly label partial snippets.
+- Before each repair, state one local hypothesis and one discriminating check. Do
+	not change multiple independent boundaries before running that check.
+- Limit speculative repair attempts for the same failure to three. Then inspect the
+	typed failure (`FAILED`, `%fail-cause`, `REPORTED`, activation error), step to the
+	owning abstraction, or stop with a handoff.
+- Prefer backend activation/runtime evidence over stale editor diagnostics. Refresh
+	the ABAP filesystem once after successful activation before investigating a cached
+	problem.
+- Re-read files reported as user-modified immediately before editing and preserve
+	those changes.
 
 ## Ownership
 
