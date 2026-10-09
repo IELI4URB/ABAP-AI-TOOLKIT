@@ -26,6 +26,8 @@ classic/Standard ABAP, and ECC-to-S/4HANA, without mixing their landscape-specif
 - Loads detailed guidance progressively, keeping routine Copilot context smaller.
 - Supports connected-system workflows through ADT and MCP tools when those tools are available and configured.
 
+**The toolkit turns ADT MCP into a repeatable development workflow. Agents no longer rediscover the server, tools, schemas, and creation sequence for every task. They reuse the active SAP destination and follow a predefined lifecycle for object discovery, validation, transport selection, creation, source population, activation, testing, and ATC.**
+
 ## Practical Benefits
 
 - **Correct role for each phase:** analysis, architecture, implementation, and review have separate owners, reducing conflicting responsibilities and self-review bias.
