@@ -1,6 +1,6 @@
 # ABAP Development AI Toolkit
 
-**Give GitHub Copilot an SAP ABAP brain — one that already knows Clean Core, RAP, released APIs, and your landscape before it writes a line.**
+Give your AI coding agent an SAP ABAP engineering brain, grounded in Clean Core, RAP, released APIs, and verified landscape context before implementation begins.
 
 An end-to-end agentic SAP ABAP engineering toolkit for AI coding assistants. It provides ready-to-use agents for GitHub Copilot and Claude Code, 
 while its reusable SAP skills can be adapted to other platforms that support custom agents, skills, or instructions. Role-specific agents and progressively loaded SAP skills keep analysis, 
