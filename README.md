@@ -2,7 +2,10 @@
 
 **Give GitHub Copilot an SAP ABAP brain — one that already knows Clean Core, RAP, released APIs, and your landscape before it writes a line.**
 
-A governed SAP ABAP engineering toolkit for GitHub Copilot in Visual Studio Code. Role-specific agents and progressively loaded SAP skills keep analysis, architecture, implementation, review, and migration on consistent evidence, quality, and delivery standards — across ABAP Cloud, classic/Standard ABAP, and ECC-to-S/4HANA, without mixing their landscape-specific rules.
+An end-to-end agentic SAP ABAP engineering toolkit for AI coding assistants. It provides ready-to-use agents for GitHub Copilot and Claude Code, 
+while its reusable SAP skills can be adapted to other platforms that support custom agents, skills, or instructions. Role-specific agents and progressively loaded SAP skills keep analysis, 
+architecture, implementation, review, and migration on consistent evidence, quality, and delivery standards — across ABAP Cloud, 
+classic/Standard ABAP, and ECC-to-S/4HANA, without mixing their landscape-specific rules.
 
 **At a glance**
 
