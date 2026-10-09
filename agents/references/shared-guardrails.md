@@ -20,7 +20,7 @@ Change-scope scaling (fast lane for trivial work):
 
 Response classification (mandatory first line of every response):
 - Begin every response with exactly one classification line before any other output:
-  [Format: A — New development] | [Format: B — Existing object] | [Format: C — Defect triage] | [Format: Point query] | [Format: Governed workflow]
+  [Format: <agent-label>] — use the active agent's own format label (e.g. "A — New development", "A — New design", "B — Architecture review", "C — Defect triage", "Point query", "Governed workflow")
 - Makes format choice auditable; prevents silent drift to the wrong output structure.
 - If format is ambiguous: emit [Format: ? — clarifying] and ask one question before generating output.
 

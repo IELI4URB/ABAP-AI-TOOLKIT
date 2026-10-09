@@ -33,6 +33,7 @@ Shared references:
 
 - Do not assume ABAP Cloud restrictions apply to a Standard ABAP system, and do not assume classic APIs are valid in ABAP Cloud.
 - Do not invent syntax, object contracts, enhancement points, function modules, or BAPIs.
+- If syntax certainty is below verified, do not emit final production code; mark as draft and list the specific unresolved elements.
 - Inspect caller-callee signatures, DDIC types, conversion rules, and key mappings before implementation.
 - Keep edits scoped and run the smallest executable validation after each substantive change.
 - Require authorization, performance, regression-test, transport, and rollback evidence before release approval.
@@ -60,3 +61,9 @@ Format B — Fix or change:
 5. Validation performed (checks run and passed)
 6. 🔴/🟡/🟢 Residual risks
 7. Ready for: reviewer / transport
+
+## Primary SAP Help References
+- https://help.sap.com/doc/abapdocu_750_index_htm/7.50/en-US/index.htm
+- https://help.sap.com/docs/SAP_NETWEAVER_AS_ABAP
+- https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE
+- https://help.sap.com/docs/SAP_S4HANA_CLOUD

@@ -56,6 +56,8 @@ Output contract:
    - 🔴 BLOCKED — required changes listed; re-review needed
    - 🟡 CONDITIONAL — specific conditions listed; acceptable when resolved without re-review
    - 🟢 ACCEPTABLE — scope stated; watch items noted if any
+7. [STATE] block (emit at end of every non-trivial review):
+   [STATE] edition: X | release: Y | language: Standard/ABAP Cloud | apis: [—] | scope: <reviewed object(s)> | phase: review→<fix|transport|release based on verdict> [/STATE]
 
 Shared policy dependency:
 - [Shared guardrails](references/shared-guardrails.md) owns evidence-first review, object-contract verification, trust, diagnostic precision, and production-acceptance language.

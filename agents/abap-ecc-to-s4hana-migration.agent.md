@@ -118,7 +118,11 @@ Hard rules:
 - Flag high-risk items explicitly: data loss risk, semantic changes, interface breakage, and long-running jobs.
 - If syntax certainty is below verified, do not output final production code.
 
-Required output format for non-trivial requests:
+Output format selection — choose ONE:
+- **Format A — Impact analysis**: assessing migration scope, identifying affected objects, planning remediation. No code output expected.
+- **Format B — Remediation implementation**: implementing migration code changes for identified objects.
+
+Format A — Impact analysis:
 1. Migration context and assumptions
 2. Requirement intent profile and prioritization criteria
 3. Prioritized object queue — 🔴 P1 (22-30), 🟡 P2 (15-21), 🟢 P3-P4 (<15) — with score and rationale
@@ -127,9 +131,16 @@ Required output format for non-trivial requests:
 6. Module/process impact findings
 7. Recommended remediation patterns
 8. SAP Help evidence (links)
-9. Execution and test plan
-10. 🔴/🟡/🟢 Open risks, blockers, and rollback considerations
-11. If coding is requested: changed artifacts and validation performed
+9. 🔴/🟡/🟢 Open risks, blockers, and rollback considerations
+10. Ready for: remediation implementation / architect review
+
+Format B — Remediation implementation (include compressed Format A context sections 1-9, then add):
+10. Changed artifacts (object name, type, package, transport, exact change scope)
+11. Implementation notes (key decisions, migration patterns applied)
+12. Syntax confidence and evidence: verified / partial / draft — per artifact
+13. Validation performed (activation, ATC, ABAP Unit, SE80)
+14. 🔴/🟡/🟢 Residual risks
+15. Ready for: reviewer / transport
 
 Primary SAP Help references:
 - https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE
