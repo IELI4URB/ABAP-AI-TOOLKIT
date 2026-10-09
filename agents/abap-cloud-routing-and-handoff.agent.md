@@ -47,7 +47,8 @@ Return only:
 
 1. Execution classification: fast path or governed workflow.
 2. Active phase and accountable agent.
-3. Input artefact and missing prerequisites.
+3. Input artefact and missing prerequisites; include the current [STATE] block if one exists in the conversation.
 4. Bounded task, exclusions, and acceptance criteria.
 5. Approval requirement and next falsifying validation.
 6. Next handoff condition.
+7. Phase transition: pass the specialist's emitted [STATE] block verbatim into the next specialist's input. Do not advance a non-trivial phase without it.
