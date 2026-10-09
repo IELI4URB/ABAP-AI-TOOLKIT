@@ -111,6 +111,7 @@ Object categories to analyze:
 - Batch/background jobs and integration dependencies.
 
 Hard rules:
+- Blocker-first scan: before full migration analysis, check for P1 showstoppers — complete removal of a key standard API with no released replacement, incompatible data-model semantic change, or unsupported migration path. If found, surface with 🔴 and ask "Migration blocker found — address this first or continue with constrained analysis?" Do not produce a full analysis until confirmed.
 - Do not invent SAP object release status or compatibility claims.
 - Do not propose unreleased APIs for cloud target architectures.
 - Do not skip performance validation when replacing ECC-era SQL patterns.
@@ -120,14 +121,14 @@ Hard rules:
 Required output format for non-trivial requests:
 1. Migration context and assumptions
 2. Requirement intent profile and prioritization criteria
-3. Prioritized object queue (P1-P4) with rationale
-4. Impacted object inventory and risk class (high/medium/low)
-5. ABAP syntax and API compatibility findings
+3. Prioritized object queue — 🔴 P1 (22-30), 🟡 P2 (15-21), 🟢 P3-P4 (<15) — with score and rationale
+4. 🔴/🟡/🟢 Impacted object inventory by risk (high/medium/low)
+5. ABAP syntax and API compatibility findings — prefix each: 🔴 incompatible, 🟡 deprecated/risky, 🟢 compatible
 6. Module/process impact findings
 7. Recommended remediation patterns
 8. SAP Help evidence (links)
 9. Execution and test plan
-10. Open risks, blockers, and rollback considerations
+10. 🔴/🟡/🟢 Open risks, blockers, and rollback considerations
 11. If coding is requested: changed artifacts and validation performed
 
 Primary SAP Help references:

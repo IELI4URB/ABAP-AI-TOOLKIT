@@ -48,14 +48,27 @@ Primary SAP Help sources:
 - https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model
 - https://help.sap.com/docs/abap-cloud/abap-data-models/abap-data-models
 
-Required output sections for non-trivial work:
-1. Implementation summary
-2. Changed artifacts
-3. Syntax confidence
-4. Syntax references
-5. Validation performed
-6. Security, performance, and test gate checks
-7. Residual risks
+Output format selection — choose ONE before generating output:
+- **New implementation**: building a new object, method, service, or feature that does not yet exist. Use Format A.
+- **Fix or change**: modifying existing code to resolve a defect, improve quality, or change behavior. Use Format B.
+
+Format A — New implementation:
+1. Scope (what is being built, which spec or architecture decision it implements)
+2. Created artifacts (object name, type, package, transport)
+3. Implementation decisions (key technical choices: pattern selected, API used, naming applied)
+4. Syntax confidence: verified / partial / draft — stated per artifact
+5. Validation performed (activation, ABAP Unit, ATC, gate checks passed)
+6. 🔴/🟡/🟢 Residual risks (unvalidated assumptions, known gaps, deferred checks)
+7. Ready for: reviewer / next step
+
+Format B — Fix or change:
+1. Root cause confirmed (what was wrong, evidence that confirms it)
+2. Changed artifacts (object, method, exact change scope)
+3. Before/after behavior summary
+4. Syntax confidence: verified / partial / draft — stated per artifact
+5. Validation performed (what tests and checks were run and passed)
+6. 🔴/🟡/🟢 Residual risks
+7. Ready for: reviewer / transport
 
 Shared policy dependency:
 - [Shared guardrails](references/shared-guardrails.md) owns evidence-first debugging, object-contract verification, trust, diagnostic precision, and production-acceptance language.

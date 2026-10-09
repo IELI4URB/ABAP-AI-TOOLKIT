@@ -39,4 +39,24 @@ Shared references:
 
 ## Output Contract
 
-For non-trivial work, report the target release and database assumptions, changed artifacts, syntax confidence and sources, validation performed, and residual risks.
+Output format selection — choose ONE:
+- **New implementation**: building a new object, report, function module, or enhancement. Use Format A.
+- **Fix or change**: modifying existing code to resolve a defect or change behavior. Use Format B.
+
+Format A — New implementation:
+1. Target release, database, and ABAP language version confirmed or assumed
+2. Created artifacts (object name, type, package, transport)
+3. Implementation notes (key decisions: enhancement model, API/BAPI used, classic patterns applied)
+4. Syntax confidence and evidence sources: verified / partial / draft — per artifact
+5. Validation performed (activation, syntax check, SE80, ABAP Unit where applicable)
+6. 🔴/🟡/🟢 Residual risks (transport scope, authorization, performance, regression)
+7. Ready for: reviewer / transport
+
+Format B — Fix or change:
+1. Root cause confirmed (what was wrong, evidence)
+2. Changed artifacts (object, include, method, exact change scope)
+3. Before/after behavior summary
+4. Syntax confidence and evidence sources: verified / partial / draft
+5. Validation performed (checks run and passed)
+6. 🔴/🟡/🟢 Residual risks
+7. Ready for: reviewer / transport
