@@ -8,6 +8,7 @@
 | Find unknown SAP objects, APIs, messages, tables, or transactions | [SAP system research](./abap-research.md) |
 | Trace ADT REST endpoints and payload contracts | [ADT API discovery](./adt-api-discovery.md) |
 | Create and activate repository objects through ADT MCP | [ADT MCP object workflow](./adt-mcp-object-workflow.md) |
+| Compare one CTS task with sibling tasks and other open requests | [Transport task overlap check](./transport-task-overlap-check.md) |
 | Basis administration and evidence-first troubleshooting | [SAP Basis guide discovery](./sap-basis-compilation-guides.md) |
 | Trace SPRO/IMG activities to maintenance objects and tables | [SAP Customizing discovery](./sap-customizing.md) |
 | Build repeatable SAP data-analysis workbooks | [SAP data workbook](./sap-data-workbook.md) |

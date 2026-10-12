@@ -11,6 +11,7 @@ description: 'Investigate and operate SAP ABAP systems. Use for production incid
 | Find SAP/custom objects, APIs, transactions | [ABAP research](./references/abap-research.md) |
 | ADT endpoint internals | [ADT API discovery](./references/adt-api-discovery.md) |
 | Create/activate/test repository objects | [ADT MCP workflow](./references/adt-mcp-object-workflow.md) |
+| Compare objects across sibling tasks and other open transport requests | [Transport task overlap check](./references/transport-task-overlap-check.md) |
 | Basis troubleshooting and administration | [Basis guides](./references/sap-basis-compilation-guides.md) |
 | SPRO, IMG, views, configuration storage | [Customizing](./references/sap-customizing.md) |
 | Reproducible SAP data analysis | [Data workbook](./references/sap-data-workbook.md) |

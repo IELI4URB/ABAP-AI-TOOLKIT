@@ -17,6 +17,52 @@ Use this guide for ABAP language-version, API-release, compatibility, release-ne
 
 Start from [ABAP Cloud Documentation Landscape](https://help.sap.com/docs/abap-cloud/abap-keyword/abap-cloud-documentation-landscape?locale=en-US). Do not use one guide as a substitute for another guide's ownership.
 
+## Cloudification Repository Release-State Lookup
+
+Use the [Cloudification Repository Viewer](https://sap.github.io/abap-atc-cr-cv-s4hc/) to check whether an SAP repository object is cataloged for a specific product and release. Treat this as catalog evidence; the target system's ADT API state, compiler, and ATC result remain authoritative for actual consumption.
+
+### Product and Release Selection
+
+| Viewer product | Release handling |
+|---|---|
+| **SAP Cloud ERP** | `Latest` |
+| **SAP Cloud ERP Private** | Select the exact available release, such as `2023 SP1` or `2025 SP0`; do not substitute `Latest` |
+| **SAP BTP ABAP Environment** | `Latest` |
+| **Partner APIs Only** | Select the partner namespace; no product release is offered |
+
+Normalize shorthand only when the product is already known. For example, `SAP Cloud ERP Private 2023 01` means viewer release `2023 SP1`. If the product or release is ambiguous, ask for it before reporting a status.
+
+### Lookup Procedure
+
+1. Open the viewer and select the exact **SAP Product** and **Release**.
+2. Search the exact technical object name, preferably uppercase. Do not rely on a business-term search as final evidence.
+3. Select the requested **Object Type**. If none was provided, search all types and report each matching row independently.
+4. Select **Released** only when answering a released-API query. If no row is returned, remove the state filter to distinguish another state from a missing object.
+5. Match the exact `objectKey` or technical name and object type. A name can have separate records for `BDEF`, `CDS_STOB`, and other types; one released record does not release the others.
+6. Record the state, software component, application component, successor information, selected product/release, source URL, and check date.
+7. In the target system, confirm ADT **API Release State**, the required release contract and Cloud Development visibility, then run the relevant released-API ATC check.
+
+Do not conclude that an object is unreleased solely from zero filtered results. First check the product, release, exact spelling, object type, state filter, and partner namespace. A `released` catalog row also does not prove that the API supports the required operation; inspect the released contract and object definition.
+
+### Required Response Format
+
+Report a release-state lookup with these fields:
+
+```text
+Object: <exact technical name>
+Product: <viewer product>
+Release: <exact viewer release or N/A>
+Object type: <exact type>
+State: <released, deprecated, not found, or other returned state>
+Software component: <value or N/A>
+Application component: <value or N/A>
+Successor: <value or none>
+Catalog checked: <URL and date>
+Target-system verification: <confirmed or still required>
+```
+
+Example: for **SAP Cloud ERP Private 2023 SP1**, `I_PRODUCTIONORDERTP` has separate released rows for object types `BDEF` and `CDS_STOB`, both in software component `S4CORE` and application component `PP-SFC`, with no successor listed. This catalog result still requires target-system verification before use.
+
 ## ABAP Language Versions
 
 - **ABAP for Cloud Development** is a restricted language version. It restricts both language scope and addressable repository objects.
