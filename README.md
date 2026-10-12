@@ -300,7 +300,7 @@ validate_pack.py  Repository validator
 
 ## Author
 
-[Pratibha Pandey](https://github.com/pratibha-pandey01_sap)
+[Pratibha Pandey](https://github.com/pratibha-pandey01_sap) [Shrikrushna Kulkarni](https://github.com/shrikrushna_kulkarni_sap)
 
 ## Contributing
 
