@@ -300,4 +300,12 @@ validate_pack.py  Repository validator
 
 ## Author
 
-Pratibha Pandey
+[Pratibha Pandey](https://github.com/pratibha-pandey01_sap)
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). All contributors must sign off commits under the Developer Certificate of Origin and follow SAP's guidance for AI-assisted contributions.
+
+## License
+
+Licensed under the [Apache License 2.0](LICENSE).
