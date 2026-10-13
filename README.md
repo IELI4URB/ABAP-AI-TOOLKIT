@@ -231,6 +231,24 @@ git pull --ff-only
 
 The installer refreshes only toolkit-managed items recorded in its manifest. Unrelated skills and agents remain untouched.
 
+### Updating Skills for a New ABAP Release
+
+Skills do not auto-update when SAP ships a new ABAP release. Run these steps to pull in new syntax, annotations, and released APIs from SAP Help:
+
+```powershell
+cd "$HOME\.agents\skill-packs\SAP-ABAP-Cloud-Skills"
+
+# Re-crawl SAP Help (abap-release-news and all root sections)
+python scripts\ingest_abap_keyword_docs.py
+
+# Push updated content to runtime skills
+python sync_skills.py --sync --prune
+```
+
+Then run **Developer: Reload Window** in VS Code.
+
+The last crawl date is recorded in `~/.agents/skill-packs/SAP-ABAP-Cloud-Skills/REFERENCE-SAP-HELP.md`. Check it to confirm skills are current for the installed ABAP release.
+
 ## Optional Claude Code Agents
 
 Claude mirrors are not installed by default because some VS Code configurations display them alongside Copilot agents and create duplicate picker entries.
