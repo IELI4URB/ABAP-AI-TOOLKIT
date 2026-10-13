@@ -1,16 +1,23 @@
 ---
 name: abap-forms
-description: 'Design and deliver SAP Adobe Forms and PDF output across S/4HANA Public Cloud, Private Cloud, on-premise, and ABAP Cloud. Use for ADS, Forms service by Adobe, Forms Objects, SFP, XDP/XSD, Output Management, RAP/OData PDF generation, templates, stored texts, logos, attachments, rendering, security, and transport.'
+description: 'Design and deliver SAP output across S/4HANA and ABAP Cloud. Use for Adobe Forms (ADS, Forms service by Adobe, Forms Objects, SFP, XDP/XSD, PDF generation), SMTG email templates (CL_SMTG_EMAIL_API, CL_BCS_MAIL_MESSAGE, CL_SMTG_EMAIL_TEMPL_RENDERER, render_bcs, HTML table injection, CDS OUTPUT_EMAIL_DATA_PROVIDER, SAP_COM_0548, SCOT, SOST, SAPconnect), Output Management, RAP/OData output, CX_SMTG_EMAIL_COMMON, CX_BCS_MAIL, template lifecycle, and transport.'
 ---
 
-# ABAP Forms
+# ABAP Forms and Output
 
-Load [the Adobe Forms guide](./references/abap-adobe-forms.md), then only the landscape/rendering/template reference it selects.
+This skill covers SAP output channels: PDF via Adobe Forms and email via SMTG email templates.
+
+## Routing by Output Type
+
+| Output type | Load guide |
+|---|---|
+| Adobe Forms, PDF, ADS, XDP/XSD, SFP, Output Management | [Adobe Forms](./references/abap-adobe-forms.md) |
+| Email templates, SMTG, CL_BCS_MAIL_MESSAGE, CL_SMTG_EMAIL_API | [Email Templates](./references/email-templates-complete.md) |
 
 ## Workflow
 
-1. Fix landscape, release, forms runtime, output channel, and template technology.
-2. Verify form-data, XSD/XDP, API, transaction, and dynamic-asset contracts.
-3. Validate authorization, sensitive content, ADS connectivity, rendering, performance, transport, and rollback.
+1. Fix output type: PDF/forms or email.
+2. Fix landscape (on-prem / private cloud / public cloud / BTP ABAP).
+3. Load the matching guide and follow its workflow.
 
-Do not mix Public Cloud Forms Objects, BTP Forms service, and Private/on-premise SFP implementation paths.
+Do not mix Adobe Forms and email template paths. Do not mix Public Cloud Forms Objects, BTP Forms service, and Private/on-premise SFP paths.

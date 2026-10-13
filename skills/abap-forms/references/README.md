@@ -5,6 +5,7 @@
 | Task | Active guide |
 |---|---|
 | Adobe Forms, ADS, XDP/XSD, Output Management, and PDF rendering | [Adobe Forms](./abap-adobe-forms.md) |
+| Email templates: creation, CDS requirements, send patterns, HTML table injection | [Email templates complete](./email-templates-complete.md) |
 | Adobe Forms landscape, runtime, and template lifecycle | [Landscape and architecture](./adobe-forms-landscape-architecture.md) |
 | Adobe Forms RAP/OData data provider and PDF rendering | [RAP, OData, rendering](./adobe-forms-rap-odata-rendering.md) |
 | Adobe Forms dynamic text, logos, and reusable assets | [Dynamic content and assets](./adobe-forms-dynamic-content-assets.md) |
