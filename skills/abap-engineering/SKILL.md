@@ -1,6 +1,9 @@
 ---
 name: abap-engineering
 description: 'Engineer and review maintainable ABAP. Use for language semantics, conditions, control flow, loops, exception mechanics, assignments and conversions, internal tables, strings, numeric/date processing, implementation workflow, Clean ABAP style, naming, classes/methods, SOLID and design patterns, released class discovery, ABAP Unit and test doubles, code review, test strategy, quality gates, refactoring, and transport readiness.'
+metadata:
+  version: 2.0.0
+  tags: abap engineering solid design-patterns unit-testing code-review clean-abap tdd
 ---
 
 # ABAP Engineering

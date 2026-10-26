@@ -1,6 +1,9 @@
 ---
 name: abap-data-performance
 description: 'Write and optimize ABAP data access and calculations. Use for ABAP SQL, SELECT, joins, subqueries, DML, FOR ALL ENTRIES, dynamic SQL, CTEs, AMDP, CDS table functions, SQLScript, HANA/traditional database tuning, N+1, pushdown, pagination, internal-table keys, caching, indexes, memory, traces, BOM/pegging traversal, BFS, DFS, and cycle detection.'
+metadata:
+  version: 2.0.0
+  tags: abap sql amdp performance hana optimization n-plus-one bom-traversal bfs-dfs
 ---
 
 # ABAP Data and Performance

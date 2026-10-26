@@ -1,6 +1,9 @@
 ---
 name: abap-forms
 description: 'Design and deliver SAP output across S/4HANA and ABAP Cloud. Use for Adobe Forms (ADS, Forms service by Adobe, Forms Objects, SFP, XDP/XSD, PDF generation), SMTG email templates (CL_SMTG_EMAIL_API, CL_BCS_MAIL_MESSAGE, CL_SMTG_EMAIL_TEMPL_RENDERER, render_bcs, HTML table injection, CDS OUTPUT_EMAIL_DATA_PROVIDER, SAP_COM_0548, SCOT, SOST, SAPconnect), Output Management, RAP/OData output, CX_SMTG_EMAIL_COMMON, CX_BCS_MAIL, template lifecycle, and transport.'
+metadata:
+  version: 2.0.0
+  tags: abap forms adobe-forms pdf email smtg output-management sfp xdp s4hana
 ---
 
 # ABAP Forms and Output

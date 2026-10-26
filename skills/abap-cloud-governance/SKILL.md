@@ -1,6 +1,9 @@
 ---
 name: abap-cloud-governance
 description: 'Govern SAP ABAP Cloud and Clean Core delivery. Use for Cloudification Repository lookups, released API and object status by SAP product/release/type, BDEF/CDS release checks, C0/C1 release contracts, API states, language versions, Tier 1/2 wrappers, extension models, Public versus Private Cloud, ABAP Platform 2025/FPS features, ATC, transports, gCTS, cTMS, Cloud ALM, CI/CD, abapGit, branches, rollback, and enterprise release governance.'
+metadata:
+  version: 2.0.0
+  tags: abap clean-core governance transport atc gcts abap-cloud cicd release-management
 ---
 
 # ABAP Cloud Governance

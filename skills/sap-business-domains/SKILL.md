@@ -1,6 +1,9 @@
 ---
 name: sap-business-domains
 description: 'Apply SAP S/4HANA business-domain guidance for Finance, Materials Management, Production Planning/PP-DS, Sales and Distribution, and Transportation Management. Use for GL/AP/AR, procurement/inventory, BOM/MRP/orders/capacity, order-to-cash/pricing/delivery/billing, freight planning/execution/charges, and cross-module ABAP solution design.'
+metadata:
+  version: 2.0.0
+  tags: sap finance mm pp ppds sd tm s4hana business-domains mrp capacity-planning
 ---
 
 # SAP Business Domains

@@ -1,6 +1,9 @@
 ---
 name: agentic-delivery
 description: 'Govern and orchestrate agentic engineering work. Use for ATQ planning, approvals, phase handoffs, context control, named-agent delegation, parallel investigation, recovery, validation, compliance evaluation, and discovering installed or installable skills. Skip simple read-only questions.'
+metadata:
+  version: 2.0.0
+  tags: agentic orchestration atq delegation context recovery skills-discovery
 ---
 
 # Agentic Delivery

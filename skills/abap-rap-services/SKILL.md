@@ -1,6 +1,9 @@
 ---
 name: abap-rap-services
 description: 'Select, design, implement, and troubleshoot ABAP Cloud RAP and service objects. Use for managed versus unmanaged RAP, read-only/custom-query scenarios, draft models, UI versus Web API services, CDS view/projection/custom entities, BDEF behavior handlers, EML, OData V2/V4, service definitions/bindings, API versioning, business events, Fiori Elements annotations, value help, text display, actions, authorization handlers, and RAP activation errors.'
+metadata:
+  version: 2.0.0
+  tags: abap rap cds bdef odata fiori annotations abap-cloud services
 ---
 
 # ABAP RAP and Services
