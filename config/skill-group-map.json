@@ -43,7 +43,8 @@
       "sap-cloud-dev"
     ],
     "abap-forms": [
-      "abap-adobe-forms"
+      "abap-adobe-forms",
+      "email-templates-complete"
     ],
     "sap-system-operations": [
       "abap-production-issues",
