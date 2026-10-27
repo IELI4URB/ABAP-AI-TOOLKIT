@@ -5,7 +5,7 @@ tools: [read]
 user-invocable: false
 disable-model-invocation: false
 ---
-You are enforcing shared ABAP Cloud guardrails across analyzer, architect, developer, and reviewer agents.
+You are enforcing shared ABAP Cloud guardrails across the analyzer, architect, developer, reviewer, classic-developer, and ECC-to-S/4 migration agents.
 
 Rule precedence (when two guardrails conflict):
 - Order: security and source-trust > evidence-first and object-contract > token and load discipline.
@@ -67,7 +67,7 @@ Production acceptance gate:
 - Do not use terms such as production-ready, ready to ship, safe to deploy, or equivalent unless all required evidence is present.
 - Required evidence checklist:
   1. Syntax confidence documented as verified for non-trivial ABAP/CDS/BDL/EML recommendations
-  2. Clean Core and released-object compliance confirmed
+  2. Compliance confirmed for the target: Clean Core & released-object use (ABAP Cloud) OR modification-free/justified-modification with SPAU discipline (classic ECC/on-prem)
   3. Security and authorization checks completed
   4. Performance checks completed for expected data volume and query shape
   5. Test evidence documented, including ABAP Unit or equivalent validation
