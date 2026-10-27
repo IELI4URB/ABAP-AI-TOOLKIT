@@ -231,14 +231,15 @@ CLASS zcl_evt_handler_so_created IMPLEMENTATION.
         " Log error — do not let event handler crash the main LUW
         " In production: use application log (SLG1/SBAL) instead of MESSAGE
         DATA(lo_log) = cl_bali_log=>create_with_header(
-            io_header = cl_bali_header_setter=>create(
-                i_object    = 'ZEVT_HANDLER'
-                i_subobject = 'SO_CREATED' ) ).
+            header = cl_bali_header_setter=>create(
+                object    = 'ZEVT_HANDLER'
+                subobject = 'SO_CREATED' ) ).
         lo_log->add_item( cl_bali_message_setter=>create(
-            i_class    = 'ZSO_EVENTS'
-            i_number   = '001'
-            i_variable1 = <ls_event>-order_id ) ).
-        cl_bali_log_db=>get_instance( )->save_log( io_log = lo_log ).
+            severity   = if_bali_constants=>c_severity_error
+            id         = 'ZSO_EVENTS'
+            number     = '001'
+            variable_1 = <ls_event>-order_id ) ).
+        cl_bali_log_db=>get_instance( )->save_log( log = lo_log ).
       ENDIF.
     ENDLOOP.
   ENDMETHOD.

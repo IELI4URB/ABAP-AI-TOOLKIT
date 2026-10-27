@@ -109,9 +109,10 @@ CLASS zcl_my_background_job IMPLEMENTATION.
     " 1. Initialise BAL application log
     "──────────────────────────────────────────────────────────
     mo_log = cl_bali_log=>create_with_header(
-               i_object    = 'ZJOB_LOG'
-               i_subobject = 'ZMYJOB'
-               i_description = |Job run { sy-datum } { sy-uzeit }| ).
+               cl_bali_header_setter=>create(
+                 object      = 'ZJOB_LOG'
+                 subobject   = 'ZMYJOB'
+                 external_id = |Job run { sy-datum } { sy-uzeit }| ) ).
 
     TRY.
         "──────────────────────────────────────────────────────
@@ -120,9 +121,9 @@ CLASS zcl_my_background_job IMPLEMENTATION.
         DATA(ls_params) = CAST zif_my_job_params(
                             cl_apj_rt_api=>get_parameters( ) ).
 
-        mo_log->add_free_text(
-          i_severity = if_bali_constants=>c_severity_info
-          i_text     = |Job started with variant: { ls_params->variant_name }| ).
+        mo_log->add_item( cl_bali_free_text_setter=>create(
+          severity = if_bali_constants=>c_severity_status
+          text     = |Job started with variant: { ls_params->variant_name }| ) ).
 
         "──────────────────────────────────────────────────────
         " 3. Business logic — wrap entirely in TRY/CATCH
@@ -140,39 +141,32 @@ CLASS zcl_my_background_job IMPLEMENTATION.
         " 4. Log business errors (non-fatal) and results
         "──────────────────────────────────────────────────────
         LOOP AT lt_errors INTO DATA(ls_error).
-          mo_log->add_free_text(
-            i_severity = if_bali_constants=>c_severity_warning
-            i_text     = |Record { ls_error-key }: { ls_error-message }| ).
+          mo_log->add_item( cl_bali_free_text_setter=>create(
+            severity = if_bali_constants=>c_severity_warning
+            text     = |Record { ls_error-key }: { ls_error-message }| ) ).
         ENDLOOP.
 
-        mo_log->add_free_text(
-          i_severity = if_bali_constants=>c_severity_info
-          i_text     = |Processing complete. Records processed: { lv_count }. |
-                    && |Errors: { lines( lt_errors ) }.| ).
+        mo_log->add_item( cl_bali_free_text_setter=>create(
+          severity = if_bali_constants=>c_severity_status
+          text     = |Processing complete. Records processed: { lv_count }. |
+                  && |Errors: { lines( lt_errors ) }.| ) ).
 
       CATCH zcx_my_job_config_error INTO DATA(lx_config).
         "──────────────────────────────────────────────────────
         " 5a. Expected configuration error — log and exit cleanly
         "     The job will show FAILED with a readable message
         "──────────────────────────────────────────────────────
-        mo_log->add_free_text(
-          i_severity = if_bali_constants=>c_severity_error
-          i_text     = |Configuration error: { lx_config->get_text( ) }. |
-                    && |Check job template parameters.| ).
+        mo_log->add_item( cl_bali_exception_setter=>create(
+          severity  = if_bali_constants=>c_severity_error
+          exception = lx_config ) ).
 
       CATCH cx_root INTO DATA(lx_unexpected).
         "──────────────────────────────────────────────────────
         " 5b. Unexpected exception — log full details for developer
         "──────────────────────────────────────────────────────
-        mo_log->add_free_text(
-          i_severity = if_bali_constants=>c_severity_error
-          i_text     = |Unexpected error in job execution: |
-                    && lx_unexpected->get_text( ) ).
-
-        mo_log->add_free_text(
-          i_severity = if_bali_constants=>c_severity_error
-          i_text     = |Exception class: { cl_abap_classdescr=>get_class_name(
-                            lx_unexpected ) }| ).
+        mo_log->add_item( cl_bali_exception_setter=>create(
+          severity  = if_bali_constants=>c_severity_error
+          exception = lx_unexpected ) ).
 
     ENDTRY.
 
@@ -182,7 +176,8 @@ CLASS zcl_my_background_job IMPLEMENTATION.
     "──────────────────────────────────────────────────────────
     TRY.
         cl_bali_log_db=>get_instance( )->save_log(
-          i_log = mo_log ).
+          log                        = mo_log
+          assign_to_current_appl_job = abap_true ).
         mv_log_handle = mo_log->get_handle( ).
       CATCH cx_bali_runtime.
         " If even log persistence fails, write to syslog as last resort

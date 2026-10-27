@@ -285,10 +285,9 @@ METHOD run_procurement_job.
   " --- 2. Set log header ---
   DATA(lo_header) = cl_bali_header_setter=>create(
     object    = 'ZPURCHASE'       " Application log object (SLG0)
-    subobject = 'BATCH_SUBMIT'    " Sub-object
-    program   = sy-repid ).
+    subobject = 'BATCH_SUBMIT' ). " Sub-object
 
-  lo_header->set_expiry_date( sy-datum + 30 ).  " Keep log 30 days
+  lo_header->set_expiry( expiry_date = sy-datum + 30 ).  " Keep log 30 days
   lo_log->set_header( lo_header ).
 
   " --- 3. Process records and write messages ---

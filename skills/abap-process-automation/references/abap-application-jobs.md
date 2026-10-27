@@ -206,20 +206,21 @@ METHOD if_apj_rt_exec_object~execute.
         msgv1  = 'Start date must not be after end date'.
   ENDIF.
 
-  " ── 3. Create structured log ───────────────────────────────────────
+  " ── 3. Create structured log (BAL OO API) ─────────────────────────
   DATA(lo_log) = cl_bali_log=>create_with_header(
-    i_object      = 'ZJOB'          " Must exist as BALI log object (SLG0)
-    i_subobject   = 'INVOICES'
-    i_external_id = |Invoice Post { sy-datum } { sy-uzeit }| ).
+    cl_bali_header_setter=>create(
+      object      = 'ZJOB'          " Must exist as BAL log object (SLG0)
+      subobject   = 'INVOICES'
+      external_id = |Invoice Post { sy-datum } { sy-uzeit }| ) ).
 
-  lo_log->add_free_text(
-    i_free_text = |Job started. DateFrom={ lv_date_from } DateTo={ lv_date_to }|
-    i_detail_level = '1' ).
+  lo_log->add_item( cl_bali_free_text_setter=>create(
+    severity = if_bali_constants=>c_severity_status
+    text     = |Job started. DateFrom={ lv_date_from } DateTo={ lv_date_to }| ) ).
 
   IF lv_simulation = abap_true.
-    lo_log->add_free_text(
-      i_free_text    = 'SIMULATION MODE — no database changes will be committed'
-      i_detail_level = '1' ).
+    lo_log->add_item( cl_bali_free_text_setter=>create(
+      severity = if_bali_constants=>c_severity_status
+      text     = 'SIMULATION MODE — no database changes will be committed' ) ).
   ENDIF.
 
   " ── 4. Business logic — package-based processing ───────────────────
@@ -236,8 +237,7 @@ METHOD if_apj_rt_exec_object~execute.
         AND ( @lv_bukrs = '' OR company_code = @lv_bukrs )
         AND posting_status = 'O'
       ORDER BY sales_order_id
-      OFFSET @lv_offset ROWS
-      FETCH NEXT @c_package_size ROWS ONLY
+      UP TO @c_package_size ROWS OFFSET @lv_offset
       INTO TABLE @DATA(lt_orders).
 
     IF sy-subrc <> 0 OR lt_orders IS INITIAL.
@@ -254,15 +254,15 @@ METHOD if_apj_rt_exec_object~execute.
 
           lv_processed += 1.
 
-          lo_log->add_free_text(
-            i_free_text    = |Processed order { ls_order-sales_order_id }|
-            i_detail_level = '2' ).
+          lo_log->add_item( cl_bali_free_text_setter=>create(
+            severity = if_bali_constants=>c_severity_status
+            text     = |Processed order { ls_order-sales_order_id }| ) ).
 
         CATCH cx_root INTO DATA(lx_any).
           lv_errors += 1.
-          lo_log->add_exception(
-            i_exception    = lx_any
-            i_detail_level = '1' ).
+          lo_log->add_item( cl_bali_exception_setter=>create(
+            severity  = if_bali_constants=>c_severity_error
+            exception = lx_any ) ).
       ENDTRY.
     ENDLOOP.
 
@@ -273,13 +273,14 @@ METHOD if_apj_rt_exec_object~execute.
   ENDDO.
 
   " ── 5. Final summary log entry ─────────────────────────────────────
-  lo_log->add_free_text(
-    i_free_text    = |Completed. Processed: { lv_processed } | &
-                     |Errors: { lv_errors }|
-    i_detail_level = '1' ).
+  lo_log->add_item( cl_bali_free_text_setter=>create(
+    severity = if_bali_constants=>c_severity_status
+    text     = |Completed. Processed: { lv_processed } Errors: { lv_errors }| ) ).
 
-  " ── 6. Save log ────────────────────────────────────────────────────
-  cl_bali_log_db=>get_instance( )->save_log( i_log = lo_log ).
+  " ── 6. Save log; assign_to_current_appl_job surfaces it in App Jobs ─
+  cl_bali_log_db=>get_instance( )->save_log(
+    log                        = lo_log
+    assign_to_current_appl_job = abap_true ).
 
   " ── 7. Raise exception to mark job as FAILED if errors occurred ────
   IF lv_errors > 0.
@@ -475,59 +476,37 @@ Structured application logs (BAL) are the correct logging mechanism inside jobs.
 ```abap
 " ── Create log ───────────────────────────────────────────────────────
 DATA(lo_log) = cl_bali_log=>create_with_header(
-  i_object      = 'ZJOB'     " SLG0 object — must be created in SLG0 or via API
-  i_subobject   = 'PROCESS'
-  i_external_id = |Run { sy-datum }-{ sy-uzeit }| ).
+  cl_bali_header_setter=>create(
+    object      = 'ZJOB'     " SLG0 object — must exist in SLG0
+    subobject   = 'PROCESS'
+    external_id = |Run { sy-datum }-{ sy-uzeit }| ) ).
 
-" ── Add message text ─────────────────────────────────────────────────
-lo_log->add_free_text(
-  i_free_text    = 'Processing company code 1000'
-  i_detail_level = '1' ).   " 1=low detail (always shown), 9=high detail
+" ── Add free text ────────────────────────────────────────────────────
+lo_log->add_item( cl_bali_free_text_setter=>create(
+  severity = if_bali_constants=>c_severity_status
+  text     = 'Processing company code 1000' ) ).
 
-" ── Add ABAP message (from message class) ─────────────────────────────
-lo_log->add_message(
-  i_message      = new_message(
-    id     = 'ZMY_MSG'
-    number = '001'
-    severity = if_bali_constants=>c_severity-success ) ).
+" ── Add a message (from a message class) ──────────────────────────────
+lo_log->add_item( cl_bali_message_setter=>create_from_sy( ) ).  " after MESSAGE ... INTO
 
 " ── Add exception ────────────────────────────────────────────────────
 TRY.
     " ... risky code ...
   CATCH cx_root INTO DATA(lx).
-    lo_log->add_exception(
-      i_exception    = lx
-      i_detail_level = '1' ).
+    lo_log->add_item( cl_bali_exception_setter=>create(
+      severity  = if_bali_constants=>c_severity_error
+      exception = lx ) ).
 ENDTRY.
 
-" ── Save log to DB (required — unsaved logs are lost) ────────────────
-cl_bali_log_db=>get_instance( )->save_log( i_log = lo_log ).
-```
-
-#### Log object creation via API (for setup classes / unit tests)
-
-```abap
-cl_bali_log_db=>get_instance( )->create_log_object(
-  i_object      = 'ZJOB'
-  i_description = 'Application Jobs Logging' ).
-```
-
-#### Retrieving log handle for the running job
-
-The job runtime automatically provides a log handle that the Fiori monitoring UI uses.
-Access it via:
-
-```abap
-DATA(lv_log_handle) = cl_apj_rt_api=>get_log_handle( ).
-```
-
-Pass this handle when saving the log so it is **linked** to the job execution record:
-
-```abap
+" ── Save log to DB; link it to the running job ───────────────────────
 cl_bali_log_db=>get_instance( )->save_log(
-  i_log    = lo_log
-  i_handle = lv_log_handle ).
+  log                        = lo_log
+  assign_to_current_appl_job = abap_true ).
 ```
+
+#### Linking the log to the job
+
+`save_log( ... assign_to_current_appl_job = abap_true )` links the log to the current Application Job so it appears in the Fiori job monitor. The job runtime also exposes `cl_apj_rt_api=>get_log_handle( )` if you need the handle explicitly.
 
 ---
 
@@ -555,9 +534,9 @@ IF lv_errors > 0 AND lv_processed = 0.
 ELSEIF lv_errors > 0.
   " Partial success: job status = WARNING (not Failed)
   " No exception raised; just write warning to log
-  lo_log->add_free_text(
-    i_free_text    = |{ lv_errors } records failed but job completed partially|
-    i_detail_level = '1' ).
+  lo_log->add_item( cl_bali_free_text_setter=>create(
+    severity = if_bali_constants=>c_severity_warning
+    text     = |{ lv_errors } records failed but job completed partially| ) ).
 ENDIF.
 ```
 
@@ -627,8 +606,7 @@ DO.
   SELECT * FROM ztable
     WHERE status = 'O'
     ORDER BY PRIMARY KEY
-    OFFSET @lv_off ROWS
-    FETCH NEXT @c_pkg ROWS ONLY
+    UP TO @c_pkg ROWS OFFSET @lv_off
     INTO TABLE @DATA(lt_pkg).
 
   IF lt_pkg IS INITIAL. EXIT. ENDIF.
@@ -747,9 +725,10 @@ CLASS zcl_invoice_post_job IMPLEMENTATION.
 
     " ── Init log ──────────────────────────────────────────────────────
     mo_log = cl_bali_log=>create_with_header(
-      i_object      = c_log_object
-      i_subobject   = c_log_subobj
-      i_external_id = |{ lv_date_from }-{ lv_date_to }| ).
+      cl_bali_header_setter=>create(
+        object      = c_log_object
+        subobject   = c_log_subobj
+        external_id = |{ lv_date_from }-{ lv_date_to }| ) ).
 
     log_message( |Start posting. DateFrom={ lv_date_from } To={ lv_date_to }| &
                  COND #( WHEN mv_simulate = abap_true THEN ' [SIMULATION]' ELSE '' ) ).
@@ -766,8 +745,7 @@ CLASS zcl_invoice_post_job IMPLEMENTATION.
           AND posting_status  = 'O'
           AND ( @lv_bukrs = '' OR company_code = @lv_bukrs )
         ORDER BY sales_order_id
-        OFFSET @lv_offset ROWS
-        FETCH NEXT @c_package_size ROWS ONLY
+        UP TO @c_package_size ROWS OFFSET @lv_offset
         INTO TABLE @DATA(lt_pkg).
 
       IF lt_pkg IS INITIAL. EXIT. ENDIF.
@@ -778,7 +756,9 @@ CLASS zcl_invoice_post_job IMPLEMENTATION.
             lv_processed += 1.
           CATCH cx_apj_rt_content INTO DATA(lx).
             lv_errors += 1.
-            mo_log->add_exception( i_exception = lx i_detail_level = '1' ).
+            mo_log->add_item( cl_bali_exception_setter=>create(
+              severity  = if_bali_constants=>c_severity_error
+              exception = lx ) ).
         ENDTRY.
       ENDLOOP.
 
@@ -794,10 +774,10 @@ CLASS zcl_invoice_post_job IMPLEMENTATION.
     " ── Final log entry ───────────────────────────────────────────────
     log_message( |Done. OK={ lv_processed } ERR={ lv_errors }| ).
 
-    " Save log linked to job handle
+    " Save log linked to the running job
     cl_bali_log_db=>get_instance( )->save_log(
-      i_log    = mo_log
-      i_handle = cl_apj_rt_api=>get_log_handle( ) ).
+      log                        = mo_log
+      assign_to_current_appl_job = abap_true ).
 
     " Mark job failed if errors
     IF lv_errors > 0 AND lv_processed = 0.
@@ -809,7 +789,9 @@ CLASS zcl_invoice_post_job IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD log_message.
-    mo_log->add_free_text( i_free_text = iv_text i_detail_level = iv_level ).
+    mo_log->add_item( cl_bali_free_text_setter=>create(
+      severity = if_bali_constants=>c_severity_status
+      text     = iv_text ) ).
   ENDMETHOD.
 
   METHOD post_invoice.

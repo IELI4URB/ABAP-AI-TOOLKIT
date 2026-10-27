@@ -111,19 +111,16 @@ CLASS zcl_pp_order_update IMPLEMENTATION.
 
   METHOD if_ex_workorder_update~after_update.
     " Log order save event
-    DATA(lo_log) = cl_bali_log=>create(
-      i_object     = 'ZPP'
-      i_subobject  = 'ORDER_SAVE'
-    ).
-    DATA(lo_msg) = cl_bali_free_text=>create(
-      i_severity = if_bali_constants=>c_severity_information
-      i_text     = |Order { im_aufnr } saved at { sy-datum }|
-    ).
-    lo_log->add_item( lo_msg ).
+    DATA(lo_log) = cl_bali_log=>create_with_header(
+      cl_bali_header_setter=>create(
+        object    = 'ZPP'
+        subobject = 'ORDER_SAVE' ) ).
+    lo_log->add_item( cl_bali_free_text_setter=>create(
+      severity = if_bali_constants=>c_severity_status
+      text     = |Order { im_aufnr } saved at { sy-datum }| ) ).
     cl_bali_log_db=>get_instance( )->save_log(
-      i_log                        = lo_log
-      i_assign_to_current_appl_log = abap_true
-    ).
+      log                        = lo_log
+      assign_to_current_appl_job = abap_true ).
   ENDMETHOD.
 ENDCLASS.
 ```
