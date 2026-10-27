@@ -91,16 +91,27 @@ Sources: [Release Contracts](https://help.sap.com/docs/abap-cloud/abap-keyword/r
 
 ## Provider and Consumer Gates
 
+**Release states** (ADT *API State* tab, Properties view — visible only for releasable object types):
+- **Released** — public API, usable for stable custom development per its contract.
+- **Deprecated** — still usable but should be replaced; deprecation requires selecting one or more **successors** (a released object or a replacing concept). For C2, a **planned decommissioning date** (month/year) may be set.
+- **Decommissioned** — no longer for productive use, unsupported; replace with highest priority. On object level currently **restricted to C2 remote APIs**. Using a decommissioned object raises a **syntax warning** pointing to the successor.
+
+Consumer side:
 1. Verify API state in the target system, not from naming conventions.
 2. Verify the release contract fits the use: extension, internal consumption, remote consumption, configuration, or AMDP.
 3. Verify visibility for the consumer's language version.
-4. Inspect public dependencies: released APIs must expose suitable released types and released association/behavior targets where required.
-5. Run **API_CONSISTENCY** before release. It checks release prerequisites, dependencies, allowed annotations, successor rules, and object-specific constraints.
-6. Run **API_COMPATIBILITY** after release and before shipment. It checks the current façade against prior API snapshots.
-7. Absence of compatibility findings is not evidence when the checking system has no relevant API snapshots.
-8. Resolve incompatible changes by restoring the shipped contract. Use exemptions only through explicit expert governance.
+4. Run **API_USAGE** (*API Release: Usage of Deprecated or Decommissioned Objects*) to find deprecated/decommissioned API and CDS-element references across objects. Part of the `ABAP_CLOUD_DEVELOPMENT_DEFAULT` variant. **Only reported** for referring objects whose language version is **ABAP for Cloud Development** or **ABAP for Key Users**.
+5. Inspect public dependencies: released APIs must expose suitable released types and released association/behavior targets where required.
 
-Sources: [Contract Checks](https://help.sap.com/docs/abap-cloud/abap-keyword/contract-checks-for-released-apis?locale=en-US), [Consistency Checks](https://help.sap.com/docs/abap-cloud/abap-keyword/consistency-checks-for-released-apis?locale=en-US), [Compatibility Checks](https://help.sap.com/docs/abap-cloud/abap-keyword/compatibility-checks-for-released-apis?locale=en-US).
+Provider side (when releasing your own APIs):
+1. Run **API_CONSISTENCY** before release. It checks release prerequisites, dependencies, allowed annotations, successor rules, and object-specific constraints.
+2. Run **API_COMPATIBILITY** after release and before shipment. It checks the current façade against prior **API snapshots** (create via the *Manage API Snapshots* app).
+3. Absence of compatibility findings is not evidence when the checking system has no relevant API snapshots.
+4. Resolve incompatible changes by restoring the shipped contract. Use exemptions only through explicit expert governance.
+
+All three checks (`API_USAGE`, `API_CONSISTENCY`, `API_COMPATIBILITY`) are part of the `ABAP_CLOUD_DEVELOPMENT_DEFAULT` ATC variant.
+
+Sources: [Released APIs / release states, deprecation, decommissioning, API_USAGE](https://help.sap.com/docs/abap-cloud/abap-development-tools-user-guide/released-apis?locale=en-US), [Contract Checks](https://help.sap.com/docs/abap-cloud/abap-keyword/contract-checks-for-released-apis?locale=en-US), [Consistency Checks](https://help.sap.com/docs/abap-cloud/abap-keyword/consistency-checks-for-released-apis?locale=en-US), [Compatibility Checks](https://help.sap.com/docs/abap-cloud/abap-keyword/compatibility-checks-for-released-apis?locale=en-US).
 
 ## High-Impact Compatibility Rules
 
