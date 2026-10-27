@@ -136,6 +136,28 @@ Use static typing when the contract is known. Use `DESCRIBE` or RTTS only when r
 
 Source: [Properties of Data Objects](https://help.sap.com/docs/abap-cloud/abap-keyword/properties-of-data-objects?locale=en-US).
 
+## Field Symbols and Data References
+
+Both are pointers to data objects used for in-place access, dynamic/generic programming, and avoiding value copies. Distinct mechanisms:
+
+| | Field symbol | Data reference variable |
+|---|---|---|
+| Declare | `FIELD-SYMBOLS <fs> TYPE ...` (typed or generic e.g. `TYPE any`) | `DATA dref TYPE REF TO data` (or `REF TO <type>`) |
+| Bind | `ASSIGN obj TO <fs>` | `GET REFERENCE OF obj INTO dref` / `dref = REF #( obj )` |
+| Create anonymous | — | `CREATE DATA dref TYPE ...` |
+| Access | use `<fs>` directly as the object | dereference with `dref->*` |
+| Unassigned/initial check | `IF <fs> IS ASSIGNED` | `IF dref IS BOUND` |
+| Nature | symbolic name for a memory location (not an object) | a real data object holding a reference (can be stored in tables/structures, passed around) |
+
+Rules and gates:
+- Always check binding before use: `<fs> IS ASSIGNED`, `dref IS BOUND`. Accessing an unassigned field symbol or dereferencing an initial/null reference dumps (`GETWA_NOT_ASSIGNED` / `CX_SY_REF_IS_INITIAL`).
+- Reference variables come in two kinds and are **not** interchangeable: **data** references (`REF TO data` → data objects) and **object** references (`REF TO class/interface` → class instances). A data reference variable cannot hold an object reference and vice versa.
+- Prefer field symbols for in-place loop processing (`LOOP AT itab ASSIGNING FIELD-SYMBOL(<row>)`) and data references where the pointer itself must be stored or passed (`REF #( )`, tables of `REF TO data`).
+- For generic typing (`TYPE any` / `TYPE data`), validate runtime compatibility (RTTS, assignability) before writing through the pointer.
+- Use pointers to **modify originals in place** instead of copy-modify-write-back — the main performance reason to use them on internal tables.
+
+Source: [Reference Variables / Field Symbols](https://help.sap.com/docs/abap-cloud/abap-concepts/field-symbols-and-data-references?locale=en-US).
+
 ## Streaming
 
 Streams are class instances characterized by direction (reader/writer) and type (character/binary); filter streams can transform data between boundaries. Use streaming when incremental transfer avoids materializing a large complete value, but verify:

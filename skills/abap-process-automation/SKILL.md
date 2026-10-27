@@ -9,6 +9,7 @@ metadata:
 # ABAP Process Automation
 
 - [Application Jobs](./references/abap-application-jobs.md)
+- [Background Processing Framework (bgPF)](./references/bgpf-background-processing.md)
 - [Workflow automation](./references/abap-workflow-automation.md)
 
 ## Workflow

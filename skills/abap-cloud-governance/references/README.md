@@ -11,5 +11,6 @@
 | ABAP Platform 2025 and FPS-specific availability | [ABAP Platform 2025 release guide](./abap-platform-2025-release-guide.md) |
 | End-to-end, cross-phase Clean Core governance | [Enterprise Clean Core delivery](./enterprise-clean-core-delivery.md) |
 | Public Cloud landscape and development constraints | [Public Cloud development constraints](./public-cloud-development-constraints.md) |
+| Generative AI in ABAP (Joule for Developers, SAP AI SDK for ABAP, ISLM) | [Generative AI in ABAP Cloud](./generative-ai-abap-cloud.md) |
 
 Do not use this group for RAP/CDS implementation mechanics, general ABAP coding, runtime operations, or business-domain decisions; route those to their owning groups.

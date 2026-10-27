@@ -17,6 +17,7 @@ metadata:
 | Platform 2025 and FPS-specific capability | [ABAP Platform 2025 release guide](./references/abap-platform-2025-release-guide.md) |
 | End-to-end Clean Core program | [Enterprise Clean Core delivery](./references/enterprise-clean-core-delivery.md) |
 | Public Cloud implementation constraints | [Public Cloud development constraints](./references/public-cloud-development-constraints.md) |
+| Generative AI in ABAP (Joule for Developers, SAP AI SDK for ABAP, ISLM) | [Generative AI in ABAP Cloud](./references/generative-ai-abap-cloud.md) |
 
 ## Workflow
 

@@ -5,6 +5,7 @@
 | Task | Active guide |
 |---|---|
 | Background execution, catalogs, templates, schedules, and job monitoring | [ABAP Cloud application jobs](./abap-application-jobs.md) |
+| Asynchronous reliable method execution (bgPF), transactional vs queued, RAP transactional control, bgRFC | [Background Processing Framework](./bgpf-background-processing.md) |
 | Approvals, Flexible Workflow, Classic Workflow, BRFplus, and Build Process Automation | [ABAP Cloud workflow automation](./abap-workflow-automation.md) |
 
 Use `sap-system-operations` to investigate failed productive jobs. Use `abap-rap-services` only for RAP actions or BO contracts connected to automation.
