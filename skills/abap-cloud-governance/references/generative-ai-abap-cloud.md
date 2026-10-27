@@ -8,7 +8,7 @@ metadata:
 
 # Generative AI in ABAP Cloud
 
-Source: SAP Help — SAP BTP → Development in the ABAP Environment → Generative AI in ABAP Cloud.
+Source: SAP Help — [Generative AI in ABAP Cloud](https://help.sap.com/docs/btp/sap-business-technology-platform/generative-ai-in-abap-cloud?locale=en-US).
 
 Two distinct use cases:
 
@@ -28,7 +28,7 @@ Include generative AI in your own business applications via the **SAP AI SDK for
 
 ### Intelligent Scenario Lifecycle Management (ISLM)
 
-ISLM is a **self-service framework** for lifecycle-managing machine-learning scenarios in the ABAP environment. An **intelligent scenario** is the **ABAP representation of a business-specific ML use case**. ISLM operations: **train, deploy, activate**, and fetch an accurate **inference** result from the trained scenario. There are two scenario kinds — classic ML scenarios and **Generative AI for ISLM** (GenAI-backed scenarios). The app consumes the activated scenario's inference; ISLM owns the model lifecycle, not the consuming business logic.
+ISLM is a **self-service framework** for lifecycle-managing machine-learning scenarios in the ABAP environment. An **intelligent scenario** is the **ABAP representation of a business-specific ML use case**. ISLM operations: **train, deploy, activate**, and fetch an accurate **inference** result from the trained scenario. There are two scenario kinds — classic ML scenarios and **Generative AI for ISLM** (GenAI-backed scenarios). The app consumes the activated scenario's inference; ISLM owns the model lifecycle, not the consuming business logic. Source: SAP Help — [Intelligent Scenario Lifecycle Management](https://help.sap.com/docs/btp/sap-business-technology-platform/intelligent-scenario-lifecycle-management?locale=en-US).
 - Treat the AI service as an external dependency: consume only released APIs, keep orchestration thin, and apply the same integration resilience (timeouts, retries, error handling) as any outbound call — see `abap-integration`.
 
 ## Governance for AI features

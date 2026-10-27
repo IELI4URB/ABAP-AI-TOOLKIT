@@ -8,7 +8,7 @@ metadata:
 
 # Background Processing Framework (bgPF)
 
-Source: SAP Help — ABAP Cloud / Learning About ABAP → Background Processing Framework.
+Source: SAP Help — [Background Processing Framework](https://help.sap.com/docs/abap-cloud/abap-concepts/background-processing-framework?locale=en-US).
 
 The **bgPF** asynchronously and reliably executes methods of an application as background processes. Use it to move time-consuming work out of the current (dialog/OData) session so the end user does not wait — process continues, result is collected later.
 

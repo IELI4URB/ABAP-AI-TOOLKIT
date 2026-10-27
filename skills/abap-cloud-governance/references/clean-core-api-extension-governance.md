@@ -159,6 +159,8 @@ Custom **business configuration** (customizing) content is the **C3 "Manage Conf
 - Alternative for large volumes: enable the object for **file upload/download** (generic file-upload app; supports the ERP/S4 download format for migration) — no full BO required.
 - **Business Configuration Change Logs** track lifecycle; maintenance/lifecycle is usually a separate user from the developer.
 
+Source: SAP Help — [Business Configuration (ABAP environment)](https://help.sap.com/docs/btp/sap-business-technology-platform/dev-in-abap-env-business-configuration?locale=en-US).
+
 ### 3. Anti-Patterns
 
 | Pattern | Problem | Fix |
