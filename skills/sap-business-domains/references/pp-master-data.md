@@ -66,25 +66,25 @@ CALL FUNCTION 'BAPI_MATERIAL_GET_DETAIL'
   TABLES
     return                      = lt_return.
 
-" Update MRP parameters
-DATA: ls_headdata  TYPE bapimathead,
-      ls_mrp1      TYPE bapi_mara_mrp1,
-      ls_mrp1x     TYPE bapi_mara_mrp1x.
+" Update MRP parameters — MRP data goes in PLANTDATA (BAPI_MARC)
+DATA: ls_headdata   TYPE bapimathead,
+      ls_plantdata  TYPE bapi_marc,
+      ls_plantdatax TYPE bapi_marcx.
 
-ls_headdata-material  = lv_matnr.
-ls_headdata-mrp1_view = 'X'.
-ls_mrp1-plant         = lv_werks.
-ls_mrp1-mrp_type      = 'PD'.
-ls_mrp1-lot_size      = 'EX'.
-ls_mrp1x-plant        = 'X'.
-ls_mrp1x-mrp_type     = 'X'.
-ls_mrp1x-lot_size     = 'X'.
+ls_headdata-material    = lv_matnr.
+ls_headdata-mrp_view    = 'X'.
+ls_plantdata-plant      = lv_werks.
+ls_plantdata-mrp_type   = 'PD'.
+ls_plantdata-lotsizekey = 'EX'.
+ls_plantdatax-plant      = lv_werks.
+ls_plantdatax-mrp_type   = 'X'.
+ls_plantdatax-lotsizekey = 'X'.
 
 CALL FUNCTION 'BAPI_MATERIAL_SAVEDATA'
   EXPORTING
-    headdata       = ls_headdata
-    plantdatamrp1  = ls_mrp1
-    plantdatamrp1x = ls_mrp1x
+    headdata   = ls_headdata
+    plantdata  = ls_plantdata
+    plantdatax = ls_plantdatax
   TABLES
     returnmessages = lt_return.
 CALL FUNCTION 'BAPI_TRANSACTION_COMMIT' EXPORTING wait = 'X'.

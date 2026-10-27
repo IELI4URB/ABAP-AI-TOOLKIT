@@ -216,16 +216,7 @@ CALL FUNCTION 'BAPI_TRANSACTION_COMMIT' EXPORTING wait = 'X'.
 
 ### Generate PI Sheet
 
-```abap
-CALL FUNCTION 'CPIP_PI_SHEET_CREATE'
-  EXPORTING
-    i_aufnr   = lv_aufnr
-    i_vornr   = lv_phase_nr
-    i_plant   = lv_werks
-  IMPORTING
-    e_sheetno = lv_sheet_no
-  EXCEPTIONS OTHERS = 1.
-```
+PI sheets / control recipes are not created by a standalone released BAPI. They are generated through **control recipe determination**: configure the control recipe destination and generate via transaction **CO60** (or the control-recipe generation step `COCF`/background job). In ABAP, trigger generation through the process-order functions; there is no `CPIP_PI_SHEET_CREATE` BAPI — verify the available control-recipe API for your release before coding.
 
 ---
 
@@ -246,13 +237,16 @@ CALL FUNCTION 'CPIP_PI_SHEET_CREATE'
 ### Set KANBAN Status
 
 ```abap
-CALL FUNCTION 'PKBAPI_KANBAN_STATUS_SET'
+" nextstatus is a BAPI1075 status code (e.g. '2' = EMPTY, '5' = FULL);
+" check the status values for your configuration.
+CALL FUNCTION 'BAPI_KANBAN_CHANGESTATUS1'
   EXPORTING
-    i_psnid     = lv_kanban_id
-    i_stat_code = 'EMPTY'   " EMPTY or FULL
-    i_plant     = lv_werks
+    kanbanidnumber     = lv_kanban_id
+    nextstatus         = lv_next_status
+  IMPORTING
+    return             = ls_return
   TABLES
-    return      = lt_return.
+    statuschangeresult = lt_result.
 CALL FUNCTION 'BAPI_TRANSACTION_COMMIT' EXPORTING wait = 'X'.
 ```
 
@@ -305,19 +299,16 @@ CALL FUNCTION 'BAPI_TRANSACTION_COMMIT' EXPORTING wait = 'X'.
 
 ## 7. Order Settlement (CO Integration)
 
-```abap
-" Settle production order costs to cost center / material
-CALL FUNCTION 'KB_BAPI_SETTLEMENT_RUN'
-  EXPORTING
-    i_aufnr             = lv_aufnr
-    i_settlement_period = lv_period
-    i_fiscal_year       = lv_gjahr
-    i_test_run          = ' '
-  TABLES
-    return              = lt_return.
-CALL FUNCTION 'BAPI_TRANSACTION_COMMIT' EXPORTING wait = 'X'.
+Production/process order settlement is **not** a standalone released BAPI (`KB_BAPI_SETTLEMENT_RUN` does not exist). Settle via the standard transactions / jobs:
+- **KO88** — individual order settlement.
+- **CO88** — collective settlement run.
+- Schedule as a periodic background job (settlement period / fiscal year as selection parameters).
 
-" Check variance categories after settlement
+After settlement, check variance categories (target vs actual) on the order.
+
+```abap
+" Settlement itself is run via KO88/CO88 (or their batch programs), not a BAPI.
+" Read settlement/variance results afterwards from the order's cost documents.
 SELECT aufnr, versn, wtgbtr
   FROM cosb
   INTO TABLE @DATA(lt_variances)

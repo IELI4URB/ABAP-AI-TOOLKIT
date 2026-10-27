@@ -219,17 +219,23 @@ ENDIF.
 
 ### RAP: Custom Extension on Production Order
 
-```abap
-" 1. Define extension in BDEF
-" extend behavior for I_ProductionOrder with ZI_ProdOrderExt
-"   { field ZCustomField; }
+Extend the **released** production-order BO through its extension include. Verify the exact released entity/BO names for your release in the Released Objects browser (the transactional projection, e.g. the `*TP` entity, is the behavior-enabled target — not every `I_*` interface view is extensible).
 
-" 2. Create custom CDS extension
+```abap
+" 1. Custom field: append structure on the persistence / extension include,
+"    then extend the released CDS view
 @AbapCatalog.extensibility: {
-  allowNewDatasources: true,
-  dataSources: ['I_ProductionOrder']
+  extensible: true,
+  allowNewFields: true
 }
-extend view entity I_
+extend view entity I_ProductionOrder with ZI_ProdOrderExt
+{
+  ZCustomField
+}
+
+" 2. Extend the behavior (only where the released BDEF exposes an extension)
+" extend behavior for <ReleasedProdOrderBO> with ZI_ProdOrderExt
+"   { field ZCustomField; }
 ```
 
 ## SAP Help Evidence Links
