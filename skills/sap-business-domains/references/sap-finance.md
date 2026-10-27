@@ -205,6 +205,27 @@ ENDCLASS.
 #### RAP-Based FI Extensions (S/4HANA 2022+)
 For extending standard FI RAP BOs (e.g., `I_JournalEntry`), use the **Extend by Customer Fields** approach via Key User Extensibility if field addition is needed — direct behavior extension requires a released extension point.
 
+#### Custom-Field Extensibility for Journal Entries
+
+Adding custom fields to journal entries (ACDOCA). Pick by scope:
+
+| Option | Mechanism | Scope / Caveat |
+|---|---|---|
+| Classic Coding Block | Transaction **OXK3** → `CI_COBL` structure | Field flows into ACDOCA **and** BSEG/MSEG/EBKN/EKKN; usable in Fiori apps that post journal entries. **Cannot** extend customer/supplier line items (account type D/K). |
+| Custom Fields app (key user) | Business contexts *Accounting: Journal Entry Item*, *Accounting: Coding Block* | Local extension. For a Coding Block field, SAP recommends OXK3 first, then **SCFD_EUI** to enable it for the Custom Fields app. |
+| Market Segment / CO-PA | Custom Fields app context *Accounting: Market Segment*, or classic **KEA5** characteristics | KEA5 chars reach ACDOCA when the operating concern uses Margin Analysis. |
+
+Reference: SAP Note 2453614 (FI extensibility). Process extensibility also exposes business scenarios (e.g. *Billing Document → Journal Entry*) for transferring custom-field data.
+
+#### Substitution / Validation Rules (modern)
+
+The **Manage Substitution/Validation Rules** app is the current mechanism to validate, derive, or replace field values in FI postings at runtime (business context *Journal Entry Item*). It supersedes the classic `FI_SUBSTITUTION` / `FI_VALIDATION` / BTE path for new journal-entry work (scope difference: SAP Note 3093515).
+
+- Rules are **topologically ordered** by field dependency: a rule that substitutes a field runs before any rule that reads it.
+- Multiple rules substituting the same field run in **alphabetical** order.
+- A **cyclic** read/write dependency on the same field aborts rule execution with an error.
+- **Table Lookup** lets a rule read values from a database table as a derivation source.
+
 ### 5. FI Released API Summary Table
 
 | Object Type | Name | Purpose | Release |
