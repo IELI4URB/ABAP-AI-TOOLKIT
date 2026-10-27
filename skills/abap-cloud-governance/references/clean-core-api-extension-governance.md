@@ -53,7 +53,7 @@ No modifications to SAP standard objects. Use released extension points only.
 
 #### 2 — Release-State Discipline
 
-Release **state** (Released / Deprecated / Decommissioned) and release **contract** (C0–C4) are separate axes. See `official-abap-cloud-apis-and-releases.md` for the authoritative definitions.
+Release **state** (Released / Deprecated / Decommissioned — plus the implicit *Not released / Not published*, i.e. absence of any stable contract) and release **contract** (C0–C4) are separate axes. See `official-abap-cloud-apis-and-releases.md` for the authoritative definitions.
 
 | State / Contract | Meaning | Use in custom code? |
 |---|---|---|
