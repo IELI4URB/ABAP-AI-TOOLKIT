@@ -2,7 +2,9 @@
 
 **Landscape: Standard ABAP / ECC / S/4HANA on-premise.**
 
-SAP Help baseline (2025 FPS02): https://help.sap.com/docs/ABAP_PLATFORM_NEW/46a2cfc13d25463b8b9a3d2a3c3ba0d9/949cdc40132a8531e10000000a1550b0.html?locale=en-US
+SAP Help baselines:
+- Enhancement Framework (2025 FPS02): https://help.sap.com/docs/ABAP_PLATFORM_NEW/46a2cfc13d25463b8b9a3d2a3c3ba0d9/949cdc40132a8531e10000000a1550b0.html?locale=en-US — §1 hierarchy, §2A Switch Framework, §2B Enhancement Append Packages.
+- Changing the SAP Standard (BC): https://help.sap.com/docs/ABAP_PLATFORM_BW4HANA/2b28ffa716c24348903f8ffbfeb81df8/c819756543b111d1896f0000e8322d00.html?locale=en-US — §3 Customer Exits (types, discovery via SAP enhancements), §5 Modification / SPDD / SPAU.
 
 ---
 

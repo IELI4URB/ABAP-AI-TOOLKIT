@@ -157,6 +157,8 @@ CALL BADI lo_badi->validate_before_save
 
 Key difference (SAP Help): classic passes filter values **with the method call**; kernel-based passes comparison values **when the BAdI object is created** via `GET BADI`.
 
+> Sections below (extendable filter types, BAdI-definition changes, country-specific, sorting) are grounded on SAP Help *Changing the SAP Standard (BC) → Enhancements to the Standard → Classic Techniques → Classic BAdIs*.
+
 ### Extendable filter types
 
 A filter type flagged **Extendable** lets you create implementations for filter values that did not exist before (SE18 *Implementation* menu becomes *Filter Value → Create*). Requirements on the filter domain:

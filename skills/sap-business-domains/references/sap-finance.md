@@ -35,7 +35,7 @@ Do not recommend direct persistence changes or unverified APIs. Preserve documen
 
 ### 1. Reading FI Data with ABAP SQL + CDS
 
-> **Universal Journal (ACDOCA) — read correctly.** `I_JournalEntryItem` / `I_GLAccountLineItem` sit on the Universal Journal. S/4HANA runs **parallel ledgers** (one per accounting principle, e.g. IFRS + local GAAP). A read without a **`Ledger`** filter returns rows for *every* ledger → double-counted balances. Always constrain `Ledger` (e.g. `0L` leading ledger) when aggregating. Standard ACDOCA reporting dimensions you can also select/group by: **Segment** (IFRS/US-GAAP segment reporting), **FunctionalArea** (cost-of-sales accounting), **ProfitCenter**.
+> **Universal Journal (ACDOCA) — read correctly.** `I_JournalEntryItem` / `I_GLAccountLineItem` sit on the Universal Journal. S/4HANA General Ledger supports **parallel accounting via several parallel ledgers** (one ledger per accounting principle, e.g. IFRS + local GAAP) — SAP Help: *General Ledger Accounting (FI-GL) → Parallel Accounting*. Each ledger holds its own version of the same journal-entry item, so a query without a **`Ledger`** filter returns one row per ledger for the same document, inflating any `SUM`. Constrain `Ledger` (e.g. `0L` leading ledger) whenever aggregating or comparing balances. Standard ACDOCA reporting dimensions you can also select/group by: **Segment** (segment reporting, IFRS/US-GAAP), **FunctionalArea** (cost-of-sales accounting), **ProfitCenter**.
 
 #### Read Journal Entry Items for a Company Code
 ```abap
@@ -206,6 +206,8 @@ ENDCLASS.
 For extending standard FI RAP BOs (e.g., `I_JournalEntry`), use the **Extend by Customer Fields** approach via Key User Extensibility if field addition is needed — direct behavior extension requires a released extension point.
 
 #### Custom-Field Extensibility for Journal Entries
+
+Source: SAP Help — *General Ledger Accounting (FI-GL) → Extensibility Options for Finance / Substitution/Validation for Journal Entries*.
 
 Adding custom fields to journal entries (ACDOCA). Pick by scope:
 
