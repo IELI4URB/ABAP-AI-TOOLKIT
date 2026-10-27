@@ -1,6 +1,9 @@
 # PP Detailed Scheduling — ABAP Reference
 
-> ⚠️ **Verify function-module names before use.** Several classic/PP-DS FM names in this guide were **not found** on a standard S/4HANA 2023 system and appear to be illustrative placeholders: `CR_CAPACITY_AVAILABLE_GET`, `CR_CAPACITY_DISPATCH`, `CR_CAPACITY_REQUIREMENTS_GET`, `CIF_ORDER_TRANSFER`, `CIF_MATERIAL_TRANSFER`, `/SAPAPO/OM_ORDER_READ`, `/SAPAPO/HEU_RUN`, `/SAPAPO/OM_PEGGING_READ`, `/SAPAPO/OM_PEGGING_FIX`, `/SAPAPO/OM_PEGGING_FIX_DELETE`, `/SAPAPO/RES_SETUP_MATRIX_GET`, `/SAPAPO/RES_SETUP_MATRIX_SET`, `/SAPAPO/OPT_RUN_BACKGROUND`. Confirm the real API in SE37 / Released Objects for your release. (`/SAPAPO/OM_ORDER_CHANGE` is real. Many PP/DS operations — heuristic/optimizer runs, pegging, setup matrix — are driven via PP/DS apps or internal APIs, not a single public FM.)
+> ⚠️ **Function-module names — verified corrections (checked on S/4HANA 2023, PP/DS liveCache present).** Several names in this guide do **not** exist; verified replacements where one exists:
+> - `/SAPAPO/OM_ORDER_READ` → **`/SAPAPO/OM_ORDER_GET_DATA`** (also `/SAPAPO/OM_ORDER_GET`, `/SAPAPO/OM_ORDER_GET_ALL`); `/SAPAPO/OM_ORDER_CHANGE` is correct for create/change/delete.
+> - `/SAPAPO/HEU_RUN` → **`/SAPAPO/RRP_HEURISTIC_RUN`** (function group `/SAPAPO/RRP_HEURISTIC`).
+> - `/SAPAPO/OM_PEGGING_READ` / `/SAPAPO/OM_PEGGING_FIX` / `_FIX_DELETE`, `/SAPAPO/RES_SETUP_MATRIX_GET` / `_SET`, `/SAPAPO/OPT_RUN_BACKGROUND`, `CR_CAPACITY_AVAILABLE_GET` / `_DISPATCH` / `_REQUIREMENTS_GET`, `CIF_ORDER_TRANSFER` / `CIF_MATERIAL_TRANSFER` → no FM by these names found; these operations run via PP/DS apps / the optimizer / the CIF integration model, not a single public FM. Verify the real API in SE37 / Released Objects before coding.
 
 ## 1. Technology Selection
 

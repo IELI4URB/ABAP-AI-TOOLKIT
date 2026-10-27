@@ -1,6 +1,10 @@
 # PP MRP and Planning — ABAP Reference
 
-> ⚠️ **Verify function-module names before use.** These FM names were **not found** on a standard S/4HANA 2023 system and appear illustrative: `MRP_MRPRUN_START`, `MD_SET_PLANNING_RUN`, `MD_SET_PLANNING_LOCK`, `MD_UNSET_PLANNING_LOCK`, `BAPI_REQUIREMENTS_REMOVE`. For a single-material MRP run use the released material-planning API / app; read the stock-requirements list with `MD_STOCK_REQUIREMENTS_LIST_API` (verified). Change/delete PIRs via `BAPI_REQUIREMENTS_CHANGE` (verify). Confirm each in SE37 for your release.
+> ⚠️ **Function-module names — verified corrections (checked on S/4HANA 2023).** These names in this guide do **not** exist; use the verified replacements:
+> - `MRP_MRPRUN_START` / `MD_SET_PLANNING_RUN` → single-material in-memory MRP: **`MD_MRP_SINGLE_MAT_MULTI_LEVEL`** or **`MD_MRP_SINGLE_MAT_REPLAN`** (function group `MRP2`). Mass MRP (MRP Live) runs via job/app, not a single FM.
+> - `MD_SET_PLANNING_LOCK` / `MD_UNSET_PLANNING_LOCK` → no such FMs; planning file / lock handling is internal.
+> - `BAPI_REQUIREMENTS_REMOVE` → change/remove PIRs with **`BAPI_REQUIREMENTS_CHANGE`** (also `BAPI_REQUIREMENTS_GETDETAIL`, `BAPI_REQUIREMENTS_SIMULATE`). Create = `BAPI_REQUIREMENTS_CREATE` (verified).
+> - Stock/requirements list read: **`MD_STOCK_REQUIREMENTS_LIST_API`**; MRP list: **`MD_MRP_LIST_API`** (both verified).
 
 ## 1. MRP Fundamentals
 
@@ -78,30 +82,26 @@
 
 ---
 
-## 3. MRP Classic — Function Modules
+## 3. Single-Material MRP — Function Module
 
 ```abap
-" Lock material before planning
-CALL FUNCTION 'MD_SET_PLANNING_LOCK'
-  EXPORTING  werks = lv_werks  matnr = lv_matnr.
+" Single-material, multi-level MRP in memory (function group MRP2).
+" Material locking is handled internally by the FM (ENQUEUE_EMATPLA).
+DATA: lt_materials TYPE mrp_mattab,
+      lv_mats       TYPE rm61x-anzmt,
+      lv_warn       TYPE rm61x-anzam,
+      lv_abends     TYPE rm61x-anzex.
 
-" Execute MRP run
-CALL FUNCTION 'MD_SET_PLANNING_RUN'
+CALL FUNCTION 'MD_MRP_SINGLE_MAT_MULTI_LEVEL'
   EXPORTING
-    plant          = lv_werks
-    material       = lv_matnr
-    processing_key = 'NETCH'
-    create_poreq   = '2'   " 2=always create
-    create_mrl     = 'X'
-    planning_mode  = '1'
-    scheduling     = '2'   " 2=lead-time scheduling
-  EXCEPTIONS
-    no_authority   = 1
-    OTHERS         = 2.
-
-" Unlock after planning
-CALL FUNCTION 'MD_UNSET_PLANNING_LOCK'
-  EXPORTING  werks = lv_werks  matnr = lv_matnr.
+    iv_material        = lv_matnr
+    iv_plant           = lv_werks
+  IMPORTING
+    et_materials       = lt_materials
+    ev_count_materials = lv_mats
+    ev_count_warnings  = lv_warn
+    ev_count_abends    = lv_abends.
+" (use MD_MRP_SINGLE_MAT_REPLAN for single-level repetitive replanning)
 
 " Convert planned order to production order
 CALL FUNCTION 'BAPI_PRODORD_CREATE_FROM_PLORD'
@@ -154,12 +154,18 @@ IF sy-subrc <> 0.
   CALL FUNCTION 'BAPI_TRANSACTION_COMMIT' EXPORTING wait = 'X'.
 ENDIF.
 
-" Delete PIRs
-CALL FUNCTION 'BAPI_REQUIREMENTS_REMOVE'
+" Delete PIRs — change with delete_old = 'X'
+CALL FUNCTION 'BAPI_REQUIREMENTS_CHANGE'
   EXPORTING
-    material = lv_matnr  plant   = lv_werks
-    req_date = lv_date   version = '00'
-  TABLES  return = lt_return.
+    material         = lv_matnr
+    plant            = lv_werks
+    requirementstype = lv_bedae     " e.g. 'VSF'
+    version          = '00'
+    vers_activ       = 'X'
+    delete_old       = 'X'          " delete existing PIRs
+    do_commit        = 'X'
+  TABLES
+    return           = lt_return.
 CALL FUNCTION 'BAPI_TRANSACTION_COMMIT' EXPORTING wait = 'X'.
 ```
 
@@ -177,17 +183,16 @@ CALL FUNCTION 'BAPI_TRANSACTION_COMMIT' EXPORTING wait = 'X'.
 | PP/DS integration | Via planned orders | Direct pegging |
 
 ```abap
-" Trigger MRP Live for single material
-CALL FUNCTION 'MRP_MRPRUN_START'
+" MRP Live mass run has no single released FM — schedule it via the
+" app/job 'Schedule MRP Runs' (program RMMRP000 / tx MD01N).
+" For programmatic single-material planning, use the in-memory FM:
+CALL FUNCTION 'MD_MRP_SINGLE_MAT_MULTI_LEVEL'
   EXPORTING
-    i_plant         = lv_werks
-    i_mrp_run_mode  = 'NET_CHANGE'
-    i_plan_horizon  = 90
-    i_scope         = 'SINGLE_MATERIAL'
-    i_material      = lv_matnr
-  TABLES
-    et_messages     = lt_messages
-  EXCEPTIONS OTHERS = 1.
+    iv_material        = lv_matnr
+    iv_plant           = lv_werks
+  IMPORTING
+    et_materials       = DATA(lt_mats)
+    ev_count_abends    = DATA(lv_ab).
 ```
 
 ### MRP Live BAdIs
