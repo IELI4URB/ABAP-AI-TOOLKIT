@@ -123,6 +123,28 @@ Key points:
 - Key User + Developer = **On-Stack** (run inside the S/4HANA system); Side-by-Side runs on **BTP**.
 - Developer Extensibility is the ABAP Cloud (ADT) path this governance guide targets by default; Key User is low/no-code; Side-by-Side decouples onto BTP when the extension should not live on-stack.
 
+#### Choosing an extensibility model (decision guide)
+
+Decide per requirement, top-down:
+
+1. **Can a key user do it with no code?** (add a field, a custom CDS view/query, a simple custom business object, a rule) → **Key User Extensibility**. No ADT, no transport pipeline.
+2. **Does it need real ABAP logic tightly coupled to SAP transactional data/BOs on the same stack?** (RAP behavior extension, released BAdI, custom ABAP app consuming released APIs in-process) → **Developer Extensibility** (ADT, ABAP for Cloud Development).
+3. **Does it need a separate runtime, lifecycle, or non-ABAP tech?** → **Side-by-Side** on BTP.
+
+**Pick Side-by-Side when any of these hold** (common for AI / POC use cases):
+- Non-ABAP technology required — **Java, Node.js, Python, AI/ML services, LLM orchestration**, third-party SDKs.
+- Extension must **scale and be released independently** of the S/4HANA lifecycle (own CI/CD, own upgrade cadence).
+- **Loose coupling** is desired — integrate via released OData/SOAP/Events/SQL service, not in-process.
+- **Multitenant / SaaS** solution, or a partner app serving multiple customers.
+- Workload shouldn't consume S/4HANA app-server resources, or must reach external systems/data.
+
+**Stay On-Stack (Key User or Developer) when:**
+- The extension is **synchronous** to SAP business logic / transactional consistency (same LUW).
+- It only reads/writes SAP data via released APIs and needs **low-latency in-process** access.
+- No extra runtime or non-ABAP tech is needed.
+
+> AI POC rule of thumb: if the POC calls an external AI service or runs non-ABAP code, default to **Side-by-Side** (BTP, ABAP environment or CAP/Node/Java), consuming S/4HANA through **released APIs / events**. Use On-Stack only when the AI logic is thin enough to run as released-API ABAP in-system.
+
 ### 3. Anti-Patterns
 
 | Pattern | Problem | Fix |
