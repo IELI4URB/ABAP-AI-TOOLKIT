@@ -99,7 +99,7 @@ DATA(lo_destination) = cl_http_destination_provider=>create_by_comm_arrangement(
   comm_scenario = 'SAP_COM_0002'   " FI standard comm scenario — verify in your system
   service_id    = 'JOURNALENTRIES_SRV' ).
 
-DATA(lo_client) = cl_web_http_client_manager=>create_by_destination( lo_destination ).
+DATA(lo_client) = cl_web_http_client_manager=>create_by_http_destination( lo_destination ).
 DATA(lo_request) = lo_client->get_http_request( ).
 
 lo_request->set_uri_path(

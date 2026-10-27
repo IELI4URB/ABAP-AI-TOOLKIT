@@ -324,7 +324,7 @@ CLASS zcl_bp_contract_a IMPLEMENTATION.
       DATA(lo_dest) = cl_http_destination_provider=>create_by_comm_arrangement(
           comm_scenario = 'ZSCEN_BUILD_PA_TRIGGER'
           service_id    = 'ZSCEN_BUILD_PA_TRIGGER_REST' ).
-      DATA(lo_client) = cl_web_http_client_manager=>create_by_destination( lo_dest ).
+      DATA(lo_client) = cl_web_http_client_manager=>create_by_http_destination( lo_dest ).
       DATA(lo_req)    = lo_client->get_http_request( ).
 
       " Build PAprocess context payload
@@ -590,7 +590,7 @@ METHOD check_workflow_status.
   DATA(lo_dest)   = cl_http_destination_provider=>create_by_comm_arrangement(
       comm_scenario = 'ZSCEN_BUILD_PA_TRIGGER'
       service_id    = 'ZSCEN_BUILD_PA_TRIGGER_REST' ).
-  DATA(lo_client) = cl_web_http_client_manager=>create_by_destination( lo_dest ).
+  DATA(lo_client) = cl_web_http_client_manager=>create_by_http_destination( lo_dest ).
   DATA(lo_req)    = lo_client->get_http_request( ).
   lo_req->set_uri_path( |/workflow/rest/v1/workflow-instances/{ iv_instance_id }| ).
 

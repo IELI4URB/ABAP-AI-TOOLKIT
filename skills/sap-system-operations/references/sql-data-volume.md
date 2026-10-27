@@ -243,7 +243,8 @@ WHILE lv_offset <= lv_total.
   ENDIF.
 
   " Extract chunk using table slice
-  lt_chunk = lt_all_suppliers[ lv_offset .. lv_upper ].
+  CLEAR lt_chunk.
+  APPEND LINES OF lt_all_suppliers FROM lv_offset TO lv_upper TO lt_chunk.
 
   " IS NOT INITIAL guard is satisfied because lv_offset <= lv_total guarantees content
   SELECT ebeln, lifnr, bukrs, bedat

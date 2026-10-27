@@ -149,7 +149,7 @@ CLASS zcl_integration_http_client IMPLEMENTATION.
         service_id    = 'ZSCEN_PRODUCT_API_REST' ).
 
     " 2. Obtain HTTP client from manager
-    DATA(lo_client) = cl_web_http_client_manager=>create_by_destination(
+    DATA(lo_client) = cl_web_http_client_manager=>create_by_http_destination(
         i_destination = lo_dest ).
 
     " 3. Build request
@@ -213,7 +213,7 @@ CLASS zcl_http_post_with_retry IMPLEMENTATION.
     DATA(lo_dest)   = cl_http_destination_provider=>create_by_comm_arrangement(
         comm_scenario = 'ZSCEN_ORDER_MGMT'
         service_id    = 'ZSCEN_ORDER_MGMT_REST' ).
-    DATA(lo_client) = cl_web_http_client_manager=>create_by_destination( lo_dest ).
+    DATA(lo_client) = cl_web_http_client_manager=>create_by_http_destination( lo_dest ).
     DATA(lo_request) = lo_client->get_http_request( ).
     lo_request->set_uri_path( '/orders' ).
     lo_request->set_header_field( i_name = 'Content-Type' i_value = 'application/json' ).
@@ -273,7 +273,7 @@ DATA ls_payload TYPE zcl_my_class=>ty_request_payload.
 ls_payload-action    = 'CREATE'.
 ls_payload-entity_id = lv_id.
 
-DATA(lo_client) = cl_web_http_client_manager=>create_by_destination( lo_dest ).
+DATA(lo_client) = cl_web_http_client_manager=>create_by_http_destination( lo_dest ).
 DATA(lo_req)    = lo_client->get_http_request( ).
 
 " Serialize ABAP -> JSON string (released XCO API)
@@ -576,7 +576,7 @@ DATA(lo_dest) = cl_http_destination_provider=>create_by_comm_arrangement(
 
 " From developer perspective, this is identical to Basic Auth usage.
 " OAuth token negotiation happens inside the framework.
-DATA(lo_client) = cl_web_http_client_manager=>create_by_destination( lo_dest ).
+DATA(lo_client) = cl_web_http_client_manager=>create_by_http_destination( lo_dest ).
 DATA(lo_req)    = lo_client->get_http_request( ).
 lo_req->set_uri_path( '/protected-resource' ).
 DATA(lo_resp)   = lo_client->execute( if_web_http_client=>get ).
@@ -672,7 +672,7 @@ TRY.
     DATA(lo_dest)   = cl_http_destination_provider=>create_by_comm_arrangement(
         comm_scenario = lc_scenario
         service_id    = lc_service_id ).
-    DATA(lo_client) = cl_web_http_client_manager=>create_by_destination( lo_dest ).
+    DATA(lo_client) = cl_web_http_client_manager=>create_by_http_destination( lo_dest ).
 
     " ... build request ...
 
@@ -717,7 +717,7 @@ ENDTRY.
 
 ```
 OUTBOUND REST:    cl_http_destination_provider=>create_by_comm_arrangement( )
-                  cl_web_http_client_manager=>create_by_destination( )
+                  cl_web_http_client_manager=>create_by_http_destination( )
                   lo_req->set_uri_path / set_header_field / set_text
                   lo_client->execute( if_web_http_client=>get/post/patch/delete )
                   lo_resp->get_status( ) / get_text( )

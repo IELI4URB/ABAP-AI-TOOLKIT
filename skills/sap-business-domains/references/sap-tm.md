@@ -117,7 +117,7 @@ DATA(lv_payload) = |\{|
 
 DATA(lo_destination) = cl_http_destination_provider=>create_by_comm_arrangement(
   comm_scenario = 'Z_TM_FO_SCENARIO' ).
-DATA(lo_client)  = cl_web_http_client_manager=>create_by_destination( lo_destination ).
+DATA(lo_client)  = cl_web_http_client_manager=>create_by_http_destination( lo_destination ).
 DATA(lo_request) = lo_client->get_http_request( ).
 lo_request->set_method( if_web_http_client=>post ).
 lo_request->set_uri_path( '/sap/opu/odata/sap/API_FREIGHT_ORDER_SRV/A_FreightOrder' ).

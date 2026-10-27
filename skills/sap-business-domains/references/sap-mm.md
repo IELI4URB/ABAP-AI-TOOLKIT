@@ -115,7 +115,7 @@ DATA(lv_payload) = |\{|
 
 DATA(lo_destination) = cl_http_destination_provider=>create_by_comm_arrangement(
   comm_scenario = 'Z_MM_MATDOC_SCENARIO' ).
-DATA(lo_client)  = cl_web_http_client_manager=>create_by_destination( lo_destination ).
+DATA(lo_client)  = cl_web_http_client_manager=>create_by_http_destination( lo_destination ).
 DATA(lo_request) = lo_client->get_http_request( ).
 lo_request->set_method( if_web_http_client=>post ).
 lo_request->set_uri_path( '/sap/opu/odata/sap/API_MATERIAL_DOCUMENT_SRV/A_MaterialDocumentHeader' ).
@@ -229,8 +229,8 @@ ENDCLASS.
 |---|---|---|---|
 | CDS View | `I_PurchaseOrder` | PO header | C1 |
 | CDS View | `I_PurchaseOrderItem` | PO line items | C1 |
-| CDS View | `I_GoodsMovement` | Goods movement | C1 |
-| CDS View | `I_MaterialDocumentItem` | Material doc items | C1 |
+| CDS View | `I_MaterialDocumentHeader` | Material document header | C1 |
+| CDS View | `I_MaterialDocumentItem` | Material doc items (goods movements) | C1 |
 | CDS View | `I_Material` | Material master | C1 |
 | CDS View | `I_InventoryBalance` | Stock levels | C1 |
 | OData API | `API_PURCHASEORDER_PROCESS_SRV` | PO R/W | Released |

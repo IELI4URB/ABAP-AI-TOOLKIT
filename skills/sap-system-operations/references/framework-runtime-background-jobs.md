@@ -64,10 +64,8 @@
 "      (if the menu option is available for your release)
 "════════════════════════════════════════════════════════════════
 " Programmatic cancel via APJ API (Public Cloud / Private Cloud):
-DATA(lo_apj) = cl_apj_rt_api=>get_instance( ).
-
 TRY.
-    lo_apj->cancel_job(
+    cl_apj_rt_api=>cancel_job(
       EXPORTING
         iv_job_id = lv_stuck_job_id ).     " from Application Jobs app
 

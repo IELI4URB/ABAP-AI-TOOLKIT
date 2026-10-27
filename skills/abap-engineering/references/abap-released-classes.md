@@ -73,10 +73,11 @@ Companion reference for the `abap-released-classes` skill. Lists additional rele
 
 | Class / Interface | Purpose | Key Methods |
 |---|---|---|
-| `CL_ABAP_CONV_IN_CE` | ABAP ↔ JSON (legacy) | `CREATE` |
-| `/UI2/CL_JSON` | JSON serialization | `SERIALIZE`, `DESERIALIZE` |
+| `XCO_CP_JSON` | JSON serialize/deserialize (released for ABAP Cloud) | `DATA->FROM_ABAP`, `DATA->FROM_STRING`, `->TO_STRING`, `->WRITE_TO` |
 | `CL_SXML_STRING_WRITER` | XML/JSON writer | `CREATE` |
-| `CL_ABAP_CODEPAGE` | Code-page name handling | `CONVERT_FROM`, `CONVERT_TO` |
+| `CL_ABAP_CODEPAGE` | Code-page xstring↔string conversion | `CONVERT_FROM`, `CONVERT_TO` |
+
+> `/UI2/CL_JSON` is **not** released for ABAP for Cloud Development — use `XCO_CP_JSON`. `CL_ABAP_CONV_IN_CE`/`CL_ABAP_CONV_OUT_CE` are classic codepage converters (not JSON), superseded by `CL_ABAP_CODEPAGE`.
 
 ---
 
@@ -84,11 +85,12 @@ Companion reference for the `abap-released-classes` skill. Lists additional rele
 
 | Class / Interface | Purpose | Key Methods |
 |---|---|---|
-| `CL_WEB_HTTP_CLIENT_MANAGER` | HTTP client factory (Cloud) | `CREATE_BY_COMMUNICATION_ARRANGEMENT`, `CREATE_BY_DESTINATION` |
+| `CL_WEB_HTTP_CLIENT_MANAGER` | HTTP client factory (Cloud) | `CREATE_BY_HTTP_DESTINATION` |
 | `IF_WEB_HTTP_CLIENT` | HTTP request/response | `EXECUTE`, `GET_HTTP_RESPONSE`, `CLOSE` |
 | `IF_WEB_HTTP_REQUEST` | Set request parameters | `SET_HEADER_FIELD`, `SET_TEXT` |
-| `IF_WEB_HTTP_RESPONSE` | Read response | `GET_STATUS_CODE`, `GET_TEXT` |
-| `CL_HTTP_UTILITY` | URL encode/decode | `ESCAPE_URL`, `UNESCAPE_URL` |
+| `IF_WEB_HTTP_RESPONSE` | Read response | `GET_STATUS`, `GET_TEXT` |
+| `CL_WEB_HTTP_UTILITY` | URL/base64 encode/decode | `ESCAPE_URL`, `UNESCAPE_URL`, `ENCODE_BASE64` |
+| `CL_HTTP_DESTINATION_PROVIDER` | Build HTTP destination | `CREATE_BY_COMM_ARRANGEMENT`, `CREATE_BY_URL` |
 
 ---
 

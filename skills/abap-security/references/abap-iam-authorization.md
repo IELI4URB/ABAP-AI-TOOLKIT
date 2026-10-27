@@ -136,9 +136,7 @@ METHOD check_purchase_authority.
     WHEN 4.
       RAISE EXCEPTION TYPE cx_zpur_auth_failed
         MESSAGE e001(zpur_messages)
-          WITH iv_actvt iv_purch_org
-        EXPORTING
-          previous => CAST cx_root( NEW cx_zpur_auth_failed( ) ).
+          WITH iv_actvt iv_purch_org.
     WHEN OTHERS.
       " sy-subrc 8 = object not active in user master
       RAISE EXCEPTION TYPE cx_zpur_auth_failed

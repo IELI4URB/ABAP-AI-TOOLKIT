@@ -647,9 +647,6 @@ COMMIT WORK AND WAIT.   " AND WAIT ensures DB consistency before next package
 " Free large internal tables after each package
 FREE lt_pkg.
 CLEAR lt_result.
-
-" Explicit garbage collection hint (use sparingly)
-cl_abap_memory=>check_storage_boundary( ).
 ```
 
 ---

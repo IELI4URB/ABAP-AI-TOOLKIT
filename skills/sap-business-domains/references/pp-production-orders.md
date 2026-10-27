@@ -13,8 +13,8 @@ Create(CO01) -> Release(CO02) -> Goods Issue(MIGO-261)
 |---|---|
 | I0001 | CRTD — Created |
 | I0002 | REL — Released |
-| I0010 | PCNF — Partially confirmed |
-| I0009 | CNF — Confirmed |
+| I0009 | PCNF — Partially confirmed |
+| I0010 | CNF — Confirmed |
 | I0012 | DLV — Delivery completed |
 | I0045 | TECO — Technically complete |
 | I0046 | CLSD — Closed |
@@ -278,21 +278,7 @@ CALL FUNCTION 'BAPI_REPMANCONF1_CREATE_MTS'
 CALL FUNCTION 'BAPI_TRANSACTION_COMMIT' EXPORTING wait = 'X'.
 ```
 
-### Create Run Schedule Quantity
-
-```abap
-CALL FUNCTION 'BAPI_REPMANCONF1_CREATE_MTS'
-  EXPORTING
-    plant              = lv_werks
-    material           = lv_matnr
-    production_version = lv_verid
-    posting_date       = sy-datum
-    backflush_quant    = lv_qty
-    backflush_uom      = lv_uom
-  TABLES
-    return             = lt_return.
-CALL FUNCTION 'BAPI_TRANSACTION_COMMIT' EXPORTING wait = 'X'.
-```
+Run-schedule quantities (planned orders for REM) are created via MRP / `MD_MRP_SINGLE_MAT_MULTI_LEVEL` or the planned-order APIs — there is no separate run-schedule-create BAPI; `BAPI_REPMANCONF1_CREATE_MTS` only posts the backflush confirmation shown above.
 
 ---
 

@@ -90,9 +90,9 @@ ENDLOOP.
 
 ```abap
 " GOOD: CDS does calculation in database
-DEFINE VIEW zv_travel_cost AS
-  SELECT FROM travels AS t
-  JOIN countries AS c ON t.country_id = c.id
+DEFINE VIEW ENTITY zv_travel_cost
+  AS SELECT FROM ztravel AS t
+  INNER JOIN zcountry AS c ON t.country_id = c.id
   {
     t.id,
     t.base_price,
@@ -257,24 +257,31 @@ ENDMETHOD.
 
 ### Pattern 1: CDS View with Calculated Fields
 
-```abap
-" Define calculation once in CDS, reuse everywhere
-DEFINE VIEW zv_travel_summary AS
-  SELECT FROM travels AS t
-  JOIN agencies AS a ON t.agency_id = a.id
-  {
-    t.id,
-    t.status,
-    t.base_price,
-    COUNT(*) OVER (PARTITION BY t.agency_id) AS travel_count_by_agency,
-    SUM(t.base_price) OVER (PARTITION BY t.agency_id) AS total_revenue_by_agency,
-    ROW_NUMBER() OVER (ORDER BY t.base_price DESC) AS price_rank,
-    CASE WHEN t.status = 'APPROVED' THEN 1 ELSE 0 END AS is_approved
-  };
+Window functions (`OVER(...)`) are **not** supported in CDS view-entity DDL — they belong in **ABAP SQL** (7.53+) or an AMDP/CDS table function. Put plain projection + `CASE` in the CDS entity; do the windowed aggregation in ABAP SQL.
 
-" Usage: All calculations already done
-SELECT * FROM zv_travel_summary WHERE is_approved = 1
-  INTO TABLE lt_approved_travels.
+```abap
+" CDS view entity — plain fields + CASE (valid in DDL)
+DEFINE VIEW ENTITY ZV_TravelSummary
+  AS SELECT FROM ztravel AS t
+  INNER JOIN zagency AS a ON t.agency_id = a.id
+{
+  key t.id,
+      t.status,
+      t.agency_id,
+      t.base_price,
+      CASE WHEN t.status = 'APPROVED' THEN 1 ELSE 0 END AS is_approved
+}
+```
+
+```abap
+" Windowed aggregation in ABAP SQL (OVER supported here, NOT in CDS DDL)
+SELECT id, status, base_price,
+       COUNT(*)          OVER( PARTITION BY agency_id )        AS travel_count_by_agency,
+       SUM( base_price ) OVER( PARTITION BY agency_id )        AS total_revenue_by_agency,
+       ROW_NUMBER()      OVER( ORDER BY base_price DESCENDING ) AS price_rank
+  FROM ZV_TravelSummary
+  WHERE is_approved = 1
+  INTO TABLE @DATA(lt_summary).
 ```
 
 ### Pattern 2: Pre-Aggregation

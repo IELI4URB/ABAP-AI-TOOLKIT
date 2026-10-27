@@ -110,7 +110,7 @@ ENDCLASS.
 ```abap
 " GOOD: Extend fields without breaking old clients
 " OLD CDS view (v1)
-DEFINE VIEW zc_travel_tp_v1 AS SELECT FROM zi_travel_tp {
+DEFINE VIEW ENTITY zc_travel_tp_v1 AS SELECT FROM zi_travel_tp {
   id,
   status,
   destination,
@@ -118,7 +118,7 @@ DEFINE VIEW zc_travel_tp_v1 AS SELECT FROM zi_travel_tp {
 };
 
 " NEW CDS view (v2) - adds optional new field
-DEFINE VIEW zc_travel_tp_v2 AS SELECT FROM zi_travel_tp {
+DEFINE VIEW ENTITY zc_travel_tp_v2 AS SELECT FROM zi_travel_tp {
   id,
   status,
   destination,
@@ -154,7 +154,7 @@ DEFINE VIEW zc_travel_tp_v2 AS SELECT FROM zi_travel_tp {
 
 ```abap
 " Warn clients about deprecated fields
-DEFINE VIEW zc_travel_tp_v2 AS SELECT FROM zi_travel_tp {
+DEFINE VIEW ENTITY zc_travel_tp_v2 AS SELECT FROM zi_travel_tp {
   id,
   status,
   destination,
