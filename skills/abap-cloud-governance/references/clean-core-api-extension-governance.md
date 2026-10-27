@@ -115,17 +115,19 @@ Source: https://help.sap.com/docs/abap-cloud/abap-cloud-background-concepts-and-
 | Target environment | S/4HANA Cloud, S/4HANA, S/4HANA Cloud Private Edition | S/4HANA Cloud, S/4HANA, S/4HANA Cloud Private Edition | SAP BTP (incl. ABAP environment) |
 | Tooling | Key User Extensibility tools | ABAP Development Tools (ADT) | ADT / non-ABAP (Java, Node.js) |
 | ABAP language version | ABAP for Key Users | ABAP for Cloud Development | ABAP for Cloud Development |
+| Released object types | BAdIs, CDS views | BAdIs, classes, interfaces, CDS views, behavior definitions, authorization objects | BAPIs, IDocs, OData APIs, SOAP APIs, events |
 | Use cases | UI field layout, custom fields, custom logic, custom CDS views | Lifecycle-stable ABAP apps, extensions of SAP S/4HANA, partner extensions | Custom/multitenant apps, ABAP + non-ABAP, partner SaaS |
 
 Key points:
 - All three are modification-free and backed by **release contracts** (C0/C1…) — upgrade-safe.
 - **Layered**: customers and partners extend in parallel without interference.
+- The **Virtual Data Model (VDM)** — released CDS views over abstract DB tables — is the data-access basis for **all three** options.
 - Key User + Developer = **On-Stack** (run inside the S/4HANA system); Side-by-Side runs on **BTP**.
 - Developer Extensibility is the ABAP Cloud (ADT) path this governance guide targets by default; Key User is low/no-code; Side-by-Side decouples onto BTP when the extension should not live on-stack.
 
 #### Choosing an extensibility model (decision guide)
 
-Decide per requirement, top-down:
+Grounded on SAP Help *"What extensibility option suits my purpose?"* (S/4HANA Cloud Public Edition → Extend and Integrate → Extensibility). Decide per requirement, top-down:
 
 1. **Can a key user do it with no code?** (add a field, a custom CDS view/query, a simple custom business object, a rule) → **Key User Extensibility**. No ADT, no transport pipeline.
 2. **Does it need real ABAP logic tightly coupled to SAP transactional data/BOs on the same stack?** (RAP behavior extension, released BAdI, custom ABAP app consuming released APIs in-process) → **Developer Extensibility** (ADT, ABAP for Cloud Development).
