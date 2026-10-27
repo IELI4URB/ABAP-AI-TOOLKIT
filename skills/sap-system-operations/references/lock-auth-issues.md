@@ -4,7 +4,7 @@
 
 ## §1 — ENQUEUE_FAILED (Lock Conflict)
 
-**Exception / Symptom:** `CX_SY_NO_HANDLER` raised when enqueue call fails; or `ENQUEUE_FAILED` message; or function module `ENQUEUE_*` returns `LOCKED` return code. User cannot save a document; "Document is locked by user X"; concurrent edit conflicts.
+**Exception / Symptom:** An `ENQUEUE_*` call fails with the `FOREIGN_LOCK` exception (or `sy-subrc <> 0` / return code `LOCKED`); user cannot save a document; "Document is locked by user X"; concurrent edit conflicts.
 
 **Landscapes:** All
 

@@ -2,7 +2,7 @@
 
 ## §2 — Activation Error After Transport Import
 
-**Exception / Symptom:** Transport import completes without a hard error (return code 0 or 4 in STMS) but the transported object is **inactive** in the target system. Calling the class/function at runtime results in `CX_SY_NO_HANDLER`, `CLASS_NOT_FOUND`, or a syntax error dump in `ST22`. The object appears to exist in SE80/ADT but has no active version.
+**Exception / Symptom:** Transport import completes without a hard error (return code 0 or 4 in STMS) but the transported object is **inactive** in the target system. Calling the class/function at runtime raises a load/generation error (e.g. `SYNTAX_ERROR`, `LOAD_PROGRAM_CLASS_MISMATCH`, or `CLASS_NOT_FOUND`) in `ST22`. The object appears to exist in SE80/ADT but has no active version.
 
 **Landscapes:** All.
 

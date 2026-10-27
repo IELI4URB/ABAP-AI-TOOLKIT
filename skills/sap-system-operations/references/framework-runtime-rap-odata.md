@@ -25,7 +25,7 @@ An ABAP exception propagated upward through the call stack without being caught 
 |------|--------------------------|--------------------------------------|
 | 1 — Find the short dump | **Analyze ABAP Runtime Errors** | `ST22` |
 | 2 — Filter by time/user | Filter panel → timestamp range + user | `ST22` → Own Dumps / All Dumps → Date+Time filter |
-| 3 — Gateway error log | **Application Logs** (object `SXMS_LOG`) | `/IWFND/ERROR_LOG` |
+| 3 — Gateway error log | **Error Log** (SAP Gateway) | `/IWFND/ERROR_LOG` |
 | 4 — OData request trace | **ADT → OData Client** → reproduce call | `/IWFND/TRACES` → set trace level 2 for service |
 | 5 — Structured app log | **Application Logs** (object `SBAL`) | `SLG1` → object/sub-object filter |
 | 6 — System log | Not directly accessible | `SM21` → filter 60 minutes around incident |

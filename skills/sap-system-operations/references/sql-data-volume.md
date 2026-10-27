@@ -103,7 +103,7 @@ SELECT m~matnr, m~mtart
 ### Prevention
 - **Count before SELECT:** `IF lines( lt_range ) > 5000. " package it ENDIF.`
 - **Code review rule:** Any `SELECT … WHERE field IN @lt_xxx` where `lt_xxx` is filled from a parameter, ALV screen, or upstream table → mandatory package-processing pattern.
-- **ATC check:** Enable ATC rule **SLIN_SEARCH** (or custom check) to flag unbounded range usage.
+- **Static check:** Use the extended program check (tx `SLIN`) / ATC Performance checks to flag unbounded range / IN-list usage; add a custom ATC check if your variant lacks one.
 - **ALV selection screens:** Wrap `SELECT-OPTIONS` ranges in a count guard in the `START-OF-SELECTION` event.
 
 ---
@@ -182,10 +182,10 @@ ENDIF.
 | ⚙️ OnPrem | Same documented behaviour since R/3; some older systems have slightly different chunk sizes internally | Same guard required |
 
 ### Prevention
-- **ATC mandatory check:** SAP standard ATC rule **`SPSQL_SELECT_FOR_ALL_ENTRIES`** (Check ID: `CL_CI_TEST_SQL_FAE`) flags `FOR ALL ENTRIES` without an `IS NOT INITIAL` guard. Enable it as an **error** in all landscapes.
+- **ATC / Code Inspector check:** the Performance checks flag `FOR ALL ENTRIES` risks (empty-table full read). Enable the Performance category in your ATC variant as an **error** in all landscapes (verify the exact check in your release).
 - **Code review gate:** `FOR ALL ENTRIES` without an immediately preceding or enclosing `IS NOT INITIAL` check is a **blocker** during pull request review.
 - **Unit test:** Write a test that calls the method under test with an empty driver table and asserts that the result is empty.
-- **Static analysis:** The SAP Code Inspector check `SLIN_SQL` also catches this pattern.
+- **Static analysis:** the extended program check (tx `SLIN`) also highlights risky SQL patterns.
 
 ---
 
@@ -282,7 +282,7 @@ ENDWHILE.
 
 ## §4 — TIME_OUT Dump
 
-**Exception / Symptom:** `TIME_OUT` (ABAP runtime error class `CX_SY_NO_HANDLER`) or `DYNPRO_SEND_IN_BACKGROUND` dump; user sees *"Maximum system runtime exceeded"* or the session is terminated without a message.
+**Exception / Symptom:** `TIME_OUT` runtime error (non-catchable; max dialog runtime exceeded) or `DYNPRO_SEND_IN_BACKGROUND` dump; user sees *"Maximum system runtime exceeded"* or the session is terminated without a message.
 **Landscapes:** ☁️ Public | 🔒 Private | ⚙️ OnPrem
 
 ### Root Cause
@@ -673,7 +673,7 @@ ENDLOOP.
 
 ### Prevention
 - **Code review rule:** Any `SELECT` (including `SELECT SINGLE`) inside a `LOOP … ENDLOOP` is a **blocker** unless the loop is explicitly bounded to ≤ 10 iterations by design.
-- **ATC check:** SAP ATC rule **`SPSQL_SELECT_IN_LOOP`** (Check: `CL_CI_TEST_SELECT_IN_LOOP`) flags SELECT-inside-LOOP. Enable as **error** in all system landscapes.
+- **Code Inspector check:** `CL_CI_TEST_SELECT_NESTED` ("SELECTs in Loops") flags SELECT-inside-LOOP. Enable it (Performance category) as an **error** in all landscapes.
 - **Design principle:** Fetch all required data **before** the processing loop, not inside it. Build in-memory lookup structures (hashed tables, sorted tables with binary search) for O(1) access during the loop.
 - **CDS-first architecture:** Model related entities as CDS views with JOINs; consumers call the view once and receive a pre-joined result set.
 - **Performance test baseline:** Establish a performance test that runs with 10× production data volume before every transport to production. N+1 issues are invisible at small data volumes and catastrophic at large ones.
