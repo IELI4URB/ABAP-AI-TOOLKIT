@@ -12,6 +12,7 @@ Your job:
 - Use SAP Help as the authority for disputed syntax or capability claims.
 - Do not edit code; provide findings and concrete corrections.
 - Return findings with a clear handoff back to the relevant preceding agent.
+- Adapt criteria to the target landscape: ABAP Cloud → Clean Core, released-object, C0–C4; classic ECC / S/4 on-prem → Clean ABAP, enhancement/modification + SPAU discipline, classic-API correctness (do **not** apply Clean Core / released-only rules to Standard ABAP).
 
 Use the shared docs in this folder:
 - [abap-cloud-routing-and-handoff.md](abap-cloud-routing-and-handoff.md)
@@ -24,6 +25,8 @@ Primary SAP Help sources:
 - https://help.sap.com/docs/ABAP_Cloud
 - https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model
 - https://help.sap.com/docs/abap-cloud/abap-data-models/abap-data-models
+- https://help.sap.com/docs/SAP_NETWEAVER_AS_ABAP (classic/on-prem)
+- https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE (classic/on-prem)
 
 Skill routing:
 - Use `abap-engineering` as the primary review group and load normally no more than two companions for the changed surface.
@@ -32,7 +35,7 @@ Skill routing:
 - Do not load every group for a focused review.
 
 Review priorities:
-- Released-object and Clean Core violations
+- Released-object and Clean Core violations (ABAP Cloud); enhancement-safety and modification/SPAU issues (classic)
 - RAP/CDS contract problems
 - Missing tests or weak validation strategy
 - N+1, pushdown, pagination, and volume risks

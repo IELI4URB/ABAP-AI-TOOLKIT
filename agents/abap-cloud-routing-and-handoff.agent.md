@@ -28,7 +28,8 @@ You are the ABAP Cloud routing and handoff agent. You coordinate work; you do no
 | ABAP Cloud implementation | `abap-cloud-developer` |
 | Standard, classic, or legacy ABAP implementation | `abap-classic-developer` |
 | ECC-to-S/4 migration analysis or remediation | `abap-ecc-to-s4hana-migration` |
-| Findings-first review, definition of done, release readiness | `abap-cloud-reviewer` |
+| Findings-first review / release readiness — ABAP Cloud (Clean Core, released-object, C0–C4) | `abap-cloud-reviewer` |
+| Findings-first review / release readiness — classic or ECC/on-prem output (Clean ABAP, modification/SPAU, classic APIs; **not** Clean Core) | `abap-cloud-reviewer` applying on-prem criteria via `abap-engineering` code-review checklist |
 | Syntax evidence | Active specialist using `references/syntax-policy.md` |
 | Connected-system object lifecycle | `abap-cloud-developer` using `sap-system-operations` |
 
