@@ -176,6 +176,41 @@ Order of execution not guaranteed — implementations must be independent and no
 
 ---
 
+## 5A. Screen Enhancements (BAdI-based)
+
+Adding custom fields/subscreens to a standard SAP screen. Since **Release 7.0**, screen enhancements are integrated into the classic BAdI concept (replacing the old customer-exit screen exits that used "X" function groups).
+
+Source: SAP Help — *Changing the SAP Standard (BC) → Classic BAdIs → Screen Enhancements*.
+
+Mechanics:
+- A classic BAdI definition can carry a **subscreen**. **Not supported for multiple-use BAdIs.**
+- Data retention/processing moves to a **user function group or module pool** in the implementer's namespace (no "X" prefix — eliminated). The BAdI class instance is used only to **transport data** between the calling application and the subscreen.
+- The BAdI class exposes a generated public static read-only attribute **`DYNPRO_INSTANCE`**.
+- App side calls static **`SET_INSTANCE_FOR_SUBSCREEN`** to publish the instance; the subscreen (PBO/PAI of the user function group) reads it via static **`GET_INSTANCE_FOR_SUBSCREEN`**.
+- Different subscreen states are represented by **different instances**.
+
+Two steps (SE18 define / SE19 implement):
+
+1. **Define** (SE18) — add a screen enhancement (subscreen) to the BAdI definition; a subscreen area is reserved in the SAP screen.
+2. **Implement** (SE19) — create the subscreen in a Z function group; in its PBO read the data via `GET_INSTANCE_FOR_SUBSCREEN`, in PAI write back to the instance.
+
+```abap
+" PBO of the customer subscreen (user function group)
+MODULE status_subscreen OUTPUT.
+  DATA(lo_badi_inst) = zcl_badi_flight_scr=>get_instance_for_subscreen( ).
+  gs_scr = lo_badi_inst->get_display_data( ).   " fill screen fields
+ENDMODULE.
+
+" Application side (SAP program, before calling the subscreen)
+zcl_badi_flight_scr=>set_instance_for_subscreen( lo_badi_inst ).
+```
+
+> **Persistence vs display are two steps.** A `CI_` include on the underlying DDIC structure (e.g. `CI_COBL`, `CI_EKKO`) makes the field *exist/persist*; the subscreen BAdI makes it *display*. Both are required for a custom field to stick.
+
+Discovery of screen hooks: **SE84 → Enhancements → BAdI Definitions** (look for GUI/subscreen BAdIs, e.g. `ME_GUI_PO_CUST`), or **SE51/SE80** → open the SAP screen flow logic → search `CALL CUSTOMER-SUBSCREEN` (classic) / `CALL SUBSCREEN`. Menu enhancements use the same BAdI mechanism (menu exit) but are distinct from subscreen enhancements.
+
+---
+
 ## 6. Fallback / Default Implementation
 
 SAP may deliver a default implementation that runs when no customer implementation is active. Check in SE18 under the BAdI → tab **Default Implementation**.

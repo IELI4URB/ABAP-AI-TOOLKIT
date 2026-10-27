@@ -16,7 +16,7 @@ For ABAP Cloud (BTP, Public Cloud, Private Cloud with ABAP Cloud enforcement): u
 | Request | Guide |
 |---|---|
 | Enhancement Spots, Enhancement Implementations, implicit/explicit options | [Classic Enhancement Framework](./references/classic-enhancement-framework.md) |
-| Classic BAdIs (IF_EX_* / CL_EXITHANDLER factory), kernel-based BAdIs (GET BADI/CALL BADI) on-premise | [Classic BAdIs](./references/classic-badis.md) |
+| Classic BAdIs (IF_EX_* / CL_EXITHANDLER factory), kernel-based BAdIs (GET BADI/CALL BADI) on-premise, screen/menu enhancements (BAdI subscreens) | [Classic BAdIs](./references/classic-badis.md) |
 | User Exits (SMOD/CMOD), Customer Exits, Function Module Exits | [Classic Enhancement Framework](./references/classic-enhancement-framework.md) |
 | Modification adjustments, SPAU, upgrade impact | [Classic Enhancement Framework](./references/classic-enhancement-framework.md) |
 
