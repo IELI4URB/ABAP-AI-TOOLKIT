@@ -145,7 +145,7 @@ Grounded on SAP Help *"What extensibility option suits my purpose?"* (S/4HANA Cl
 - It only reads/writes SAP data via released APIs and needs **low-latency in-process** access.
 - No extra runtime or non-ABAP tech is needed.
 
-> AI POC rule of thumb: if the POC calls an external AI service or runs non-ABAP code, default to **Side-by-Side** (BTP, ABAP environment or CAP/Node/Java), consuming S/4HANA through **released APIs / events**. Use On-Stack only when the AI logic is thin enough to run as released-API ABAP in-system.
+> **AI-POC heuristic (derived, not SAP doctrine).** Applying the SAP criteria above: if a POC calls an external AI service or runs non-ABAP code, the Side-by-Side triggers are met → default to **Side-by-Side** (BTP — ABAP environment or CAP/Node/Java), consuming S/4HANA through **released APIs / events**. Use On-Stack only when the AI logic is thin enough to run as released-API ABAP in-system. This is engineering guidance inferred from the grounded comparison, not a statement from SAP Help.
 
 ### 3. Anti-Patterns
 
