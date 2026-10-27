@@ -25,6 +25,10 @@ Include generative AI in your own business applications via the **SAP AI SDK for
 
 - The **SAP AI SDK for ABAP** is the released ABAP API layer for consuming generative-AI / foundation-model services (through SAP AI Core / the generative-AI hub) from ABAP Cloud code.
 - **ISLM** is the lifecycle framework for intelligent scenarios: register, deploy, activate, and monitor an AI scenario that your ABAP app consumes.
+
+### Intelligent Scenario Lifecycle Management (ISLM)
+
+ISLM is a **self-service framework** for lifecycle-managing machine-learning scenarios in the ABAP environment. An **intelligent scenario** is the **ABAP representation of a business-specific ML use case**. ISLM operations: **train, deploy, activate**, and fetch an accurate **inference** result from the trained scenario. There are two scenario kinds — classic ML scenarios and **Generative AI for ISLM** (GenAI-backed scenarios). The app consumes the activated scenario's inference; ISLM owns the model lifecycle, not the consuming business logic.
 - Treat the AI service as an external dependency: consume only released APIs, keep orchestration thin, and apply the same integration resilience (timeouts, retries, error handling) as any outbound call — see `abap-integration`.
 
 ## Governance for AI features

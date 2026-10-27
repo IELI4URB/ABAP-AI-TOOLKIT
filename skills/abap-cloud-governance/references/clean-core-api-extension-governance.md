@@ -150,6 +150,15 @@ Grounded on SAP Help *"What extensibility option suits my purpose?"* (S/4HANA Cl
 
 > **AI-POC heuristic (derived, not SAP doctrine).** Applying the SAP criteria above: if a POC calls an external AI service or runs non-ABAP code, the Side-by-Side triggers are met → default to **Side-by-Side** (BTP — ABAP environment or CAP/Node/Java), consuming S/4HANA through **released APIs / events**. Use On-Stack only when the AI logic is thin enough to run as released-API ABAP in-system. This is engineering guidance inferred from the grounded comparison, not a statement from SAP Help.
 
+### 2B. Business Configuration content (C3)
+
+Custom **business configuration** (customizing) content is the **C3 "Manage Configuration Content"** contract. Developer workflow (business role `SAP_BR_DEVELOPER`):
+
+- Base the config on a DB table with **delivery class `C`** (`@AbapCatalog.deliveryClass: #C`) so content is **transportable between tenants** (created in DEV, transported to TEST/PROD via **customizing** transport requests).
+- Build a full **RAP business object** on the table and expose it as an **OData service** so business users maintain content through a UI. SAP's standardized **Custom Business Configurations app** consumes it — prefer it over a bespoke UI.
+- Alternative for large volumes: enable the object for **file upload/download** (generic file-upload app; supports the ERP/S4 download format for migration) — no full BO required.
+- **Business Configuration Change Logs** track lifecycle; maintenance/lifecycle is usually a separate user from the developer.
+
 ### 3. Anti-Patterns
 
 | Pattern | Problem | Fix |
