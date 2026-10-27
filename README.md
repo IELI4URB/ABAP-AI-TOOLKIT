@@ -10,7 +10,7 @@ classic/Standard ABAP, and ECC-to-S/4HANA, without mixing their landscape-specif
 **At a glance**
 
 - **7 role agents** — analyzer, architect, developer, reviewer, classic developer, ECC→S/4 migration, and a router that sequences them.
-- **11 SAP skill groups** — RAP/CDS, performance, security, integration, process automation, governance, forms, business domains, operations, and delivery.
+- **12 SAP skill groups** — RAP/CDS, performance, security, integration, process automation, governance, forms, business domains, operations, delivery, and classic/standard ABAP enhancements (ECC & S/4HANA on-premise).
 - **Evidence-first gates** — Clean Core, released-API, security, performance, testing, transport, and rollback checks applied *while building*, not just at release.
 - **Light by default** — short skill routers keep Copilot context small and load deep references only when the task needs them.
 
@@ -152,7 +152,7 @@ $skills = Get-ChildItem "$HOME\.agents\skills" -Directory |
 	Where-Object { Test-Path (Join-Path $_.FullName 'SKILL.md') }
 $agents = Get-ChildItem "$HOME\.copilot\agents" -Filter '*.agent.md'
 
-$skills.Count  # 11 toolkit skills, plus any unrelated installed skills
+$skills.Count  # 12 toolkit skills, plus any unrelated installed skills
 $agents.Count  # 7 toolkit agents, plus any unrelated installed agents
 ```
 

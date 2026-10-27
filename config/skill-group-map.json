@@ -67,6 +67,10 @@
       "atq-principles",
       "cavecrew",
       "find-skills"
+    ],
+    "abap-classic-enhancements": [
+      "classic-enhancement-framework",
+      "classic-badis"
     ]
   }
 }

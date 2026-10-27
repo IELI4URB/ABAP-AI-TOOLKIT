@@ -8,7 +8,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $manifestName = '.sap-dev-ai-toolkit-manifest'
-$expectedSkillCount = 11
+$expectedSkillCount = 12
 $expectedAgentCount = 7
 
 function Reset-ManagedItems {

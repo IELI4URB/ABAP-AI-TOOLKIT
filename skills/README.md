@@ -30,5 +30,6 @@ group-name/
 - `sap-system-operations`
 - `sap-business-domains`
 - `agentic-delivery`
+- `abap-classic-enhancements`
 
 Do not add a new top-level skill folder when an existing object group owns the subject. Add a guide under that group's `references/` directory and update its routing table.

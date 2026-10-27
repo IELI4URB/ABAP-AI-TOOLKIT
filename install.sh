@@ -3,7 +3,7 @@ set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 manifest_name=".sap-dev-ai-toolkit-manifest"
-expected_skill_count=11
+expected_skill_count=12
 expected_agent_count=7
 
 reset_managed_items() {

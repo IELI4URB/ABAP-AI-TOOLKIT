@@ -62,7 +62,8 @@ The parameter entity is a **pure abstract structure** — it carries the event p
 
 ```abap
 " ZSalesOrderCreatedParams.ddls.asddls
-@AbapCatalog.sqlViewName: 'ZSOCRPV'
+" Abstract entity: no SQL view and no persistence.
+" @AbapCatalog.sqlViewName is NOT valid on 'define abstract entity' — do not add it.
 @EndUserText.label: 'Sales Order Created Event Parameters'
 
 define abstract entity ZSalesOrderCreatedParams
@@ -411,7 +412,7 @@ RAISE ENTITY EVENT i_salesorder~zsalesorder_updated       " SAP-released event
         updated_by = sy-uname ) ).
 ```
 
-> ⚠️ Verify on **Business Accelerator Hub** that the SAP BO event and its parameter entity carry `@VDM.lifecycle.contract.type: #PUBLIC_REMOTE_API` before using cross-BO event raising in production.
+> ⚠️ Same-system cross-BO raising requires the SAP BO event and its parameter entity to be released **C1 (Use System-Internally)** on the Business Accelerator Hub. Only if that same event is additionally delivered remotely via Event Mesh must the event also carry a **C2 (Use as Remote API)** contract. Verify each contract independently; do not assume C1 implies remote eligibility.
 
 ---
 

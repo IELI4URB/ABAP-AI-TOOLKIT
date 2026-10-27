@@ -99,7 +99,7 @@ ENDIF.
 #### 8.1 Prerequisites
 
 Before extending a standard SAP BO:
-1. Verify the BO has a **C1 (Use System-Internally)** or **C2 (Use in Key User Apps)** contract on the Hub.
+1. Verify the BO exposes a **C0 (Use as Extension Point / Extend)** contract with declared extension points on the Business Accelerator Hub. C0 is the contract that governs extensibility; **C1 (Use System-Internally)** and **C2 (Use as Remote API)** are consumption contracts, not extension permits. Separately verify the C1 contract of any released API that your extension code consumes.
 2. Verify the extension fields exist in the CDS extension include (`_extension_include`).
 3. Your custom package must depend on the package containing the SAP BO.
 

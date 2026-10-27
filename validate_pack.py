@@ -56,8 +56,8 @@ def validate_skills(errors: list[str]) -> set[str]:
             f"Skill groups differ: missing={sorted(expected_groups - actual_groups)}, "
             f"extra={sorted(actual_groups - expected_groups)}"
         )
-    if len(expected_groups) != 11:
-        errors.append(f"Expected 11 groups, found {len(expected_groups)}")
+    if len(expected_groups) != 12:
+        errors.append(f"Expected 12 groups, found {len(expected_groups)}")
 
     nested_skills = sorted(SKILLS.glob("*/*/SKILL.md"))
     for nested in nested_skills:
@@ -213,7 +213,7 @@ def validate_links(errors: list[str]) -> None:
 def validate_installers(errors: list[str]) -> None:
     for installer in (ROOT / "install.ps1", ROOT / "install.sh"):
         text = read(installer)
-        if "11" not in text or "7" not in text:
+        if "12" not in text or "7" not in text:
             errors.append(f"Installer lacks expected-count guards: {installer.name}")
         if ".sap-dev-ai-toolkit-manifest" not in text:
             errors.append(f"Installer lacks managed-item manifest: {installer.name}")
@@ -233,7 +233,7 @@ def main() -> int:
         return 1
 
     print("Pack validation PASSED")
-    print("Validated 11 skill groups, self-contained references, 7 Copilot agents, and 7 Claude mirrors.")
+    print("Validated 12 skill groups, self-contained references, 7 Copilot agents, and 7 Claude mirrors.")
     return 0
 
 
