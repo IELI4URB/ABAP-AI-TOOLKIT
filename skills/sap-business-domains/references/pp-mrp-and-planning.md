@@ -1,5 +1,7 @@
 # PP MRP and Planning — ABAP Reference
 
+> ⚠️ **Verify function-module names before use.** These FM names were **not found** on a standard S/4HANA 2023 system and appear illustrative: `MRP_MRPRUN_START`, `MD_SET_PLANNING_RUN`, `MD_SET_PLANNING_LOCK`, `MD_UNSET_PLANNING_LOCK`, `BAPI_REQUIREMENTS_REMOVE`. For a single-material MRP run use the released material-planning API / app; read the stock-requirements list with `MD_STOCK_REQUIREMENTS_LIST_API` (verified). Change/delete PIRs via `BAPI_REQUIREMENTS_CHANGE` (verify). Confirm each in SE37 for your release.
+
 ## 1. MRP Fundamentals
 
 ### Planning Run Types

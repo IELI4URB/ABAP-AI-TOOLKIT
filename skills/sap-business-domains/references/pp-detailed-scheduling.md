@@ -1,5 +1,7 @@
 # PP Detailed Scheduling — ABAP Reference
 
+> ⚠️ **Verify function-module names before use.** Several classic/PP-DS FM names in this guide were **not found** on a standard S/4HANA 2023 system and appear to be illustrative placeholders: `CR_CAPACITY_AVAILABLE_GET`, `CR_CAPACITY_DISPATCH`, `CR_CAPACITY_REQUIREMENTS_GET`, `CIF_ORDER_TRANSFER`, `CIF_MATERIAL_TRANSFER`, `/SAPAPO/OM_ORDER_READ`, `/SAPAPO/HEU_RUN`, `/SAPAPO/OM_PEGGING_READ`, `/SAPAPO/OM_PEGGING_FIX`, `/SAPAPO/OM_PEGGING_FIX_DELETE`, `/SAPAPO/RES_SETUP_MATRIX_GET`, `/SAPAPO/RES_SETUP_MATRIX_SET`, `/SAPAPO/OPT_RUN_BACKGROUND`. Confirm the real API in SE37 / Released Objects for your release. (`/SAPAPO/OM_ORDER_CHANGE` is real. Many PP/DS operations — heuristic/optimizer runs, pegging, setup matrix — are driven via PP/DS apps or internal APIs, not a single public FM.)
+
 ## 1. Technology Selection
 
 | Feature | Classic Capacity Planning | Embedded PP/DS S/4 1709+ | APO PP/DS |

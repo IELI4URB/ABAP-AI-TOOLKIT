@@ -263,19 +263,18 @@ CALL FUNCTION 'BAPI_TRANSACTION_COMMIT' EXPORTING wait = 'X'.
 
 ### Backflushing
 
+Repetitive-manufacturing backflush is posted via the released BAPI (there is no `MFBF_BACKFLUSH` function module; `MFBF` is the transaction):
+
 ```abap
-" Post repetitive manufacturing backflush
-CALL FUNCTION 'MFBF_BACKFLUSH'
+" REM backflush — make-to-stock confirmation
+CALL FUNCTION 'BAPI_REPMANCONF1_CREATE_MTS'
   EXPORTING
-    i_matnr      = lv_matnr
-    i_werks      = lv_werks
-    i_verid      = lv_verid
-    i_qty        = lv_qty
-    i_pstng_date = sy-datum
-    i_move_type  = '131'   " 131=GR for replenishment order
+    confirmation = ls_conf          " BAPI_RMCONF1_CREATE_MTS (matnr, prodplant,
+                                     " prodversion, backflushqty, postgdate, ...)
+  IMPORTING
+    return       = ls_return
   TABLES
-    t_return     = lt_return
-  EXCEPTIONS OTHERS = 1.
+    detailreturn = lt_return.
 CALL FUNCTION 'BAPI_TRANSACTION_COMMIT' EXPORTING wait = 'X'.
 ```
 

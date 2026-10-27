@@ -1,5 +1,7 @@
 # PP Master Data — ABAP Reference
 
+> ⚠️ **Verify function-module names before use.** These work-center/routing FM names were **not found** on a standard S/4HANA 2023 system and appear illustrative: `CR_WORKCENTER_READ_COMPLETE`, `CR_WORKCENTER_GET_OBJID`, `CR_CAPACITY_AVAILABLE_GET`, `CR_CAPACITY_REQUIREMENTS_GET`, `CARO_ROUTING_MAINTAIN`. Verified real alternatives: work-center reads `CR_WORKCENTER_READ_CAPACITIES` / `CR_WORKCENTER_READ_DIALOG`; routing read `CARO_ROUTING_READ`; BOM `CS_BOM_EXPL_MAT_V2` / `CSAP_MAT_BOM_CREATE` / `CS_WHERE_USED_MAT`; material `BAPI_MATERIAL_SAVEDATA` / `BAPI_MATERIAL_GET_DETAIL`. Confirm exact names in SE37.
+
 ## 1. Material Master (PP Views)
 
 ### Critical MARC Fields
