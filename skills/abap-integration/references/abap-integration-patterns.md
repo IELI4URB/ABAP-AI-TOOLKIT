@@ -172,12 +172,9 @@ CLASS zcl_integration_http_client IMPLEMENTATION.
           WITH lv_status-code lv_status-reason.
     ENDIF.
 
-    " 5. Deserialize JSON response
+    " 5. Deserialize JSON response (released XCO API)
     DATA(lv_json) = lo_response->get_text( ).
-    /ui2/cl_json=>deserialize(
-        EXPORTING json        = lv_json
-                  pretty_name = /ui2/cl_json=>pretty_mode-camel_case
-        CHANGING  data        = rs_product ).
+    xco_cp_json=>data->from_string( lv_json )->write_to( REF #( rs_product ) ).
   ENDMETHOD.
 
 ENDCLASS.
@@ -221,10 +218,8 @@ CLASS zcl_http_post_with_retry IMPLEMENTATION.
     lo_request->set_uri_path( '/orders' ).
     lo_request->set_header_field( i_name = 'Content-Type' i_value = 'application/json' ).
 
-    " Serialize request payload
-    DATA(lv_body) = /ui2/cl_json=>serialize(
-        data        = is_request
-        pretty_name = /ui2/cl_json=>pretty_mode-camel_case ).
+    " Serialize request payload (released XCO API)
+    DATA(lv_body) = xco_cp_json=>data->from_abap( is_request )->to_string( ).
     lo_request->set_text( lv_body ).
 
     " Retry loop with exponential back-off
@@ -239,10 +234,8 @@ CLASS zcl_http_post_with_retry IMPLEMENTATION.
           DATA(lv_status) = lo_response->get_status( ).
           CASE lv_status-code.
             WHEN 200 OR 201.
-              /ui2/cl_json=>deserialize(
-                  EXPORTING json        = lo_response->get_text( )
-                            pretty_name = /ui2/cl_json=>pretty_mode-camel_case
-                  CHANGING  data        = rs_response ).
+              xco_cp_json=>data->from_string( lo_response->get_text( )
+                )->write_to( REF #( rs_response ) ).
               RETURN.   " success — exit retry loop
             WHEN 429 OR 503.
               " Rate-limited or service unavailable — wait and retry
@@ -271,44 +264,38 @@ ENDCLASS.
 
 ### 4. HTTP with JSON Serialization
 
-#### Using CL_WEB_HTTP_UTILITY (newer API, 2023+)
+#### Released JSON API: XCO (`XCO_CP_JSON`)
+
+In ABAP for Cloud Development, use the released **XCO** JSON library. (`/UI2/CL_JSON` is not released for ABAP Cloud.)
 
 ```abap
-" GET_CANONICAL_JSON_BODY: serializes any ABAP structure/table to canonical JSON
-DATA: ls_payload  TYPE zcl_my_class=>ty_request_payload,
-      lo_response TYPE REF TO if_web_http_response.
-
+DATA ls_payload TYPE zcl_my_class=>ty_request_payload.
 ls_payload-action    = 'CREATE'.
 ls_payload-entity_id = lv_id.
 
 DATA(lo_client) = cl_web_http_client_manager=>create_by_destination( lo_dest ).
 DATA(lo_req)    = lo_client->get_http_request( ).
 
-" Serialize with canonical helper
-cl_web_http_utility=>set_request_json_body(
-    io_request = lo_req
-    iv_json    = cl_web_http_utility=>get_canonical_json_body( ls_payload ) ).
+" Serialize ABAP -> JSON string (released XCO API)
+DATA(lv_json) = xco_cp_json=>data->from_abap( ls_payload )->to_string( ).
 
-lo_response = lo_client->execute( if_web_http_client=>post ).
+lo_req->set_text( lv_json ).
+lo_req->set_header_field( i_name = 'Content-Type' i_value = 'application/json' ).
 
-" Deserialize response
+DATA(lo_response) = lo_client->execute( if_web_http_client=>post ).
+
+" Deserialize JSON string -> ABAP
 DATA ls_result TYPE zcl_my_class=>ty_response_payload.
-cl_web_http_utility=>get_response_json_body(
-    io_response = lo_response
-    ev_json     = DATA(lv_json_out) ).
-
-/ui2/cl_json=>deserialize(
-    EXPORTING json        = lv_json_out
-              pretty_name = /ui2/cl_json=>pretty_mode-camel_case
-    CHANGING  data        = ls_result ).
+xco_cp_json=>data->from_string( lo_response->get_text( )
+  )->write_to( REF #( ls_result ) ).
 ```
 
 #### JSON Field Mapping Tips
 
 | Scenario | Technique |
 |---|---|
-| Snake_case JSON ↔ CamelCase ABAP | `/UI2/CL_JSON pretty_name = camel_case` |
-| Nested objects | Use nested ABAP structures; `/UI2/CL_JSON` maps recursively |
+| snake_case JSON ↔ camelCase/underscore ABAP | Apply an XCO naming transformation on `from_string( ... )->apply( ... )`; verify the exact transformation for your release |
+| Nested objects | Use nested ABAP structures; XCO maps recursively |
 | Arrays | Use `STANDARD TABLE OF` with `DEFAULT KEY` |
 | Date/time (ISO 8601) | Convert with `CL_ABAP_UTCLONG_UTILS` after deserialization |
 | Null values | Use `REF TO` or string `'null'` check post-deserialization |
@@ -478,7 +465,7 @@ CLASS zcl_inbound_webhook_handler IMPLEMENTATION.
 
   METHOD if_http_service_extension~handle_request.
     " 1. Route by HTTP method
-    DATA(lv_method) = request->get_header_field( '~request_method' ).
+    DATA(lv_method) = request->get_method( ).
 
     CASE lv_method.
       WHEN 'POST'.
@@ -509,10 +496,7 @@ CLASS zcl_inbound_webhook_handler IMPLEMENTATION.
            END OF ty_event.
     DATA ls_event TYPE ty_event.
 
-    /ui2/cl_json=>deserialize(
-        EXPORTING json        = lv_body
-                  pretty_name = /ui2/cl_json=>pretty_mode-camel_case
-        CHANGING  data        = ls_event ).
+    xco_cp_json=>data->from_string( lv_body )->write_to( REF #( ls_event ) ).
 
     " 4. Business logic — hand off to service class
     DATA(lo_processor) = NEW zcl_webhook_event_processor( ).
@@ -532,7 +516,7 @@ CLASS zcl_inbound_webhook_handler IMPLEMENTATION.
 
     response->set_status( 202 ).
     response->set_header_field( i_name = 'Content-Type' i_value = 'application/json' ).
-    response->set_text( /ui2/cl_json=>serialize( data = ls_ack ) ).
+    response->set_text( xco_cp_json=>data->from_abap( ls_ack )->to_string( ) ).
   ENDMETHOD.
 
   METHOD handle_get.
@@ -553,7 +537,7 @@ CLASS zcl_inbound_webhook_handler IMPLEMENTATION.
 
     response->set_status( 200 ).
     response->set_header_field( i_name = 'Content-Type' i_value = 'application/json' ).
-    response->set_text( /ui2/cl_json=>serialize( data = ls_health ) ).
+    response->set_text( xco_cp_json=>data->from_abap( ls_health )->to_string( ) ).
   ENDMETHOD.
 
 ENDCLASS.
@@ -673,7 +657,7 @@ Source: SAP Help, ABAP Cloud Develop Integration Services.
 | 4 | Always handle **`CX_WEB_HTTP_CLIENT_ERROR`** | Letting network exceptions surface as ABAP runtime errors |
 | 5 | Use **typed exceptions** in wrapper methods | Exposing raw BAPIRET2 or SYSUBRC to callers |
 | 6 | **Log correlation IDs** on all outbound calls | Debugging production issues without a trace |
-| 7 | Use **`/UI2/CL_JSON pretty_mode-camel_case`** for SAP API payloads | Manual string concatenation to build JSON |
+| 7 | Use the released **`XCO_CP_JSON`** API for JSON payloads | `/UI2/CL_JSON` (not released for ABAP Cloud) or manual string concatenation |
 | 8 | Keep **retry logic** at the infrastructure layer, not business logic | Retry loops inside RAP action methods |
 | 9 | **RFC Wrapper → Tier 2 only** | Calling unreleased FMs from Tier 1 code in Public Cloud |
 | 10 | Always set **`Content-Type: application/json`** on POST/PATCH/PUT | Sending JSON without a content type header |
@@ -742,8 +726,8 @@ INBOUND HTTP:     IMPLEMENT if_http_service_extension~handle_request
                   request->get_header_field / get_form_field / get_text
                   response->set_status / set_header_field / set_text
 
-JSON:             /ui2/cl_json=>serialize( data = ... )
-                  /ui2/cl_json=>deserialize( json = ... CHANGING data = ... )
+JSON:             xco_cp_json=>data->from_abap( ... )->to_string( )
+                  xco_cp_json=>data->from_string( ... )->write_to( REF #( ... ) )
 
 SOAP:             NEW zco_<service>( )->set_logical_port( 'ZPORT_...' )
                   CATCH cx_ai_system_fault / cx_ai_application_fault

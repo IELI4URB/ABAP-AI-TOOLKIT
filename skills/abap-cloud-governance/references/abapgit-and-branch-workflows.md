@@ -50,8 +50,8 @@ Complete guide to managing ABAP development objects in Git repositories using **
 
 **Via ABAP:**
 1. Open SE24 → Class Browser
-2. Create a new class or download `zcl_abapgit_standalone` from GitHub
-3. Run the class via SE38 (Report abapGit_starter)
+2. Import the standalone version from GitHub (single report `ZABAPGIT_STANDALONE`)
+3. Run report `ZABAPGIT_STANDALONE` via SE38
 4. Follow web UI for repository management
 
 **Via ADT (Recommended for BTP):**
@@ -108,7 +108,7 @@ The `.abapgit.xml` file controls how abapGit serializes and deserializes ABAP ob
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<abapGit version="v1.0.0" serializer="LCL_OBJECT_DEVC" serializer_version="v1.0.0">
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DOTA" serializer_version="v1.0.0">
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DATA>
@@ -132,41 +132,13 @@ The `.abapgit.xml` file controls how abapGit serializes and deserializes ABAP ob
 
 #### Advanced Configuration
 
-**Ignore patterns:**
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<abapgit>
-  <ignore>
-    <folder>/.git</folder>
-    <folder>/src/local</folder>
-    <pattern>.*\.json$</pattern>
-    <pattern>^ZCUSTOM_TEST.*</pattern>
-  </ignore>
-</abapgit>
-```
+`.abapgit.xml` supports only these settings (shown in the block above): `MASTER_LANGUAGE`, `STARTING_FOLDER`, `FOLDER_LOGIC` (`PREFIX` or `FULL`), and an **`IGNORE`** list of `<item>` paths. There is no regex-pattern, per-folder-prefix, or serialization-option schema — ignore entries are explicit path items only.
 
-**Folder structure (for complex projects):**
 ```xml
-<folders>
-  <folder>
-    <prefix>Z</prefix>
-    <path>src/Z*</path>
-  </folder>
-  <folder>
-    <prefix>Y</prefix>
-    <path>src/Y*</path>
-  </folder>
-</folders>
-```
-
-**Serialization options:**
-```xml
-<abapgit>
-  <serialize>
-    <delete_folder_contents>true</delete_folder_contents>
-    <ignore_deletes>false</ignore_deletes>
-  </serialize>
-</abapgit>
+    <IGNORE>
+     <item>/.gitignore</item>
+     <item>/src/local_tests/*</item>
+    </IGNORE>
 ```
 
 ---
@@ -451,16 +423,14 @@ Combine abapGit with traditional SAP transports for production safety.
 
 3. **Export transport to QA:**
    ```
-   SE01 > Transport > Release
+   STMS > Release (or tp releaseall <SID> / tp export)
    ↓
-   stmsctrl -t RELEASE -r "/usr/sap/trans/data/[transport].cofile"
-   ↓
-   Transport moved to QA queue
+   Transport moved to QA import queue
    ```
 
 4. **Pull in QA system:**
    ```
-   stmsctrl -t IMPORT -r "/usr/sap/trans/incoming/[transport]"
+   STMS Import Queue > Import (or tp import <transport> <SID>)
    ↓
    ABAP objects updated in QA
    
@@ -484,7 +454,7 @@ Combine abapGit with traditional SAP transports for production safety.
 #### Don't ❌
 
 - **Push to main directly** — Always use feature branches
-- **Commit test data** — Use `.abapgitignore` for local objects
+- **Local objects** — list them under IGNORE in `.abapgit.xml` (there is no `.abapgitignore` file)
 - **Mix features** — One branch = one feature
 - **Force push** — Never `git push --force` on shared branches
 - **Commit generated code** — Only hand-written code belongs in Git
@@ -522,7 +492,7 @@ abapGit Pull > Conflict
 **Cause:** Objects modified in feature but merged to main in Git.
 
 **Solution:**
-1. Delete feature package in ABAP (SE15)
+1. Delete feature package in ABAP (SE80 / ADT; SE21 for package maintenance)
 2. Switch branch: `git checkout feature/xyz`
 3. Pull again in abapGit to recreate objects
 4. Continue development
@@ -572,7 +542,7 @@ git stash pop                        # Restore work
 | CI/CD | ✅ Easy integration | ⚠️ Manual steps | ✅ Native |
 | Branching | ✅ Full support | ❌ No branches | ✅ Recommended |
 | Learning Curve | Medium | Low | Medium |
-| Cross-account transport | ❌ No | ✅ Yes (RFC) | ✅ Yes (cTMS) |
+| Cross-account transport | ❌ No | ✅ Yes (RFC) | gCTS: within one global account only — cross-account needs **cTMS** |
 
 ---
 
@@ -580,7 +550,7 @@ git stash pop                        # Restore work
 
 - GitHub: https://github.com/abapGit/abapGit
 - abapGit Docs: http://abapgit.org/
-- SAP Help: Transport Management System (stmsctrl)
+- SAP Help: Transport Management System (STMS; CLI tp / R3trans)
 - abaplint Rules: https://rules.abaplint.org/
 
 

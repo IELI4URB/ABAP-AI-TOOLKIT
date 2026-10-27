@@ -23,7 +23,7 @@
 | PLNTY | Task list type for routing selection |
 | STLAL | BOM alternative |
 | STLAN | BOM usage |
-| STRAT | Planning strategy group |
+| STRGR | Planning strategy group |
 | DISLS | Lot sizing procedure |
 
 ### Read Material MRP Data
@@ -32,7 +32,7 @@
 " ECC / S/4 on-premise
 SELECT SINGLE dismm, dispo, beskz, eisbe, minbe,
                bstfe, bstmi, bstma, webaz, plifz,
-               dzeit, fhori, disls, strat, stlal, stlan
+               dzeit, fhori, disls, strgr, stlal, stlan
   FROM marc
   INTO @DATA(ls_marc)
   WHERE matnr = @lv_matnr

@@ -350,22 +350,24 @@ ENDMETHOD.
 
 **Fix D — Identifying a lock collision programmatically**
 
+RAP has no standalone "lock" statement. The framework acquires the lock **implicitly** on the first modifying EML operation (or, for draft BOs, the standard `Edit` action). A collision surfaces in the EML `FAILED` table with cause `if_abap_behv=>cause-locked`:
+
 ```abap
-" Check if a draft lock exists before attempting activation
-" Useful in batch / migration scenarios
-DATA(lv_lock_key) = CONV sesenqkey( |ZTRAVEL_TP{ lv_travel_id }| ).
+MODIFY ENTITIES OF zi_travel
+  ENTITY travel
+  UPDATE FROM VALUE #( ( %tky-travel_id = lv_travel_id
+                         overall_status  = 'A'
+                         %control-overall_status = if_abap_behv=>mk-on ) )
+  FAILED   DATA(failed)
+  REPORTED DATA(reported).
 
-CALL FUNCTION 'ENQUEUE_READ'
-  EXPORTING
-    garg    = lv_lock_key
-  IMPORTING
-    number  = DATA(lv_lock_count).
-
-IF lv_lock_count > 0.
-  " Another session holds the draft lock — do not attempt activation
-  MESSAGE 'Draft is locked by another session' TYPE 'W'.
-ENDIF.
+LOOP AT failed-travel INTO DATA(ls_failed) WHERE cause = if_abap_behv=>cause-locked.
+  " Another session holds the lock — do not proceed
+  MESSAGE 'Record is locked by another session' TYPE 'W'.
+ENDLOOP.
 ```
+
+> Classic on-premise only: `ENQUEUE_READ` (reads the lock table by `garg`) exists in Standard ABAP but is **not** released for ABAP Cloud.
 
 ---
 

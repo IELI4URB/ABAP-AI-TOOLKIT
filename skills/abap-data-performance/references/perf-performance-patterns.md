@@ -7,8 +7,8 @@ Optimize query performance, data transfer, memory usage, and response times with
 ## Prerequisites
 
 - Working knowledge of ABAP SQL/CDS query design.
-- Architecture baseline from module 03 to avoid local optimizations that break boundaries.
-- Database modeling context from module 14 for index and lifecycle decisions.
+- Architecture-layering baseline to avoid local optimizations that break boundaries.
+- Database modeling context for index and lifecycle decisions.
 
 ## SAP Reference & Standards
 

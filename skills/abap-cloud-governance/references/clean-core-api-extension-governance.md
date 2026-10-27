@@ -32,7 +32,7 @@ This guide owns focused release-state and extension decisions. Use `enterprise-c
 
 ## Clean Core Principles for ABAP Cloud
 
-Source: SAP Help Portal ABAP Cloud, skill pack module 04.
+Source: SAP Help Portal — ABAP Cloud Clean Core and released-API guidance.
 
 ### Objective
 
@@ -53,13 +53,16 @@ No modifications to SAP standard objects. Use released extension points only.
 
 #### 2 — Release-State Discipline
 
-| State | Symbol | Use? |
+Release **state** (Released / Deprecated / Decommissioned) and release **contract** (C0–C4) are separate axes. See `official-abap-cloud-apis-and-releases.md` for the authoritative definitions.
+
+| State / Contract | Meaning | Use in custom code? |
 |---|---|---|
-| Released C1 | Yes | Always, backward-compatible |
-| Released (Deprecated) | Warning | Allowed, plan migration |
-| Restricted C2 | Restricted | Partner or SAP internal scope only |
-| Use System-Internally | Internal | Never in custom code |
-| Not Published | No | Never |
+| Released, **C1** (Use System-Internally) | Stable public API for consumption in on-stack custom code (ADT or key-user apps) | **Yes** — the standard case for consuming SAP APIs |
+| Released, **C0** (Extend) | Stable extension points (BAdI, enhancement, RAP extension) | Yes — for extending SAP objects |
+| Released, **C2** (Use as Remote API) | Stable remote API | Yes — for remote / side-by-side consumption |
+| Released (Deprecated) | Still usable, has a successor | Allowed; plan migration |
+| Decommissioned | Unsupported (C2 remote APIs only) | No — replace with highest priority |
+| Not released / Not published | No stable contract | Never in custom code |
 
 How to verify in ADT:
 1. Right-click object.
@@ -168,7 +171,7 @@ Grounded on SAP Help *"What extensibility option suits my purpose?"* (S/4HANA Cl
 
 ### 5. SAP Help Verification Addendum
 
-Verification focus for module 04:
+Verification focus:
 - Clean Core principles are aligned with ABAP Cloud released API and extension guidance.
 - API release-state discipline is validated in ADT and enforced by ATC.
 - Upgrade-safe design remains the default decision path across all modules.

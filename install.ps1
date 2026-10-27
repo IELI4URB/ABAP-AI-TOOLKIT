@@ -21,11 +21,11 @@ function Reset-ManagedItems {
     $manifestPath = Join-Path $Destination $manifestName
     if (Test-Path $manifestPath) {
         foreach ($oldName in Get-Content $manifestPath) {
-            if (-not $oldName -or $oldName -match '[\\/]') { continue }
+            if (-not $oldName -or $oldName -match '[\\/*?\[\]]') { continue }
             $oldPath = Join-Path $Destination $oldName
-            if (Test-Path $oldPath) {
+            if (Test-Path -LiteralPath $oldPath) {
                 Write-Host "Refreshing toolkit item $oldPath"
-                Remove-Item $oldPath -Recurse -Force
+                Remove-Item -LiteralPath $oldPath -Recurse -Force
             }
         }
     }

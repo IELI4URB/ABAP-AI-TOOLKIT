@@ -49,7 +49,7 @@ SELECT po~PurchaseOrder,
   INNER JOIN I_PurchaseOrderItem AS poi
     ON po~PurchaseOrder = poi~PurchaseOrder
   WHERE poi~Plant           = @iv_plant
-    AND po~PurchaseOrderType <> 'STPO'  " exclude stock transport orders
+    AND po~PurchaseOrderType <> 'UB'  " exclude intra-company stock transport orders (STO types are config-dependent; UB is the standard one)
     AND poi~OrderQuantity   > poi~GoodsReceiptQuantity  " open quantity
   INTO TABLE @DATA(lt_open_pos).
 ```
@@ -189,7 +189,10 @@ CLASS zcl_mm_goods_movement IMPLEMENTATION.
       TABLES     goodsmvt_item    = lt_items
                  return           = lt_return.
 
-    DATA(lt_errors) = FILTER #( lt_return WHERE type = 'E' OR type = 'A' ).
+    DATA lt_errors LIKE lt_return.
+    LOOP AT lt_return INTO DATA(ls_ret) WHERE type = 'E' OR type = 'A'.
+      APPEND ls_ret TO lt_errors.
+    ENDLOOP.
     IF lt_errors IS NOT INITIAL.
       ROLLBACK WORK.
       RAISE EXCEPTION TYPE zcx_goods_movement_error

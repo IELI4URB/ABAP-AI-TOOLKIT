@@ -571,7 +571,7 @@ annotate entity ZC_SalesOrder with
 @AccessControl.authorizationCheck: #CHECK
 @Metadata.allowExtensions: true
 define root projection entity ZC_Travel
-  provider contract transactional_ui
+  provider contract transactional_query
   as projection on ZI_Travel
 {
   key TravelID,

@@ -86,7 +86,7 @@ $skills = Get-ChildItem "$HOME\.agents\skills" -Directory |
   Where-Object { Test-Path (Join-Path $_.FullName 'SKILL.md') }
 $agents = Get-ChildItem "$HOME\.copilot\agents" -Filter '*.agent.md'
 
-$skills.Count  # expected: 11 toolkit skill groups (plus any other packages)
+$skills.Count  # expected: 12 toolkit skill groups (plus any other packages)
 $agents.Count  # expected: 7 toolkit agents (plus any other packages)
 ```
 
@@ -105,7 +105,7 @@ The installer writes `.sap-dev-ai-toolkit-manifest` files in both destination fo
 
 1. Reads the previous toolkit-owned item list.
 2. Removes only obsolete toolkit-owned items.
-3. Reinstalls the current 11 groups and 8 agents.
+3. Reinstalls the current 12 groups and 7 agents.
 4. Leaves unrelated skills and agents from other packages untouched.
 
 Obsolete toolkit-managed entries recorded by an earlier installation are removed automatically.

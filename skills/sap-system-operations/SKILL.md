@@ -34,5 +34,3 @@ For repository discovery, first resolve the mounted `abap:` workspace destinatio
 
 Load one workflow guide at a time and preserve evidence, authorization, and operational safety boundaries.
 
-onal safety boundaries.
-

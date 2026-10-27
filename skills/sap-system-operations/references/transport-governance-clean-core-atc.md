@@ -83,15 +83,10 @@ COMMIT ENTITIES
 ```
 
 ```abap
-" ❌ BEFORE — unreleased UTC class
-DATA(lv_timestamp) = cl_abap_context_info=>get_system_date( ).  " internal / unverified
-
-" ✅ AFTER — released XCO framework
-DATA(lo_moment) = xco_cp_time=>moment(
-  iv_year   = xco_cp_time=>year( sy-datum(4) )
-  iv_month  = xco_cp_time=>month( sy-datum+4(2) )
-  iv_day    = xco_cp_time=>day( sy-datum+6(2) )
-).
+" ✅ Released C1 — CL_ABAP_CONTEXT_INFO is the released ABAP Cloud API
+"    for system date/time/user. Use it directly; no replacement needed.
+DATA(lv_date) = cl_abap_context_info=>get_system_date( ).
+DATA(lv_time) = cl_abap_context_info=>get_system_time( ).
 ```
 
 #### Fix B — Request ATC Exemption (Emergency / Justified Exception)

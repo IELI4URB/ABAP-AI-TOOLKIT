@@ -1,6 +1,6 @@
 # Grouped Skills
 
-Only the 11 directories containing a top-level `SKILL.md` are registered skills.
+Only the 12 directories containing a top-level `SKILL.md` are registered skills.
 
 Each group uses this structure:
 

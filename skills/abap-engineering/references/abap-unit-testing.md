@@ -82,8 +82,8 @@ Additional gates:
 ### Prerequisites
 
 - ABAP Unit basics (test classes, assertions, setup/teardown).
-- Familiarity with business logic modules 01, 02, and 06 to define meaningful tests.
-- Code review flow from module 07 to position tests as a mandatory release gate.
+- Familiarity with the business logic under test to define meaningful tests.
+- The code-review flow positions tests as a mandatory release gate.
 
 ### Test Pyramid: Why and How Much
 

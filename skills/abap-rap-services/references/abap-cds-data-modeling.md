@@ -178,9 +178,8 @@ The projection view is the **OData-facing** layer. It never adds logic — it re
 
 | Contract | Use case |
 |---|---|
-| `transactional_ui` | Standard RAP UI — List Report / Object Page (OData V4) |
-| `transactional_query` | Read-only OData V4 API |
-| `odata_v4_ui` | Alias for `transactional_ui` (pre-2022 naming) |
+| `transactional_query` | Transactional RAP service projection — List Report / Object Page UI **and** OData API (editable; the standard choice). Omitting a contract currently defaults to this but is deprecated. |
+| `transactional_interface` | Reusable transactional interface projection layer (provider-to-provider reuse) |
 | `analytical_query` | Analytical List Page / embedded analytics |
 
 #### Root projection with redirected associations
@@ -191,11 +190,10 @@ The projection view is the **OData-facing** layer. It never adds logic — it re
 @Metadata.allowExtensions: true  // Required to attach metadata extensions
 
 define root projection entity ZC_SalesOrder
-  provider contract transactional_ui
+  provider contract transactional_query
   as projection on ZI_SalesOrder
 {
   key SalesOrderID,
-      CustomerID,
 
       @Consumption.valueHelpDefinition: [{
         entity: { name: 'ZI_Customer', element: 'CustomerID' },
@@ -359,8 +357,8 @@ CLASS zcl_ce_product_query IMPLEMENTATION.
     " ── 3. Paging ────────────────────────────────────────────────────
     DATA(lv_offset)    = io_request->get_paging( )->get_offset( ).
     DATA(lv_page_size) = io_request->get_paging( )->get_page_size( ).
-    " IF_RAP_QUERY_PAGING~ALL_INSTANCES = 0 means fetch all
-    IF lv_page_size = if_rap_query_paging=>all_instances.
+    " page_size_unlimited means the consumer requested all rows
+    IF lv_page_size = if_rap_query_paging=>page_size_unlimited.
       lv_page_size = 200.   " safety cap
     ENDIF.
 
@@ -414,7 +412,7 @@ define behavior for ZCE_ExternalProduct alias ExProduct
 }
 ```
 
-> **Remember:** `create`, `update`, `delete`, `draft`, and `lock` are **not permitted** in a custom entity BDEF. Attempting to add them causes activation error `BDEF_CE_001`.
+> **Remember:** `create`, `update`, `delete`, `draft`, and `lock` are **not permitted** in a custom entity BDEF. Attempting to add them causes an activation error.
 
 ---
 
@@ -581,7 +579,7 @@ define role ZR_ActiveCustomers
 
 #### Key notes
 
-- DCL file name must equal view entity name (e.g. `ZI_SalesOrder.dcls`)
+- The DCL (access-control) object has its own independent name (e.g. `ZR_SalesOrder`); it is bound to the entity by the `grant select on <entity>` clause, **not** by filename.
 - `@MappingRole: true` is **required** for projection to work correctly
 - `aspect pfcg_auth` checks the user's PFCG authorization object at runtime
 - Multiple roles for the same entity are combined with **OR** logic
@@ -601,7 +599,7 @@ define role ZR_ActiveCustomers
 
 | Annotation | Values | Purpose |
 |---|---|---|
-| `authorizationCheck` | `#CHECK` / `#NOT_REQUIRED` / `#NOT_ALLOWED` / `#PRIVILEGED_ONLY` | DCL enforcement |
+| `authorizationCheck` | `#NOT_REQUIRED` (default) / `#CHECK` / `#MANDATORY` / `#NOT_ALLOWED` / `#PRIVILEGED_ONLY` | DCL enforcement. Default is `#NOT_REQUIRED`. `#CHECK` behaves like `#NOT_REQUIRED` at runtime but raises an activation warning if no DCL exists; `#MANDATORY` requires a DCL. See `official-cds-access-control.md`. |
 
 #### `@EndUserText`
 
@@ -731,7 +729,7 @@ define view entity ZQ_Sales as select from ZCUBE_Sales { ... }
 
 #### Measures and aggregation
 
-- Standard aggregations: **SUM, MIN, MAX** (built-in).
+- `@DefaultAggregation` values: **`#SUM`, `#MIN`, `#MAX`, `#AVG`, `#COUNT`** (also `#NONE` / `#FORMULA`).
 - **Calculated measures** — derive new KPIs from existing measures at query level.
 - **Restricted measures** — filter a measure's result set by condition (exclude values from aggregation).
 - `@AnalyticsDetails` — default multidimensional layout, variable sequence, aggregation/planning behavior.

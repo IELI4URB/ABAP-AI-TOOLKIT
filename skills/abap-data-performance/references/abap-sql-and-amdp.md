@@ -65,7 +65,7 @@ For non-trivial requests, state data contracts and assumptions, chosen execution
 |---------|---------------------|-------|
 | `@host variables` (`@lv_`, `@lt_`) | **Mandatory** | All literals in WHERE must use host variables |
 | `EXEC SQL … ENDEXEC` | **Forbidden** | No native SQL passthrough |
-| `EXECUTE IMMEDIATE` | **Forbidden** | No DDL at runtime |
+| ADBC (`CL_SQL_STATEMENT`) | **Forbidden** | No native/direct DB access in ABAP Cloud |
 | `SELECT *` | **Discouraged** (ATC warning) | Always list explicit fields |
 | Window functions (`OVER(…)`) | **ABAP SQL only** | NOT available in CDS DDL views |
 | Dynamic `WHERE` tokens | Requires `CL_ABAP_DYN_PRG` | Must whitelist-check every token |
@@ -74,7 +74,7 @@ For non-trivial requests, state data contracts and assumptions, chosen execution
 | `MODIFY` (upsert) | Allowed | INSERT OR UPDATE semantics |
 | `INSERT … FROM TABLE` | Allowed | Bulk insert; check `sy-dbcnt` |
 | Subqueries | Allowed | Scalar and table-valued; no correlated window |
-| CTE (`WITH … AS ( SELECT … )`) | Allowed | Available since ABAP 7.57 |
+| CTE (`WITH … AS ( SELECT … )`) | Allowed | Available since ABAP 7.51 |
 | `OFFSET … ROWS` / `UP TO … ROWS` | Allowed | Pagination; requires `ORDER BY` |
 
 ---
@@ -355,25 +355,26 @@ ENDIF.
 For very large driving tables, the database IN-list can exceed limits. Chunk into batches:
 
 ```abap
-CONSTANTS: lc_chunk_size TYPE i VALUE 5000.
+CONSTANTS lc_chunk_size TYPE i VALUE 5000.
 
-DATA(lv_offset) = 0.
-DATA(lv_total)  = lines( lt_driving_table ).
+DATA lt_chunk LIKE lt_driving_table.
+DATA(lv_total) = lines( lt_driving_table ).
 
 DO.
-  DATA(lt_chunk) = lt_driving_table[ lv_offset + 1
-                                     TO MIN( lv_offset + lc_chunk_size, lv_total ) ].
+  DATA(lv_from) = ( sy-index - 1 ) * lc_chunk_size + 1.
+  IF lv_from > lv_total. EXIT. ENDIF.
+  DATA(lv_to) = nmin( val1 = lv_from + lc_chunk_size - 1 val2 = lv_total ).
 
-  IF lt_chunk IS INITIAL. EXIT. ENDIF.
+  CLEAR lt_chunk.
+  LOOP AT lt_driving_table INTO DATA(ls_row) FROM lv_from TO lv_to.
+    APPEND ls_row TO lt_chunk.
+  ENDLOOP.
 
   SELECT ItemID, OrderID, NetPrice
     FROM zpurchase_order_item
     FOR ALL ENTRIES IN @lt_chunk
     WHERE OrderID = @lt_chunk-OrderID
     APPENDING TABLE @lt_items.
-
-  lv_offset += lc_chunk_size.
-  IF lv_offset >= lv_total. EXIT. ENDIF.
 ENDDO.
 ```
 
@@ -415,7 +416,7 @@ METHOD build_dynamic_where.
     CATCH cx_abap_not_in_whitelist INTO DATA(lx_wl).
       RAISE EXCEPTION TYPE cx_zpur_invalid_filter
         MESSAGE e020(zpur_messages)
-        EXPORTING previous => lx_wl.
+        EXPORTING previous = lx_wl.
   ENDTRY.
 
   " Build safe dynamic WHERE token — value is always a host variable
@@ -517,7 +518,7 @@ METHOD analyze_orders.
     CATCH cx_amdp_error INTO DATA(lx_amdp).
       RAISE EXCEPTION TYPE cx_zpur_analytics_error
         MESSAGE e030(zpur_messages)
-        EXPORTING previous => lx_amdp.
+        EXPORTING previous = lx_amdp.
   ENDTRY.
 ENDMETHOD.
 ```
@@ -594,7 +595,7 @@ SELECT PurchasingOrg,
 #### 9.2 Common Table Expressions (CTEs)
 
 ```abap
-" WITH clause — available from ABAP 7.57
+" WITH clause — available from ABAP 7.51
 WITH
   +approved_orders AS (
     SELECT OrderID, PurchasingOrg, NetValue, SupplierId

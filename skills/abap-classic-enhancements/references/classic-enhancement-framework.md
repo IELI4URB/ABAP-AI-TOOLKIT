@@ -43,8 +43,9 @@ SAP defines explicit hook points directly in source code:
 ENHANCEMENT-POINT ZSD_SO_BEFORE_SAVE
     SPOTS ES_SD_SALES_DOCUMENT
     STATIC.
-" STATIC means no local variables from surrounding code are visible
-" Omit STATIC for non-static (local scope is visible)
+" STATIC restricts the point to static enhancements (statement insertions);
+" surrounding local data of the enclosing unit is visible in the implementation.
+" Omit STATIC to also allow class-based (dynamic) enhancement implementations.
 ```
 
 ```abap
@@ -87,8 +88,9 @@ lv_cust_check = zcl_custom_so_rules=>check_before_save(
     iv_vbeln = ls_vbak-vbeln ).
 
 IF lv_cust_check = abap_false.
-  MESSAGE e001(zsd_custom) WITH ls_vbak-vbeln INTO sy-msgli.
-  RAISE EXCEPTION TYPE cx_sy_root.    " or use RETURN / SY-SUBRC pattern per BAdI contract
+  MESSAGE e001(zsd_custom) WITH ls_vbak-vbeln INTO DATA(lv_msg).
+  " Signal the error per the enhancement's contract (set a return flag,
+  " SY-SUBRC, or raise the exception type declared by the host).
 ENDIF.
 ```
 

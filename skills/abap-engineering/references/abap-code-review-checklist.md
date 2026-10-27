@@ -597,8 +597,8 @@ ENDMETHOD.
 ```abap
 CLASS account DEFINITION FINAL CREATE PRIVATE.
   PUBLIC SECTION.
-    METHODS:
-      static create
+    CLASS-METHODS:
+      create
         IMPORTING id TYPE string
         RETURNING VALUE(result) TYPE REF TO account,
       
@@ -688,7 +688,7 @@ CLASS account_test DEFINITION FOR TESTING.
     DATA account TYPE REF TO account.
     
     METHODS:
-      setup FOR TESTING,
+      setup,
       test_deposit_increases_balance FOR TESTING,
       test_deposit_zero_fails FOR TESTING.
 ENDCLASS.

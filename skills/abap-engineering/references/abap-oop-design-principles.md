@@ -7,8 +7,8 @@ Apply object-oriented design that improves maintainability, testability, and upg
 ## Prerequisites
 
 - ABAP OO fundamentals (interfaces, inheritance, visibility, exception handling).
-- Familiarity with module 03 (architecture layering) and module 04 (Clean Core constraints).
-- Recommended before implementation-heavy design in modules 01 and 06.
+- Familiarity with architecture layering and Clean Core constraints.
+- Recommended before implementation-heavy design work.
 
 ---
 

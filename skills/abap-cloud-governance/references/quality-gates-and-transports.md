@@ -28,9 +28,9 @@ Establish release-safe delivery with automated quality gates, controlled transpo
 
 ### Prerequisites
 
-- Quality gates from modules 05 and 07 are already adopted by the team.
-- Security and IAM controls from modules 09 and 15 are defined.
-- Landscape constraints are selected from module 17.
+- Quality gates (code review, ATC) are already adopted by the team.
+- Security and IAM controls are defined (see abap-security).
+- Landscape constraints are selected (Public/Private Cloud, BTP).
 
 ### Landscape Scope
 
@@ -105,8 +105,8 @@ Establish release-safe delivery with automated quality gates, controlled transpo
 #### Transport Approval Workflow
 
 1. Development owner submits release candidate with ATC/test evidence.
-2. Reviewer confirms module 07 checklist and unresolved risks.
-3. Security approver validates module 09 and 15 controls.
+2. Reviewer confirms the code-review checklist and unresolved risks.
+3. Security approver validates security and IAM controls.
 4. Release manager approves sequencing and rollback plan.
 5. Transport import executes in defined wave with post-import verification.
 
@@ -116,7 +116,7 @@ Establish release-safe delivery with automated quality gates, controlled transpo
 
 - Include SAST checks and forbidden-pattern scans.
 - Validate secret leakage (tokens/passwords) before merge.
-- Enforce security checklist from module 09 in review template.
+- Enforce the security checklist (abap-security) in the review template.
 
 ---
 

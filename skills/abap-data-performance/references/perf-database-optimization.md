@@ -7,8 +7,8 @@ Optimize database performance through intelligent indexing, query analysis, and 
 ## Prerequisites
 
 - Strong ABAP SQL/CDS fundamentals and execution-plan literacy.
-- Performance baseline knowledge from module 08.
-- Clean Core and landscape constraints from modules 04 and 17 for safe implementation choices.
+- Performance baseline knowledge (profiling, runtime analysis).
+- Clean Core and landscape constraints for safe implementation choices.
 
 ## SAP Reference & Standards
 

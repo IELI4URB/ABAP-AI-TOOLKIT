@@ -211,10 +211,17 @@ def validate_links(errors: list[str]) -> None:
 
 
 def validate_installers(errors: list[str]) -> None:
+    import re as _re
     for installer in (ROOT / "install.ps1", ROOT / "install.sh"):
         text = read(installer)
-        if "12" not in text or "7" not in text:
-            errors.append(f"Installer lacks expected-count guards: {installer.name}")
+        if installer.name == "install.ps1":
+            skill_ok = _re.search(r"expectedSkillCount\s*=\s*12", text)
+            agent_ok = _re.search(r"expectedAgentCount\s*=\s*7", text)
+        else:
+            skill_ok = _re.search(r"expected_skill_count=12", text)
+            agent_ok = _re.search(r"expected_agent_count=7", text)
+        if not skill_ok or not agent_ok:
+            errors.append(f"Installer lacks expected-count guards (12 skills / 7 agents): {installer.name}")
         if ".sap-dev-ai-toolkit-manifest" not in text:
             errors.append(f"Installer lacks managed-item manifest: {installer.name}")
 

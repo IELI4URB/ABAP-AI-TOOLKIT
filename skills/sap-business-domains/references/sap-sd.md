@@ -157,7 +157,7 @@ CLASS zcl_sd_sales_order_creator IMPLEMENTATION.
     DATA lt_items      TYPE TABLE OF bapisditm.
     DATA lt_items_x    TYPE TABLE OF bapisditmx.
     DATA lt_return     TYPE TABLE OF bapiret2.
-    DATA lt_created    TYPE TABLE OF bapicreatedvbeln.
+    DATA lv_salesdoc   TYPE vbeln.
 
     ls_header-doc_type       = 'OR'.
     ls_header-sales_org      = iv_sales_org.
@@ -186,12 +186,15 @@ CLASS zcl_sd_sales_order_creator IMPLEMENTATION.
     CALL FUNCTION 'BAPI_SALESORDER_CREATEFROMDAT2'
       EXPORTING  order_header_in   = ls_header
                  order_header_inx  = ls_header_x
+      IMPORTING  salesdocument     = lv_salesdoc
       TABLES     order_items_in    = lt_items
                  order_items_inx   = lt_items_x
-                 return            = lt_return
-                 salesdocument_ex  = lt_created.
+                 return            = lt_return.
 
-    DATA(lt_errors) = FILTER #( lt_return WHERE type = 'E' OR type = 'A' ).
+    DATA lt_errors LIKE lt_return.
+    LOOP AT lt_return INTO DATA(ls_ret) WHERE type = 'E' OR type = 'A'.
+      APPEND ls_ret TO lt_errors.
+    ENDLOOP.
     IF lt_errors IS NOT INITIAL.
       ROLLBACK WORK.
       RAISE EXCEPTION TYPE zcx_sd_order_error
@@ -199,7 +202,7 @@ CLASS zcl_sd_sales_order_creator IMPLEMENTATION.
     ENDIF.
 
     CALL FUNCTION 'BAPI_TRANSACTION_COMMIT' EXPORTING wait = 'X'.
-    rv_sales_order = lt_created[ 1 ]-vbeln.
+    rv_sales_order = lv_salesdoc.
   ENDMETHOD.
 ENDCLASS.
 ```
@@ -207,18 +210,19 @@ ENDCLASS.
 ### 4. Key SD Extension Points
 
 #### BAdIs
+Verify exact BAdI names in SE18 for your release (SD enhancement names vary and are easy to mis-cite).
+
 | BAdI | Description |
 |---|---|
-| `SD_ORDER_CHECK` | Additional checks during order save |
-| `BADI_SD_PICING` | Pricing enhancement |
-| `BADI_DELIVERYPROCESSING_EXEC` | Delivery processing enhancement |
-| `BADI_SD_BILLING_PROCESS` | Billing document enhancement |
+| `BADI_SD_SALES` / `BADI_SD_SALES_ITEM` | Sales document header/item enhancement |
+| `LE_SHP_DELIVERY_PROC` | Delivery processing enhancement |
+| `SD_CIN_LV60AU02` / pricing user-exits (VOFM routines) | Pricing-related enhancement (classic) |
 
 #### S/4HANA SD Key Changes vs ECC
 | Topic | ECC | S/4HANA |
 |---|---|---|
 | Customer master | KNA1 + KNB1 | Business Partner (BUT000) — `I_Customer` CDS |
-| Output management | NAST (condition technique) | Business Document Service (BDS) / BRF+ |
+| Output management | NAST (condition technique) | Output Control (BRF+ based) |
 | Availability check | Classic ATP | aATP (Advanced ATP) in SAP S/4HANA |
 | Pricing | Classic condition technique | Same technique, new APIs |
 

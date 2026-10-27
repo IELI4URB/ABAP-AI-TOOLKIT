@@ -1,14 +1,16 @@
 # Design Patterns for ABAP Cloud and RAP — Decision-Driven Guide
 
+> **Code style:** Snippets in this catalog are **conceptual skeletons** illustrating pattern structure, not copy-paste-ready ABAP. Verify exact syntax (class/interface sections, method declarations, types) against `abap-code-writing.md` and the ABAP keyword documentation before use.
+
 ## Purpose
 
 Use patterns that preserve Clean Core boundaries while keeping RAP services maintainable. Know WHEN to apply each pattern and WHY.
 
 ## Prerequisites
 
-- Solid understanding of module 02 (OOP principles) and module 03 (layered architecture).
-- Basic RAP implementation familiarity from module 01.
-- Clean Core guardrails from module 04 must be accepted before introducing abstractions.
+- Solid understanding of OOP principles and layered architecture.
+- Basic RAP implementation familiarity.
+- Clean Core guardrails must be accepted before introducing abstractions.
 
 ---
 

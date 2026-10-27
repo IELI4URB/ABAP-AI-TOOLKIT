@@ -34,7 +34,7 @@ Build secure applications with input validation, authorization checks, secrets m
 - ABAP Open SQL Reference: https://help.sap.com/doc/abapdocu_latest_index_htm/latest/en-US/index.htm
 - SAP BTP Security Recommendations: https://help.sap.com/docs/btp
 
-Landscape navigation: pair this module with module 17 to apply the correct control depth for Public Cloud, Private Cloud (ABAP Cloud), and BTP ABAP.
+Landscape navigation: apply the correct control depth for Public Cloud, Private Cloud (ABAP Cloud), and BTP ABAP.
 
 ### Snippet Execution Labels
 
@@ -57,8 +57,8 @@ Default rule in this module:
 ```abap
 " BAD: No validation
 METHODS create_travel IMPORTING destination TYPE string.
-  INSERT INTO travels (destination) VALUES (destination).
-  " Open SQL parameter binding prevents SQL injection here,
+  INSERT travels FROM @( VALUE #( destination = destination ) ).
+  " Host-variable binding prevents SQL injection here,
   " but invalid business input is still accepted and may break process integrity.
 ENDMETHOD.
 
@@ -76,25 +76,26 @@ METHODS create_travel IMPORTING destination TYPE string.
     RAISE EXCEPTION TYPE cx_invalid_input
       EXPORTING message = 'Destination too long (max 100 chars)'.
   ENDIF.
-  
-  " 2. Character whitelist and business format validation
-  " Example: letters, spaces, apostrophe and hyphen only
-  IF destination NA 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz -'''.
+
+  " 2. Character whitelist (CN = contains a char NOT in the allowed set)
+  IF destination CN 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz -'''.
     RAISE EXCEPTION TYPE cx_invalid_input
       EXPORTING message = 'Destination contains disallowed characters'.
   ENDIF.
-  
+
   " 3. Range validation (only existing countries)
-  IF NOT EXISTS( SELECT 1 FROM countries WHERE name = destination ).
+  SELECT SINGLE @abap_true FROM countries
+    WHERE name = @destination INTO @DATA(lv_exists).
+  IF lv_exists = abap_false.
     RAISE EXCEPTION TYPE cx_invalid_destination
       EXPORTING message = |Destination '{ destination }' does not exist|.
   ENDIF.
-  
+
   " 4. Canonicalization (normalize before persistence)
-  destination = condense( destination ).
-  
-  " Now safe to use
-  INSERT INTO travels (destination) VALUES (destination).
+  DATA(lv_dest) = condense( destination ).
+
+  " Now safe to use — host variable binding, never string-built SQL
+  INSERT travels FROM @( VALUE #( destination = lv_dest ) ).
 ENDMETHOD.
 ```
 
@@ -124,23 +125,19 @@ ENDMETHOD.
 **Anti-Pattern: String Concatenation in Queries**
 
 ```abap
-" BAD: String concatenation = SQL injection vulnerability
+" BAD: dynamic WHERE built by string concatenation = SQL injection
 METHODS search_travels IMPORTING destination TYPE string.
-  DATA query TYPE string.
-  query = 'SELECT * FROM travels WHERE destination = ''' && destination && ''''.
-  " If destination = "PARIS'; DELETE FROM travels; --"
-  " Query becomes: SELECT * FROM travels WHERE destination = 'PARIS'; DELETE FROM travels; --'
-  " Table gets deleted! 💥
-  
-  EXECUTE IMMEDIATE query INTO TABLE result.
+  DATA(where_clause) = |destination = '{ destination }'|.
+  " If destination = "PARIS' OR '1' = '1", the filter is bypassed
+  SELECT * FROM travels WHERE (where_clause)
+    INTO TABLE @DATA(result).
 ENDMETHOD.
 
-" GOOD: Use parameterized queries (automatic escaping)
+" GOOD: static ABAP SQL with host variable (automatic binding)
 METHODS search_travels IMPORTING destination TYPE string.
-  SELECT * FROM travels WHERE destination = destination
-    INTO TABLE result.
-  " Database automatically escapes special characters
-  " Even if destination = "PARIS'; DROP TABLE--", it's treated as literal string
+  SELECT * FROM travels WHERE destination = @destination
+    INTO TABLE @DATA(result).
+  " @destination is bound as a value, never parsed as SQL
 ENDMETHOD.
 ```
 
@@ -170,14 +167,15 @@ SELECT * FROM travels
 ```abap
 " ❌ DANGEROUS: Build WHERE clause with string concatenation
 DATA where_clause TYPE string.
-where_clause = 'WHERE destination = ''' && user_input && ''''.
-SELECT * FROM travels WHERE (where_clause) INTO TABLE result.  " SQL injection!
+where_clause = |destination = '{ user_input }'|.
+SELECT * FROM travels WHERE (where_clause) INTO TABLE @result.  " SQL injection!
 
-" ❌ DANGEROUS: EXECUTE IMMEDIATE with concatenation
-EXECUTE IMMEDIATE 'SELECT * FROM travels WHERE id = ' && travel_id.
+" ❌ DANGEROUS: dynamic column/table token from user input
+SELECT * FROM travels ORDER BY (user_input) INTO TABLE @result.
 
-" ❌ DANGEROUS: SET clause with concatenation
-UPDATE travels SET status = '' && user_input. 
+" ❌ DANGEROUS: SET clause with concatenation in a dynamic UPDATE
+DATA(set_clause) = |status = '{ user_input }'|.
+UPDATE travels SET (set_clause). 
 ```
 
 ---
@@ -284,11 +282,11 @@ ENDMETHOD.
 
 | Secret Type | Storage | Rotation | Tool |
 |---|---|---|---|
-| **API passwords** | SAP Credential Store | Every 90 days | /IWFND/CONF_DESTINAT |
-| **OAuth tokens** | Token cache (in-memory) | Automatic (expires) | OAuth provider |
-| **Certificates (mTLS)** | Certificate store | Every year | SAP PSE |
-| **Database passwords** | SAP Credential Store | Every 6 months | /IWFND/CONFIG |
-| **API keys** | Environment variables (cloud) | Every 90 days | SAP BTP Secret Manager |
+| **API passwords / basic auth** | Communication Arrangement credentials | Every 90 days | Maintain Communication Arrangements (Fiori) |
+| **OAuth tokens** | Token cache (in-memory) | Automatic (expires) | OAuth provider / Communication Arrangement |
+| **Certificates (mTLS / client cert)** | Communication System keystore | Every year | Maintain Communication Systems (Fiori) |
+| **Outbound connection credentials** | Communication System | Per policy | Maintain Communication Systems (Fiori) |
+| **BTP-side secrets** | BTP destination / credential service | Every 90 days | SAP BTP Destination service / Credential Store |
 
 **Never:**
 - ❌ Hard-code passwords in source

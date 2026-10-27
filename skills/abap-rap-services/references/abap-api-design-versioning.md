@@ -31,7 +31,7 @@ Design APIs that evolve without breaking clients. Implement versioning strategie
 - ABAP RAP Service Exposure: https://help.sap.com/docs/abap-cloud/abap-rap
 - SAP API Lifecycle Guidance: https://help.sap.com/docs
 
-Landscape navigation: align API exposure choices with module 17 so contract policies match Public Cloud, Private Cloud (ABAP Cloud), or BTP ABAP constraints.
+Landscape navigation: align API exposure choices with the target landscape so contract policies match Public Cloud, Private Cloud (ABAP Cloud), or BTP ABAP constraints.
 
 ---
 

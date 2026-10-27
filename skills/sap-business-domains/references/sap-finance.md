@@ -177,7 +177,10 @@ CLASS zcl_fi_document_poster IMPLEMENTATION.
                  return          = lt_return.
 
     " Check for errors
-    DATA(lt_errors) = FILTER #( lt_return WHERE type = 'E' OR type = 'A' ).
+    DATA lt_errors LIKE lt_return.
+    LOOP AT lt_return INTO DATA(ls_ret) WHERE type = 'E' OR type = 'A'.
+      APPEND ls_ret TO lt_errors.
+    ENDLOOP.
     IF lt_errors IS NOT INITIAL.
       ROLLBACK WORK.
       RAISE EXCEPTION TYPE zcx_fi_posting_error
@@ -199,8 +202,8 @@ ENDCLASS.
 | BAdI | Description |
 |---|---|
 | `BADI_ACC_DOCUMENT` | Enhance accounting document during posting |
-| `FI_SUBSTITUTION` | Field substitution before document save |
-| `FI_VALIDATION` | Validation rules during posting |
+
+Substitution and validation are **not** BAdIs — they are the classic config-based framework (transactions `OB28`/`GGB0`, exit programs `RGGBR000`/`RGGBS000`), superseded on S/4HANA by the **Manage Substitution/Validation Rules** app (see §4 below).
 
 #### RAP-Based FI Extensions (S/4HANA 2022+)
 For extending standard FI RAP BOs (e.g., `I_JournalEntry`), use the **Extend by Customer Fields** approach via Key User Extensibility if field addition is needed — direct behavior extension requires a released extension point.

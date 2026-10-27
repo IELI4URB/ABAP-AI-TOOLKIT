@@ -45,21 +45,23 @@ DATA(lv_offset) = 0.
 
 WHILE lv_offset < lv_total.
 
-  DATA(lv_to) = lv_offset + lc_chunk_size - 1.
-  IF lv_to >= lv_total.
-    lv_to = lv_total - 1.
+  DATA(lv_from) = lv_offset + 1.                      " 1-based
+  DATA(lv_to)   = nmin( val1 = lv_offset + lc_chunk_size val2 = lv_total ).
+
+  " Build the chunk by copying a row range
+  CLEAR lt_chunk.
+  APPEND LINES OF lt_all_keys FROM lv_from TO lv_to TO lt_chunk.
+
+  IF lt_chunk IS NOT INITIAL.
+    SELECT matnr, mtart, mbrsh
+      FROM mara
+      FOR ALL ENTRIES IN @lt_chunk
+      WHERE matnr = @lt_chunk-table_line
+      INTO TABLE @lt_result.
+
+    APPEND LINES OF lt_result TO lt_all_mara.
+    CLEAR lt_result.
   ENDIF.
-
-  " Table slice — zero-based index offset, length-based slice
-  lt_chunk = lt_all_keys[ lv_offset + 1 .. lv_to + 1 ].  " 1-based ABAP table index
-
-  SELECT matnr, mtart, mbrsh
-    FROM mara
-    WHERE matnr IN @lt_chunk
-    INTO TABLE @lt_result.
-
-  APPEND LINES OF lt_result TO lt_all_mara.
-  CLEAR lt_result.
 
   lv_offset = lv_offset + lc_chunk_size.
 
