@@ -1,7 +1,7 @@
 ---
 name: abap-cloud-analyzer
 description: "Use before architecture or implementation to assess SAP ABAP Cloud requirement feasibility, constraints, evidence gaps, Clean Core impact, landscape fit, and delivery risks. It may compare options but does not own the target architecture or write code."
-tools: [read, search, execute, web, todo, "adt-mcp-server/*"]
+tools: [read, search, web, todo]
 argument-hint: "Describe the business goal, target landscape, constraints, data volume, risk areas, and decision to be analyzed."
 user-invocable: true
 disable-model-invocation: false

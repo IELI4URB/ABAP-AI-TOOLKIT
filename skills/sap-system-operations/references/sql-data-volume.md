@@ -338,9 +338,8 @@ WHILE lv_continue = abap_true.
     FROM vbak
     WHERE erdat >= @(sy-datum - 365)
     ORDER BY vbeln
-    INTO TABLE @lt_page
-    OFFSET @lv_offset
-    UP TO @lc_page_size ROWS.             " FETCH NEXT N ROWS equivalent
+    UP TO @lc_page_size ROWS OFFSET @lv_offset
+    INTO TABLE @lt_page.
 
   IF lt_page IS INITIAL.
     lv_continue = abap_false.
@@ -362,7 +361,7 @@ WHILE lv_continue = abap_true.
 ENDWHILE.
 ```
 
-> **Note:** `OFFSET … UP TO … ROWS` (ABAP 7.50+) is the standard pagination syntax. On earlier releases use `PACKAGE SIZE` with cursor-based processing (see §5).
+> **Note:** `UP TO @n ROWS OFFSET @o` (ABAP 7.50+) is the standard pagination syntax. On earlier releases use `PACKAGE SIZE` with cursor-based processing (see §5).
 
 #### Option C — Optimise the Slow Query
 

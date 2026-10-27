@@ -32,7 +32,7 @@
 | 20 | Make-to-order (order-specific) |
 | 25 | Planning without final assembly |
 | 40 | Planning with final assembly (variant config) |
-| 70 | KANBAN |
+| 70 | Planning at assembly level (subassembly planning) |
 
 ### Lot Sizing Keys (MARC-DISLS)
 | Key | Description |

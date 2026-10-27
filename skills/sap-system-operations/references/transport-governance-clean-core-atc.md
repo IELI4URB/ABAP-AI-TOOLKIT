@@ -311,7 +311,7 @@ Resolution Options:
 
 ### Prevention
 
-- **Make ATC mandatory before transport release** — configure `ABAP_CLOUD_DEVELOPMENT_DEFAULT` as a pre-release check set in SE91/ATC configuration; no transport can be released without a clean ATC result.
+- **Make ATC mandatory before transport release** — configure `ABAP_CLOUD_DEVELOPMENT_DEFAULT` as a pre-release check set via ATC configuration (tx `ATC`/`SCI`, or the ADT ATC run configuration); no transport can be released without a clean ATC result.
 - **Run ATC in ADT on every save** for ABAP Cloud packages — configure in ADT preferences → ABAP → ATC → "Run on Save".
 - Establish a team **API Approval Gate**: any new external dependency (SAP class, FM, BAPI) must be reviewed for release state before implementation begins — not after.
 - Maintain a team **Approved API Catalogue**: a shared document listing confirmed C1-released APIs for your domain, reviewed after every system upgrade.
