@@ -32,10 +32,11 @@ Two MCP servers are approved for ABAP development. Use the comparison table to p
 ## SAP ADT MCP Server (`com.sap.adt/mcp`)
 
 ### Prerequisites
-- ADT for VS Code extension installed and configured
-- At least one ABAP destination added to the workspace (see Getting Started in VS Code extension docs)
+- ADT for VS Code extension installed and configured (or ADT for Eclipse — the server can also be enabled there)
+- At least one ABAP destination/project added to the workspace (see Getting Started in VS Code extension docs)
+- **SAP Joule for Developers, ABAP AI capabilities license** — required for MCP tools that depend on it. Log in to the Joule service **before** starting the MCP server; if the server is already running, open any object editor in the configured ABAP project to trigger the Joule login. (SAP Help: *ADT User Guide → Model Context Protocol Tools*.)
 
-> **No separate install from MCP Server Gallery needed.** Enable via VS Code preferences only.
+> **No separate install from MCP Server Gallery needed.** Enable via VS Code (or Eclipse `ABAP Development → MCP Server`) preferences only. The bearer token is auto-generated on enable and stored in the `ABAP Development → MCP Server → Token` preference.
 
 ### Setup
 
