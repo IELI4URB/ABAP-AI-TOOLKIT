@@ -111,8 +111,10 @@ Source: https://help.sap.com/docs/abap-cloud/abap-cloud-background-concepts-and-
 |---|---|---|---|
 | Scenario | Smaller low/no-code | Tightly coupled, complex extensions and apps | Loosely coupled extensions and apps |
 | Extensibility type | On-Stack | On-Stack | Side-by-Side |
+| Persona | Key users | Developers | Developers |
 | Target environment | S/4HANA Cloud, S/4HANA, S/4HANA Cloud Private Edition | S/4HANA Cloud, S/4HANA, S/4HANA Cloud Private Edition | SAP BTP (incl. ABAP environment) |
-| Tooling | Key-user adaptation / custom-field+logic apps | ADT (developer extensibility) | ADT / non-ABAP (Java, Node.js) |
+| Tooling | Key User Extensibility tools | ABAP Development Tools (ADT) | ADT / non-ABAP (Java, Node.js) |
+| ABAP language version | ABAP for Key Users | ABAP for Cloud Development | ABAP for Cloud Development |
 | Use cases | UI field layout, custom fields, custom logic, custom CDS views | Lifecycle-stable ABAP apps, extensions of SAP S/4HANA, partner extensions | Custom/multitenant apps, ABAP + non-ABAP, partner SaaS |
 
 Key points:
