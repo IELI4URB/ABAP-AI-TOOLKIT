@@ -157,21 +157,45 @@ CALL BADI lo_badi->validate_before_save
 
 Key difference (SAP Help): classic passes filter values **with the method call**; kernel-based passes comparison values **when the BAdI object is created** via `GET BADI`.
 
+### Extendable filter types
+
+A filter type flagged **Extendable** lets you create implementations for filter values that did not exist before (SE18 *Implementation* menu becomes *Filter Value → Create*). Requirements on the filter domain:
+
+- Domain linked to a **cross-client value table** with exactly one key field typed by the filter's data element.
+- A **text table** with two key fields (filter type + language), containing a field whose name includes `TEXT`/`TXT`.
+- Delivery class of both tables = **E or G**.
+- New filter values must not already exist in the value table — they are added on save, removed when the implementation/BAdI is deleted.
+
+### Changing a BAdI definition (upgrade awareness)
+
+Allowed changes: **filter type**, **multiple-use** flag, **internal flag**. Interface changes are risky:
+- Deleting/renaming/creating a method can make existing implementations syntactically invalid. Clean up with SE19 → *Interface* tab → *Name of Implementing Class* → Class Builder → **Utilities → Clean Up → Method Includes** (runs automatically after a transport import).
+- Adding parameters is safe; changing parameter types or deleting parameters can cause syntax errors or runtime termination.
+
+### Country-specific BAdIs
+
+Use the ISO country code data element **`INTCA`** (e.g. `US`, not `USA`) as filter. Determine it with `SELECT ... INTCA FROM T005` before the call, then pass as the filter value (SAP example: the `Address-Check` BAdI).
+
 ---
 
 ## 5. Multiple-Use BAdIs
 
-When BAdI definition has **Multiple Use = X**: multiple active implementations execute in sequence.
+When BAdI definition has **Multiple Use = X**: multiple active implementations execute.
 
-Order of execution not guaranteed — implementations must be independent and not rely on execution order.
+By default execution order is **arbitrary** — so implementations should be independent. But order **can** be controlled by a **sort mechanism** (SAP Help: *Sorting Classic BAdI Implementations*):
+
+- **SE18 → Utilities → Sort.**
+- **Standard Sort** — numeric sort values entered in the **Layer Value** field when creating each implementation; stored in a table; implementations run in that numeric order.
+- **Special Sort** — non-numeric ordering via an implementation of the delivered BAdI definition `BADI_LAYER` (interface `IF_EX_BADI_LAYER`, method `SORT_DATA` sorts a value table at runtime; data transmission via a subscreen).
+- **No Sort** — arbitrary order (default).
+- Turning sort **on** is **not** a modification (BAdI definition unchanged). Turning it **off** or changing it **counts as a modification**.
 
 ```abap
 " Multiple implementations active:
 "   ZCL_BADI_SD_VALIDATION_BASIC   — filter: * (all)
 "   ZCL_BADI_SD_VALIDATION_KEYA    — filter: customer group Z001
-
-" Both execute for key account orders. Both must be idempotent
-" and must not cancel each other's messages.
+" Without sort: order arbitrary — both must be idempotent and must not
+" cancel each other's messages. With Standard Sort: Layer Value sets order.
 ```
 
 ---
@@ -239,7 +263,7 @@ Do not activate default implementation in customer systems — it is SAP-owned. 
 | Issue | Cause | Fix |
 |---|---|---|
 | Implementation not firing | Inactive or wrong filter value | SE19 → check activation status and filter |
-| Multiple active — wrong sequence | Order not guaranteed | Decouple implementations; no sequence dependency |
+| Multiple active — wrong sequence | Default order is arbitrary | Decouple implementations, or set order via SE18 → Utilities → Sort (Standard/Special Sort) |
 | `GET BADI` returns empty | No active implementation, not a runtime error | Check for active impl in SE19; verify filter match |
 | Classic BAdI on Cloud system | Object not released for Cloud | Use Cloud BAdI in ADT instead |
 | Implementation lost after transport | Transport captured wrong client | Re-transport; check CTS |

@@ -158,8 +158,8 @@ ENDFORM.
 
 | Type | Description |
 |---|---|
-| Menu Exit | Add custom menu entries |
-| Screen Exit | Add custom subscreens to SAP screens |
+| Menu Exit | Add custom menu entries. SAP defines them in the Menu Painter with function codes starting with **`+`**; you supply the menu text when activating the add-on project. |
+| Screen Exit | SAP places a reserved **subscreen area** on a standard screen and issues `CALL CUSTOMER-SUBSCREEN` in its flow logic; you build the subscreen in a customer function group. |
 | Field Exit | Validate/format individual screen fields |
 
 Field exit example:
@@ -175,6 +175,13 @@ FUNCTION EXIT_SAPMV45A_010.
   ENDIF.
 ENDFUNCTION.
 ```
+
+### 3.4 Finding Applications That Have Exits
+
+SAP groups exits into **SAP enhancements** (one enhancement = several individual exits, possibly of different types). Discovery:
+
+- **ABAP Workbench → Utilities → Enhancements → Project Management → Utilities → SAP Enhancements** — selection screen to list enhancements; search by **development class** if the name is unknown, or Execute with no criteria to list all. Each entry shows documentation and its exit types.
+- **Application Hierarchy** (ABAP Workbench → Overview → Application Hierarchy) + Repository Information System — locate exits for a specific application area (e.g. Materials Management).
 
 ---
 
@@ -216,13 +223,17 @@ Only when:
 1. **SE03** → Register Object in Object Catalog → register SAP object to customer namespace modification.
 2. Or via SAP Support Portal: System SSCR Key request.
 
-### 5.3 SPAU Obligation
+### 5.3 Upgrade Adjustment — SPDD and SPAU
 
-Every upgrade (SPS, SP, major release) requires:
-- **SPAU** — adjust modified repository objects.
-- All modifications appear in SPAU delta list.
-- Assign upgrade owner per modification.
-- Document in change management system.
+A system update compares modified objects against the new SAP standard. Two transactions, run during the update:
+
+- **SPDD — ABAP Dictionary objects** (domains, data elements, tables, **structures**). Run **first**, before mass activation of DDIC objects, to avoid **loss of data / table fields**. Adjust or reset the objects SPDD lists; **do not activate adjusted objects** (with SPAM, activate only new objects, except appends); release the transport tasks; mark via **Modification Adjustment → Assign Transport**. With SUM the request is released automatically.
+- **SPAU — repository objects** (programs, function modules, classes, screens, menus, text elements). Adjust after SPDD.
+
+General:
+- All modifications appear in the SPDD/SPAU delta lists.
+- Assign an upgrade owner per modification; document in change management.
+- SAP recommends all project members register the adjustment transport as their **default transport**.
 
 ```abap
 " Modified SAP standard — marked by modification assistant
@@ -237,13 +248,14 @@ Every upgrade (SPS, SP, major release) requires:
 
 ## 6. Upgrade Impact Comparison
 
-| Mechanism | Upgrade Impact | SPAU Required | Risk |
+| Mechanism | Upgrade Impact | SPDD/SPAU Required | Risk |
 |---|---|---|---|
 | Enhancement Spot (explicit) | None — spot survives | No | Low |
 | Enhancement Spot (implicit) | Low — position-based | Rare | Low |
 | Classic BAdI | None — interface versioned | No | Low |
 | User Exit / Customer Exit | None — exit contract stable | No | Low |
-| Modification | **High — re-apply each upgrade** | **Yes** | High |
+| Modification (repository) | **High — re-apply each upgrade** | **SPAU** | High |
+| Modification (DDIC structure/table) | **High — field/data loss risk** | **SPDD** | High |
 
 ---
 
@@ -258,5 +270,6 @@ Every upgrade (SPS, SP, major release) requires:
 | SFW1 | Switch maintenance (Switch Framework) |
 | SFW5 | Business Function activation |
 | SE03 | Transport Organizer Tools; SSCR key registration |
-| SPAU | Modification adjustment after upgrade |
+| SPDD | ABAP Dictionary modification adjustment after upgrade |
+| SPAU | Repository modification adjustment after upgrade |
 | SE80 | Repository Browser — navigate to any object for modification |
