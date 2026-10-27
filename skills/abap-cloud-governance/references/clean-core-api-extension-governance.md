@@ -32,7 +32,7 @@ This guide owns focused release-state and extension decisions. Use `enterprise-c
 
 ## Clean Core Principles for ABAP Cloud
 
-Source: SAP Help Portal — ABAP Cloud Clean Core and released-API guidance.
+Source: SAP Help — [ABAP Cloud](https://help.sap.com/docs/abap-cloud) Clean Core and released-API guidance.
 
 ### Objective
 

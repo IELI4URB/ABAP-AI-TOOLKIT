@@ -639,7 +639,7 @@ Process integration (HTTP/SOAP/RFC/Event, above) moves *messages*. **Data integr
 | Access control | Checked locally per system; business-user **or** privileged mode | Runs in **privileged mode**; auths replicated or redefined on consumer side |
 | Technical impl | **SQL service over ODBC** | **SQL service over ODBC** (SAP Datasphere: replication middleware) |
 
-Source: SAP Help, ABAP Cloud Develop Integration Services.
+Source: SAP Help — [Develop Integration Services](https://help.sap.com/docs/abap-cloud/abap-cloud-background-concepts-and-overview/develop-integration-services?locale=en-US).
 
 - **Federation** — use when live access to the most recent source data is required, or to rely on the source system's own data-access control.
 - **Replication** — use when it is more efficient to move business data to the target before access (e.g. a data warehouse).

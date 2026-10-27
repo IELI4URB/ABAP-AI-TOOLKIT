@@ -206,7 +206,7 @@ By default execution order is **arbitrary** — so implementations should be ind
 
 Adding custom fields/subscreens to a standard SAP screen. Since **Release 7.0**, screen enhancements are integrated into the classic BAdI concept (replacing the old customer-exit screen exits that used "X" function groups).
 
-Source: SAP Help — *Changing the SAP Standard (BC) → Classic BAdIs → Screen Enhancements*.
+Source: SAP Help — [Changing the SAP Standard (BC) → Classic BAdIs → Screen Enhancements](https://help.sap.com/docs/ABAP_PLATFORM_BW4HANA/2b28ffa716c24348903f8ffbfeb81df8/9d12233a0edd7978e10000000a11402f.html?locale=en-US).
 
 Mechanics:
 - A classic BAdI definition can carry a **subscreen**. **Not supported for multiple-use BAdIs.**

@@ -701,7 +701,7 @@ define role ZR_TravelBookingAdmin
 
 Distinct from the transactional RAP/OData path. Same CDS stack, different annotations and runtime: the data model is exposed over the **InA (Information Access) protocol** and processed by the **ABAP Analytical Engine**, not OData. Embedded = engine runs in the same ABAP stack, on the same persistence as transactional apps, **no replication** to an external warehouse — queries hit live business data.
 
-Source: SAP Help, ABAP Cloud Analytical Services / Analytical Use Cases.
+Source: SAP Help — [Analytical Services](https://help.sap.com/docs/abap-cloud/abap-cloud-background-concepts-and-overview/analytical-services?locale=en-US) / [Analytical Use Cases](https://help.sap.com/docs/abap-cloud/abap-cloud-background-concepts-and-overview/analytical-use-cases-initial-considerations?locale=en-US).
 
 #### Building blocks (star / snowflake schema)
 

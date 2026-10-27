@@ -35,7 +35,7 @@ Do not recommend direct persistence changes or unverified APIs. Preserve documen
 
 ### 1. Reading FI Data with ABAP SQL + CDS
 
-> **Universal Journal (ACDOCA) — read correctly.** `I_JournalEntryItem` / `I_GLAccountLineItem` sit on the Universal Journal. S/4HANA General Ledger supports **parallel accounting via several parallel ledgers** (one ledger per accounting principle, e.g. IFRS + local GAAP) — SAP Help: *General Ledger Accounting (FI-GL) → Parallel Accounting*. Each ledger holds its own version of the same journal-entry item, so a query without a **`Ledger`** filter returns one row per ledger for the same document, inflating any `SUM`. Constrain `Ledger` (e.g. `0L` leading ledger) whenever aggregating or comparing balances. Standard ACDOCA reporting dimensions you can also select/group by: **Segment** (segment reporting, IFRS/US-GAAP), **FunctionalArea** (cost-of-sales accounting), **ProfitCenter**.
+> **Universal Journal (ACDOCA) — read correctly.** `I_JournalEntryItem` / `I_GLAccountLineItem` sit on the Universal Journal. S/4HANA General Ledger supports **parallel accounting via several parallel ledgers** (one ledger per accounting principle, e.g. IFRS + local GAAP) — SAP Help: [General Ledger Accounting (FI-GL) → Parallel Accounting](https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE_UPA/e55549ee96814207af9232a7688dd64a/84914653e02bf663e10000000a4450e5.html?locale=en-US&version=2023.1_UPA). Each ledger holds its own version of the same journal-entry item, so a query without a **`Ledger`** filter returns one row per ledger for the same document, inflating any `SUM`. Constrain `Ledger` (e.g. `0L` leading ledger) whenever aggregating or comparing balances. Standard ACDOCA reporting dimensions you can also select/group by: **Segment** (segment reporting, IFRS/US-GAAP), **FunctionalArea** (cost-of-sales accounting), **ProfitCenter**.
 
 #### Read Journal Entry Items for a Company Code
 ```abap
@@ -210,7 +210,7 @@ For extending standard FI RAP BOs (e.g., `I_JournalEntry`), use the **Extend by 
 
 #### Custom-Field Extensibility for Journal Entries
 
-Source: SAP Help — *General Ledger Accounting (FI-GL) → Extensibility Options for Finance / Substitution/Validation for Journal Entries*.
+Source: SAP Help — [Extensibility Options for Finance](https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE_UPA/e55549ee96814207af9232a7688dd64a/266cb949a0414d1bb30c4a6550d55835.html?locale=en-US&version=2023.1_UPA) / Substitution/Validation for Journal Entries.
 
 Adding custom fields to journal entries (ACDOCA). Pick by scope:
 
