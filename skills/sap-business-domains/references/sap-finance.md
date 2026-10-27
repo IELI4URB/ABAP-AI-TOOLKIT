@@ -35,21 +35,27 @@ Do not recommend direct persistence changes or unverified APIs. Preserve documen
 
 ### 1. Reading FI Data with ABAP SQL + CDS
 
+> **Universal Journal (ACDOCA) — read correctly.** `I_JournalEntryItem` / `I_GLAccountLineItem` sit on the Universal Journal. S/4HANA runs **parallel ledgers** (one per accounting principle, e.g. IFRS + local GAAP). A read without a **`Ledger`** filter returns rows for *every* ledger → double-counted balances. Always constrain `Ledger` (e.g. `0L` leading ledger) when aggregating. Standard ACDOCA reporting dimensions you can also select/group by: **Segment** (IFRS/US-GAAP segment reporting), **FunctionalArea** (cost-of-sales accounting), **ProfitCenter**.
+
 #### Read Journal Entry Items for a Company Code
 ```abap
 SELECT CompanyCode,
+       Ledger,
        FiscalYear,
        AccountingDocument,
        AccountingDocumentItem,
        GLAccount,
        CostCenter,
        ProfitCenter,
+       Segment,
+       FunctionalArea,
        AmountInCompanyCodeCurrency,
        CompanyCodeCurrency,
        PostingDate,
        DebitCreditCode
   FROM I_JournalEntryItem
   WHERE CompanyCode  = @iv_company_code
+    AND Ledger       = @iv_ledger          "'0L' leading ledger; mandatory in parallel-ledger systems
     AND FiscalYear   = @iv_fiscal_year
     AND PostingDate BETWEEN @iv_from_date AND @iv_to_date
   ORDER BY PostingDate DESCENDING
@@ -64,6 +70,7 @@ SELECT GLAccount,
        CompanyCodeCurrency
   FROM I_GLAccountLineItem
   WHERE CompanyCode = @iv_company_code
+    AND Ledger      = @iv_ledger           "omit -> balances summed across all ledgers (wrong)
     AND GLAccount   = @iv_gl_account
     AND FiscalYear  = @iv_fiscal_year
   GROUP BY GLAccount, CompanyCode, CompanyCodeCurrency
