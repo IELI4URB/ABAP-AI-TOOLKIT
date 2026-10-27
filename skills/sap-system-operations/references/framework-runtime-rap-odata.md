@@ -348,16 +348,13 @@ METHOD execute_submit_travel.
 ENDMETHOD.
 ```
 
-**Fix D — Identifying a lock collision programmatically**
+**Fix D — Acquiring / checking a lock programmatically**
 
-RAP has no standalone "lock" statement. The framework acquires the lock **implicitly** on the first modifying EML operation (or, for draft BOs, the standard `Edit` action). A collision surfaces in the EML `FAILED` table with cause `if_abap_behv=>cause-locked`:
+The RAP framework auto-locks an instance on the first modifying operation, but a consumer can request an exclusive lock explicitly with the EML statement **`SET LOCKS`**. The lock holds until the end of the RAP transaction. If the instance is already locked, the attempt returns a row in `FAILED` with cause `if_abap_behv=>cause-locked` (only the lock-master root entity can be locked; child entities lock their root):
 
 ```abap
-MODIFY ENTITIES OF zi_travel
-  ENTITY travel
-  UPDATE FROM VALUE #( ( %tky-travel_id = lv_travel_id
-                         overall_status  = 'A'
-                         %control-overall_status = if_abap_behv=>mk-on ) )
+SET LOCKS ENTITY travel
+  FROM VALUE #( ( travel_id = lv_travel_id ) )
   FAILED   DATA(failed)
   REPORTED DATA(reported).
 
