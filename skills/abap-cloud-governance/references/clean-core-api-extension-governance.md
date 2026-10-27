@@ -101,6 +101,26 @@ Prohibition:
 | C | Wrapper over non-released objects | Warnings | Only if no level B alternative |
 | D | Direct modifications | Errors or blocked | Never |
 
+### 2A. SAP Extensibility Options (Product Taxonomy)
+
+SAP Help classifies ABAP Cloud extensibility into three options. Orthogonal to the A–D maturity above: pick the *option* by scenario, then stay at the highest A–D level it allows.
+
+Source: https://help.sap.com/docs/abap-cloud/abap-cloud-background-concepts-and-overview/extensibility
+
+| | Key User | Developer | Side-by-Side |
+|---|---|---|---|
+| Scenario | Smaller low/no-code | Tightly coupled, complex extensions and apps | Loosely coupled extensions and apps |
+| Extensibility type | On-Stack | On-Stack | Side-by-Side |
+| Target environment | S/4HANA Cloud, S/4HANA, S/4HANA Cloud Private Edition | S/4HANA Cloud, S/4HANA, S/4HANA Cloud Private Edition | SAP BTP (incl. ABAP environment) |
+| Tooling | Key-user adaptation / custom-field+logic apps | ADT (developer extensibility) | ADT / non-ABAP (Java, Node.js) |
+| Use cases | UI field layout, custom fields, custom logic, custom CDS views | Lifecycle-stable ABAP apps, extensions of SAP S/4HANA, partner extensions | Custom/multitenant apps, ABAP + non-ABAP, partner SaaS |
+
+Key points:
+- All three are modification-free and backed by **release contracts** (C0/C1…) — upgrade-safe.
+- **Layered**: customers and partners extend in parallel without interference.
+- Key User + Developer = **On-Stack** (run inside the S/4HANA system); Side-by-Side runs on **BTP**.
+- Developer Extensibility is the ABAP Cloud (ADT) path this governance guide targets by default; Key User is low/no-code; Side-by-Side decouples onto BTP when the extension should not live on-stack.
+
 ### 3. Anti-Patterns
 
 | Pattern | Problem | Fix |
