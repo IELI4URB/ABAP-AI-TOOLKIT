@@ -103,6 +103,7 @@ Agents use these skills as focused knowledge modules. Copilot loads the applicab
 | `abap-forms` | Adobe Forms, ADS, XDP/XSD, Output Management, PDF rendering, templates, and assets |
 | `sap-business-domains` | Finance, Materials Management, Production Planning/PP-DS, Sales and Distribution, and Transportation Management |
 | `sap-system-operations` | Incidents, dumps, jobs, locks, object research, ADT APIs, MCP object lifecycle, Basis, SPRO, and system analysis |
+| `abap-classic-enhancements` | Classic/Standard ABAP (ECC & S/4HANA on-premise): Enhancement Spots, classic & kernel BAdIs, User/Customer Exits, SMOD/CMOD, screen/menu enhancements, modifications & SPAU |
 | `agentic-delivery` | Multi-step planning, approval gates, named-agent delegation, handoffs, recovery, and validation |
 
 ## Installation
