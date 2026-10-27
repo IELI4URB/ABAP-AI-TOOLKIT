@@ -699,4 +699,52 @@ define role ZR_TravelBookingAdmin
 
 ---
 
+### 12. Analytical CDS Modeling (Embedded Analytics / OLAP)
+
+Distinct from the transactional RAP/OData path. Same CDS stack, different annotations and runtime: the data model is exposed over the **InA (Information Access) protocol** and processed by the **ABAP Analytical Engine**, not OData. Embedded = engine runs in the same ABAP stack, on the same persistence as transactional apps, **no replication** to an external warehouse — queries hit live business data.
+
+Source: SAP Help, ABAP Cloud Analytical Services / Analytical Use Cases.
+
+#### Building blocks (star / snowflake schema)
+
+| Block | Annotation | Role |
+|---|---|---|
+| Cube (fact) | `@Analytics.dataCategory: #CUBE` | Center of the star — measures + dimension associations |
+| Dimension | `@Analytics.dataCategory: #DIMENSION` | Master-data / characteristic views joined to the cube |
+| Analytical query | `@Analytics.query: true` | Consumption view; defines aggregation, layout, variables |
+
+```abap
+" Dimension
+@Analytics.dataCategory: #DIMENSION
+define view entity ZDIM_Product as select from zproduct { ... }
+
+" Cube
+@Analytics.dataCategory: #CUBE
+define view entity ZCUBE_Sales as select from zsales
+  association [1..1] to ZDIM_Product as _Product on ...
+{ ... key fields, @Semantics-typed measures, _Product }
+
+" Analytical query
+@Analytics.query: true
+define view entity ZQ_Sales as select from ZCUBE_Sales { ... }
+```
+
+#### Measures and aggregation
+
+- Standard aggregations: **SUM, MIN, MAX** (built-in).
+- **Calculated measures** — derive new KPIs from existing measures at query level.
+- **Restricted measures** — filter a measure's result set by condition (exclude values from aggregation).
+- `@AnalyticsDetails` — default multidimensional layout, variable sequence, aggregation/planning behavior.
+- Engine evaluates measures either on the **SAP HANA database** or in **ABAP**.
+
+#### Consumption
+
+InA services consumed by **SAP Fiori** analytical UIs (Analytical List Page) or **SAP Analytics Cloud**. The `analytical_query` provider contract (see §3 Provider contracts) governs the projection exposed to clients.
+
+#### Analytical extension points
+
+Analytical extensibility targets: **dimension, cube, analytical-query, service-definition** — add a hierarchy, dimension, measure, or query to a released analytical model (modification-free, release-contract-backed).
+
+---
+
 *End of CDS Complete Syntax Reference*

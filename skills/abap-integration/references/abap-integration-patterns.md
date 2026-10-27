@@ -644,6 +644,25 @@ ABAP Cloud System
 
 ---
 
+### 9A. Data Integration — Federation vs Replication
+
+Process integration (HTTP/SOAP/RFC/Event, above) moves *messages*. **Data integration** gives external tools direct access to CDS view-entity data. Two modes:
+
+| Characteristic | Data Federation | Data Replication |
+|---|---|---|
+| Data location | Stays in source; requests delegated and run there | Copied to a target system; requests run locally on the copy |
+| Consistency | Stateful (transactions span multiple statements), live access | Stateless; data often transformed in transit (enrich, clean, consolidate) |
+| Access control | Checked locally per system; business-user **or** privileged mode | Runs in **privileged mode**; auths replicated or redefined on consumer side |
+| Technical impl | **SQL service over ODBC** | **SQL service over ODBC** (SAP Datasphere: replication middleware) |
+
+Source: SAP Help, ABAP Cloud Develop Integration Services.
+
+- **Federation** — use when live access to the most recent source data is required, or to rely on the source system's own data-access control.
+- **Replication** — use when it is more efficient to move business data to the target before access (e.g. a data warehouse).
+- Both expose **released CDS view entities** via the **SQL service** (ODBC) — never direct table reads.
+
+---
+
 ### 10. Golden Rules for ABAP Cloud Integration
 
 | # | Rule | Anti-Pattern (Never Do) |
