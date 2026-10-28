@@ -1,0 +1,28 @@
+name: Mirror to SAP-DEVELOPMENT-AI-TOOLKIT
+
+# Auto-push this repo's main to the org repo whenever the toolkit updates.
+# Requires repo secret TARGET_REPO_PAT: a PAT with write (repo) access to
+# SAP-DEVELOPMENT-AI-TOOLKIT/ABAP-DEVELOPMENT-AI-TOOLKIT.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest   # change to self-hosted runner label if GHE has no hosted runners
+    steps:
+      - name: Checkout source (full history + tags)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to target repo
+        env:
+          TARGET_PAT: ${{ secrets.TARGET_REPO_PAT }}
+        run: |
+          set -e
+          git push --follow-tags \
+            "https://x-access-token:${TARGET_PAT}@github.tools.sap/SAP-DEVELOPMENT-AI-TOOLKIT/ABAP-DEVELOPMENT-AI-TOOLKIT.git" \
+            HEAD:main
