@@ -12,5 +12,6 @@
 | End-to-end, cross-phase Clean Core governance | [Enterprise Clean Core delivery](./enterprise-clean-core-delivery.md) |
 | Public Cloud landscape and development constraints | [Public Cloud development constraints](./public-cloud-development-constraints.md) |
 | Generative AI in ABAP (Joule for Developers, SAP AI SDK for ABAP, ISLM) | [Generative AI in ABAP Cloud](./generative-ai-abap-cloud.md) |
+| Tabular and predictive AI in ABAP (SAP-RPT classification/regression, ISLM tabular scenarios, SAP-RPT-2 and SAP-RPT-TS overview) | [ISLM — Tabular and Predictive AI](./islm-tabular-ai.md) |
 
 Do not use this group for RAP/CDS implementation mechanics, general ABAP coding, runtime operations, or business-domain decisions; route those to their owning groups.

@@ -18,6 +18,7 @@ metadata:
 | End-to-end Clean Core program | [Enterprise Clean Core delivery](./references/enterprise-clean-core-delivery.md) |
 | Public Cloud implementation constraints | [Public Cloud development constraints](./references/public-cloud-development-constraints.md) |
 | Generative AI in ABAP (Joule for Developers, SAP AI SDK for ABAP, ISLM) | [Generative AI in ABAP Cloud](./references/generative-ai-abap-cloud.md) |
+| Tabular and predictive AI in ABAP (SAP-RPT classification/regression, ISLM tabular scenarios, SAP-RPT-2 and SAP-RPT-TS overview) | [ISLM — Tabular and Predictive AI](./references/islm-tabular-ai.md) |
 
 ## Workflow
 
