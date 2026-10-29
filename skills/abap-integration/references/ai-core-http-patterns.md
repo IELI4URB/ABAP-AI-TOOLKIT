@@ -395,3 +395,15 @@ ENDMETHOD.
 - **Never log raw prompts** containing business data to standard application logs without masking.
 - **On-premise data boundary:** data leaves the system boundary to the AI Core endpoint. Apply the same data privacy controls as for any external REST call.
 - **Deployment IDs are not permanent:** if a model is redeployed, the deployment ID changes. Store the ID in a customizing table (e.g. maintained via SM30 / Custom Business Configuration), not hardcoded.
+
+---
+
+## Authoritative Sources (SAP AI Core REST API)
+
+- [Generative AI Hub in SAP AI Core](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/generative-ai-hub-in-sap-ai-core)
+- [Create a Deployment for a Generative AI Model](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/create-deployment-for-generative-ai-model-in-sap-ai-core)
+- [Use a Service Key — AI_API_URL and auth](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/use-service-key)
+- [AI API Overview — REST endpoints](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/about-ai-api)
+- [AI Core API spec (OAS3)](https://help.sap.com/doc/d748f0db8501465a86909bb448148b07/CLOUD/en-US/aicore-api.html)
+- [Orchestration — single deployment, multiple models](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/orchestration-8d022355037643cebf775cd3bf662cc5)
+- ABAP Cloud alternative (ABAP AI SDK + ISLM): the `abap-cloud-governance` skill's `generative-ai-abap-cloud.md`.

@@ -2,13 +2,13 @@
 name: generative-ai-abap-cloud
 description: 'Generative AI in ABAP Cloud. Use for the two AI use cases — AI-assisted ABAP development (Joule for Developers) and embedding generative AI into custom ABAP apps via the SAP AI SDK for ABAP and Intelligent Scenario Lifecycle Management (ISLM). Covers system requirements by landscape, BTP + ABAP setup steps, SAP_COM_0A69 communication arrangement, ABAP AI SDK code examples, model availability, deployment ID wiring, and data-privacy governance.'
 metadata:
-  version: 2.0.0
+  version: 2.1.0
   tags: abap generative-ai joule ai-sdk islm intelligent-scenario abap-cloud btp sap-com-0a69 generative-ai-hub
 ---
 
 # Generative AI in ABAP Cloud
 
-Source: SAP Help — [Generative AI in ABAP Cloud](https://help.sap.com/docs/btp/sap-business-technology-platform/generative-ai-in-abap-cloud?locale=en-US).
+Source: SAP Help — [Generative AI in ABAP Cloud](https://help.sap.com/docs/abap-ai/generative-ai-in-abap-cloud/generative-ai-in-abap-cloud).
 
 Two distinct use cases:
 
@@ -188,129 +188,101 @@ This ID is:
 
 ## ABAP AI SDK — Code Examples
 
-### Verify Released API Availability
+All classes/interfaces below are the **released** ABAP AI SDK Completion API, verified against
+SAP Help — [API Reference Guide for ABAP AI SDK](https://help.sap.com/docs/abap-ai/generative-ai-in-abap-cloud/api-reference-guide-for-abap-ai-sdk)
+and [Calling The Completion API](https://help.sap.com/docs/abap-ai/generative-ai-in-abap-cloud/calling-completion-api).
+Confirm your release level in ADT; the objects are released APIs.
 
-Before coding, confirm the following released classes/interfaces exist in your landscape via ADT or SE24:
+### Released Objects
 
-| Object | Type | Purpose |
-|--------|------|---------|
-| `IF_AIC_SDK_LLM_CLIENT` | Interface | LLM client contract |
-| `CL_AIC_SDK_LLM_FACTORY` | Class | Creates client instances via ISLM |
-| `IF_AIC_SDK_LLM_RESPONSE` | Interface | Parses LLM response |
-| `CX_AIC_SDK_ERROR` | Exception | Base exception for AI SDK errors |
+| Object | Type | Role |
+|--------|------|------|
+| `CL_AIC_ISLM_COMPL_API_FACTORY` | Class | Factory; static method `GET( )` |
+| `IF_AIC_ISLM_COMPL_API_FACTORY` | Interface | Factory instance; `CREATE_INSTANCE( <scenario> )` |
+| `IF_AIC_COMPLETION_API` | Interface | `EXECUTE_FOR_STRING`, `EXECUTE_FOR_MESSAGES`, `CREATE_MESSAGE_CONTAINER`, `GET_PARAMETER_SETTER` |
+| `IF_AIC_COMPLETION_API_RESULT` | Interface | `GET_COMPLETION`, `GET_PROMPT_TOKEN_COUNT`, `GET_COMPLETION_TOKEN_COUNT`, `GET_TOTAL_TOKEN_COUNT`, `GET_FINISH_REASON`, `GET_ORIGINAL_FINISH_REASON`, `GET_RUNTIME_MS` |
+| `IF_AIC_COMPLETION_PARAMETERS` | Interface | `SET_TEMPERATURE`, `SET_MAXIMUM_TOKENS`, `SET_ANY_PARAMETER` |
+| `CX_AIC_COMPLETION_API` | Exception | API/LLM errors; attribute `API_ERROR` → `IF_AIC_API_ERROR` |
+| `IF_AIC_API_ERROR` | Interface | `GET_CODE` (ENUM), `GET_ORIGINAL_CODE`, `GET_ORIGINAL_MESSAGE` |
 
-### Chat Completion — Single Turn
+The API is **vendor-independent** — the same calls work regardless of the LLM behind the
+intelligent scenario. The scenario name (configured in ISLM, Step 4) carries the connection and
+the model, so **no deployment ID or credentials appear in application code**.
+
+### Chat Completion — Single Prompt
 
 ```abap
-CLASS zcl_ai_chat DEFINITION PUBLIC FINAL CREATE PUBLIC.
-  PUBLIC SECTION.
-    METHODS ask
-      IMPORTING iv_prompt        TYPE string
-                iv_scenario_id   TYPE /aic/scenario_id
-      RETURNING VALUE(rv_answer) TYPE string
-      RAISING   cx_aic_sdk_error.
-ENDCLASS.
+" Factory → completion API for an ISLM intelligent scenario
+FINAL(api) = cl_aic_islm_compl_api_factory=>get(
+  )->create_instance( 'Z_MY_AI_SCENARIO' ).
 
-CLASS zcl_ai_chat IMPLEMENTATION.
-  METHOD ask.
-    " Factory resolves credentials from SAP_COM_0A69 via ISLM
-    DATA(lo_client) = cl_aic_sdk_llm_factory=>get_client(
-      iv_scenario_id = iv_scenario_id ).
+" Optional: set model parameters (bound to this API instance, reused across calls)
+FINAL(params) = api->get_parameter_setter( ).
+params->set_temperature( '0.5' ).
+params->set_maximum_tokens( 1000 ).
 
-    DATA(lt_messages) = VALUE if_aic_sdk_llm_client=>tt_message(
-      ( role    = if_aic_sdk_llm_client=>co_role_system
-        content = 'You are a helpful SAP business assistant.' )
-      ( role    = if_aic_sdk_llm_client=>co_role_user
-        content = iv_prompt )
-    ).
-
-    DATA(lo_response) = lo_client->chat_completion(
-      it_messages    = lt_messages
-      iv_max_tokens  = 1000
-      iv_temperature = '0.7'
-    ).
-
-    rv_answer = lo_response->get_content( ).
-  ENDMETHOD.
-ENDCLASS.
+FINAL(response) = api->execute_for_string( 'How are you?' )->get_completion( ).
 ```
 
-### Multi-Turn Chat (conversation history)
+### Multi-Turn Chat (message container)
 
 ```abap
-METHOD ask_with_history.
-  DATA(lo_client) = cl_aic_sdk_llm_factory=>get_client(
-    iv_scenario_id = iv_scenario_id ).
+FINAL(api) = cl_aic_islm_compl_api_factory=>get(
+  )->create_instance( 'Z_MY_AI_SCENARIO' ).
 
-  " Start with system message
-  DATA(lt_messages) = VALUE if_aic_sdk_llm_client=>tt_message(
-    ( role    = if_aic_sdk_llm_client=>co_role_system
-      content = iv_system_prompt )
-  ).
+FINAL(messages) = api->create_message_container( ).
+messages->set_system_role( 'You are an ABAP expert' ).
+messages->add_user_message( 'Does ABAP support OO programming?' ).
+messages->add_assistant_message( 'Yes' ).
+messages->add_user_message( 'Can you build RESTful applications in ABAP?' ).
 
-  " Append prior turns from DB or session cache
-  LOOP AT it_history INTO DATA(ls_turn).
-    APPEND VALUE #(
-      role    = ls_turn-role       " 'user' or 'assistant'
-      content = ls_turn-message
-    ) TO lt_messages.
-  ENDLOOP.
-
-  " Append current user prompt
-  APPEND VALUE #(
-    role    = if_aic_sdk_llm_client=>co_role_user
-    content = iv_current_prompt
-  ) TO lt_messages.
-
-  DATA(lo_response) = lo_client->chat_completion(
-    it_messages   = lt_messages
-    iv_max_tokens = 1500
-  ).
-
-  rv_answer = lo_response->get_content( ).
-ENDMETHOD.
+FINAL(response) = api->execute_for_messages( messages )->get_completion( ).
 ```
 
-### Text Embedding Generation
+### Reading Token Counts and Finish Reason
 
 ```abap
-METHOD generate_embedding.
-  " Use a dedicated ISLM scenario pointing to an embedding model deployment
-  " (text-embedding-3-large or text-embedding-ada-002)
-  DATA(lo_client) = cl_aic_sdk_llm_factory=>get_client(
-    iv_scenario_id = iv_embed_scenario_id ).
-
-  DATA(lo_response) = lo_client->embedding(
-    iv_input = iv_text   " max ~8000 tokens — truncate if needed
-  ).
-
-  " Returns number[] — store as JSON string for HANA Vector Engine
-  rt_vector = lo_response->get_embedding( ).  " TYPE float_t TAB
-ENDMETHOD.
+FINAL(result)       = api->execute_for_string( 'How are you?' ).
+FINAL(response)     = result->get_completion( ).
+FINAL(total_tokens) = result->get_total_token_count( ).
+FINAL(finish)       = result->get_finish_reason( ).           " standardized
+FINAL(orig_finish)  = result->get_original_finish_reason( ).  " as returned by the LLM
 ```
 
 ### Error Handling
 
+`EXECUTE_FOR_*` raise `CX_AIC_COMPLETION_API` for connection/configuration errors and for
+LLM / service-provider errors that carry a known error code. Unknown codes or programming errors
+(for example wrong parameters) raise a **short dump**, not a catchable exception — so do not
+blanket-catch to hide bugs.
+
 ```abap
 TRY.
-    DATA(lo_client) = cl_aic_sdk_llm_factory=>get_client(
-      iv_scenario_id = 'Z_MY_AI_SCENARIO' ).
+    FINAL(response) = api->execute_for_string( xxl_prompt )->get_completion( ).
 
-    DATA(lo_resp) = lo_client->chat_completion(
-      it_messages   = lt_messages
-      iv_max_tokens = 500
-    ).
-
-    lv_answer = lo_resp->get_content( ).
-
-  CATCH cx_aic_sdk_error INTO DATA(lx_ai).
-    " Covers: scenario not active, deployment not running,
-    "         token fetch failure, HTTP 4xx/5xx from AI Core
-    cl_bali_log=>...   " Log via Application Log
-    RAISE EXCEPTION TYPE zcx_ai_integration_error
-      EXPORTING previous = lx_ai.
+  CATCH cx_aic_completion_api INTO FINAL(lx).
+    " api_error is populated when the LLM / AI service provider reports a code
+    CASE lx->api_error->get_code( ).
+      WHEN if_aic_api_error=>context_length_exceeded.
+        " prompt too large — truncate or summarize, then retry
+      WHEN if_aic_api_error=>content_filter.
+        " blocked by content policy — do not retry unchanged
+      WHEN if_aic_api_error=>invalid_prompt.
+        " malformed / repetitive prompt
+    ENDCASE.
+    " raw provider values for logging
+    FINAL(raw_code) = lx->api_error->get_original_code( ).
+    FINAL(raw_msg)  = lx->api_error->get_original_message( ).
 ENDTRY.
 ```
+
+> **ADT quota exception:** When implementing an IDE action, do **not** catch
+> `CX_AIQUOTA_ADT_LIMIT_EXCEEDED` — let the ADT action framework handle it in the client.
+
+> **Embeddings / multi-model routing:** The Completion API covers text generation. For embeddings
+> or routing across several models from one deployment, use the Generative AI Hub **Orchestration**
+> service — see the `abap-integration` skill's `ai-core-http-patterns.md` (raw REST) or SAP Help
+> [Orchestration](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/orchestration-8d022355037643cebf775cd3bf662cc5).
 
 ---
 
@@ -321,3 +293,32 @@ ENDTRY.
 - **Determinism:** generative output is non-deterministic — validate and constrain model output before acting on it in a business process. Do not treat raw model output as verified fact or production-ready code.
 - **Availability** is edition/release-dependent and some capabilities require an additional Joule for Developers license — confirm for the target landscape before development commitment.
 - **Resilience:** apply the same timeout, retry, and circuit-breaker patterns as for any external HTTP call — see `abap-integration/references/abap-error-handling-resilience.md`.
+
+---
+
+## Authoritative Sources
+
+**Generative AI in ABAP Cloud (`abap-ai`)**
+- [Overview — two use cases](https://help.sap.com/docs/abap-ai/generative-ai-in-abap-cloud/generative-ai-in-abap-cloud)
+- [ABAP AI SDK powered by ISLM](https://help.sap.com/docs/abap-ai/generative-ai-in-abap-cloud/abap-ai-sdk-powered-by-intelligent-scenario-lifecycle-management)
+- [Set Up ABAP AI SDK powered by ISLM](https://help.sap.com/docs/abap-ai/generative-ai-in-abap-cloud/set-up-abap-ai-sdk-powered-by-intelligent-scenario-lifecycle-management)
+- [API Reference Guide for ABAP AI SDK](https://help.sap.com/docs/abap-ai/generative-ai-in-abap-cloud/api-reference-guide-for-abap-ai-sdk)
+- [Calling The Completion API](https://help.sap.com/docs/abap-ai/generative-ai-in-abap-cloud/calling-completion-api)
+- [Catchable Exceptions](https://help.sap.com/docs/abap-ai/generative-ai-in-abap-cloud/catchable-exceptions)
+- [Joule for Developers, ABAP AI Capabilities](https://help.sap.com/docs/abap-ai)
+- [ABAP Cloud Documentation Landscape](https://help.sap.com/docs/abap-ai/generative-ai-in-abap-cloud/abap-cloud-documentation-landscape)
+
+**SAP_COM_0A69 — communication arrangement**
+- [Create Communication Arrangement for SAP_COM_0A69](https://help.sap.com/docs/btp/sap-business-technology-platform/how-to-create-communication-arrangement-for-sap-com-0a69-20014a0910124c18aca114d4477c797e)
+- [Configure Communication System for SAP_COM_0A69](https://help.sap.com/docs/btp/sap-business-technology-platform/how-to-configure-communication-system-for-sap-com-0a69-7d691a07627442a3b1d07000417c8056)
+- [Troubleshooting SAP_COM_0A69](https://help.sap.com/docs/btp/sap-business-technology-platform/troubleshooting-84f2c28cc208493aadf5be709ec947cc)
+
+**SAP AI Core — Generative AI Hub**
+- [Generative AI Hub in SAP AI Core](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/generative-ai-hub-in-sap-ai-core)
+- [Create a Deployment for a Generative AI Model](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/create-deployment-for-generative-ai-model-in-sap-ai-core)
+- [Orchestration — single deployment, multiple models](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/orchestration-8d022355037643cebf775cd3bf662cc5)
+
+**Developer tutorials**
+- [Generative AI in ABAP Cloud — tutorials index](https://developers.sap.com/concepts/generative-ai-abap-cloud/)
+- [ABAP AI SDK for Generative AI](https://developers.sap.com/concepts/abap-ai-sdk/)
+- [ISLM for Generative AI](https://developers.sap.com/concepts/islm-generative-ai-framework/)
