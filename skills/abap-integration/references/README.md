@@ -6,5 +6,7 @@
 |---|---|
 | HTTP/REST, SOAP, RFC wrappers, communication arrangements, Event Mesh, and AIF | [ABAP Cloud integration patterns](./abap-integration-patterns.md) |
 | Remote failures, retries, circuit breakers, application logging, and operational recovery | [Error handling and resilience](./abap-error-handling-resilience.md) |
+| SAP AI Core REST API from on-premise ABAP — SM59, STRUST, OAuth2 token fetch, chat and embedding calls | [AI Core HTTP patterns (on-premise)](./ai-core-http-patterns.md) |
 
 This group owns integration and operational resilience. Use `abap-engineering` for language-level exception mechanics without a remote or operational boundary, and `abap-security` for credentials, IAM, and authorization policy.
+For AI Core from ABAP Cloud (ABAP AI SDK + ISLM + SAP_COM_0A69), use the `abap-cloud-governance` skill's `generative-ai-abap-cloud.md`.

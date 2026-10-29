@@ -11,6 +11,7 @@ metadata:
 - [Integration patterns](./references/abap-integration-patterns.md)
 - [Engineering: exception and program-flow mechanics](../abap-engineering/references/official-program-flow-logic.md)
 - [Error handling and resilience](./references/abap-error-handling-resilience.md)
+- [SAP AI Core HTTP patterns — on-premise](./references/ai-core-http-patterns.md)
 
 ## Workflow
 
